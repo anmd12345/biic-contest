@@ -140,7 +140,83 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\theme-rtl.min.css" />
+    <Content Include="assets\css\theme.min.css" />
+    <Content Include="assets\css\user-rtl.min.css" />
+    <Content Include="assets\css\user.min.css" />
+    <Content Include="assets\img\bg\37.png" />
+    <Content Include="assets\img\bg\38.png" />
+    <Content Include="assets\img\bg\42.png" />
+    <Content Include="assets\img\bg\43.png" />
+    <Content Include="assets\img\bg\44.png" />
+    <Content Include="assets\img\bg\45.png" />
+    <Content Include="assets\img\bg\46.png" />
+    <Content Include="assets\img\bg\47.png" />
+    <Content Include="assets\img\bg\bg-1-2.png" />
+    <Content Include="assets\img\bg\bg-13.png" />
+    <Content Include="assets\img\bg\bg-18.png" />
+    <Content Include="assets\img\bg\bg-19.png" />
+    <Content Include="assets\img\bg\bg-2.png" />
+    <Content Include="assets\img\bg\bg-21.png" />
+    <Content Include="assets\img\bg\bg-23.png" />
+    <Content Include="assets\img\bg\bg-28.png" />
+    <Content Include="assets\img\bg\bg-29.png" />
+    <Content Include="assets\img\bg\bg-30.png" />
+    <Content Include="assets\img\bg\bg-31.png" />
+    <Content Include="assets\img\bg\bg-41.svg" />
+    <Content Include="assets\img\bg\bg-5.png" />
+    <Content Include="assets\img\bg\bg-left-17.png" />
+    <Content Include="assets\img\bg\bg-left-20.png" />
+    <Content Include="assets\img\bg\bg-left-21.png" />
+    <Content Include="assets\img\bg\bg-left-5.png" />
+    <Content Include="assets\img\bg\bg-right-17.png" />
+    <Content Include="assets\img\bg\bg-right-20.png" />
+    <Content Include="assets\img\bg\bg-right-21.png" />
+    <Content Include="assets\img\bg\bg-right-6.png" />
+    <Content Include="assets\img\blog\blog-1.png" />
+    <Content Include="assets\img\blog\blog-2.png" />
+    <Content Include="assets\img\blog\blog-3.png" />
+    <Content Include="assets\img\blog\blog-4.png" />
+    <Content Include="assets\img\blog\blog-5.png" />
+    <Content Include="assets\img\generic\auto.png" />
+    <Content Include="assets\img\generic\default-dark.png" />
+    <Content Include="assets\img\generic\default-light.png" />
+    <Content Include="assets\img\system\default_banner.jpg" />
+    <Content Include="assets\img\system\default_logo.jpg" />
+    <Content Include="assets\img\icons\favicon.jpg" />
+    <Content Include="assets\js\config.js" />
+    <Content Include="assets\js\phoenix.js" />
     <Content Include="Global.asax" />
+    <Content Include="vendors\anchorjs\anchor.min.js" />
+    <Content Include="vendors\bigpicture\BigPicture.js" />
+    <Content Include="vendors\bootstrap\bootstrap.min.js" />
+    <Content Include="vendors\countup\countUp.umd.js" />
+    <Content Include="vendors\dayjs\dayjs.min.js" />
+    <Content Include="vendors\feather-icons\feather.min.js" />
+    <Content Include="vendors\fontawesome\all.min.js" />
+    <Content Include="vendors\imagesloaded\imagesloaded.pkgd.min.js" />
+    <Content Include="vendors\isotope-layout\isotope.pkgd.min.js" />
+    <Content Include="vendors\isotope-packery\packery-mode.pkgd.min.js" />
+    <Content Include="vendors\is\is.min.js" />
+    <Content Include="vendors\list.js\list.min.js" />
+    <Content Include="vendors\lodash\lodash.min.js" />
+    <Content Include="vendors\mapbox-gl\mapbox-gl.css" />
+    <Content Include="vendors\mapbox-gl\mapbox-gl.js" />
+    <Content Include="vendors\popper\popper.min.js" />
+    <Content Include="vendors\simplebar\simplebar.min.css" />
+    <Content Include="vendors\simplebar\simplebar.min.js" />
+    <Content Include="vendors\tinymce\icons\default\icons.min.js" />
+    <Content Include="vendors\tinymce\models\dom\model.min.js" />
+    <Content Include="vendors\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="vendors\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="vendors\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="vendors\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="vendors\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="vendors\tinymce\skins\content\default\content.min.css" />
+    <Content Include="vendors\tinymce\skins\ui\oxide\content.min.css" />
+    <Content Include="vendors\tinymce\skins\ui\oxide\skin.min.css" />
+    <Content Include="vendors\tinymce\themes\silver\theme.min.js" />
+    <Content Include="vendors\tinymce\tinymce.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -159,6 +235,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Views\Home\Contact.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

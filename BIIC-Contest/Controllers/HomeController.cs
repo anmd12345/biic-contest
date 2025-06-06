@@ -12,5 +12,10 @@ namespace BIIC_Contest.Controllers
         {
             return View();
         }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
     }
 }
