@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -19,6 +19,19 @@ namespace BIIC_Contest
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        //Chặn request chứa script nguy hiểm
+        protected void Application_BeginRequest()
+        {
+            string requestUrl = Request.RawUrl;
+            string postData = Request.Form.ToString();
+
+            if (Regex.IsMatch(requestUrl + postData, @"<script|x8s\.pw", RegexOptions.IgnoreCase))
+            {
+                Response.StatusCode = 403;
+                Response.End();
+            }
         }
     }
 }
