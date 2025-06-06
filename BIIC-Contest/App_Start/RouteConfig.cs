@@ -13,6 +13,9 @@ namespace BIIC_Contest
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Tùy chỉnh routes cho ứng dụng
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
