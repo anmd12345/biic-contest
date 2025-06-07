@@ -6,16 +6,10 @@ using System.Web.Mvc;
 
 namespace BIIC_Contest.Controllers
 {
-    public class NewsController : Controller
+    public class UserController : Controller
     {
-        // GET: News
-
-        public ActionResult News()
-        {
-            return View();
-        }
-
-        public ActionResult Contest()
+        // GET: User
+        public ActionResult Index()
         {
             return View();
         }

@@ -129,6 +129,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -181,6 +183,10 @@
     <Content Include="assets\img\blog\blog-3.png" />
     <Content Include="assets\img\blog\blog-4.png" />
     <Content Include="assets\img\blog\blog-5.png" />
+    <Content Include="assets\img\brand2\b.png" />
+    <Content Include="assets\img\gallery\19.png" />
+    <Content Include="assets\img\gallery\20.png" />
+    <Content Include="assets\img\gallery\21.png" />
     <Content Include="assets\img\generic\auto.png" />
     <Content Include="assets\img\generic\default-dark.png" />
     <Content Include="assets\img\generic\default-light.png" />
@@ -193,10 +199,14 @@
     <Content Include="vendors\anchorjs\anchor.min.js" />
     <Content Include="vendors\bigpicture\BigPicture.js" />
     <Content Include="vendors\bootstrap\bootstrap.min.js" />
+    <Content Include="vendors\choices\choices.min.css" />
+    <Content Include="vendors\choices\choices.min.js" />
     <Content Include="vendors\countup\countUp.umd.js" />
     <Content Include="vendors\dayjs\dayjs.min.js" />
     <Content Include="vendors\feather-icons\feather.min.js" />
     <Content Include="vendors\fontawesome\all.min.js" />
+    <Content Include="vendors\glightbox\glightbox.min.css" />
+    <Content Include="vendors\glightbox\glightbox.min.js" />
     <Content Include="vendors\imagesloaded\imagesloaded.pkgd.min.js" />
     <Content Include="vendors\isotope-layout\isotope.pkgd.min.js" />
     <Content Include="vendors\isotope-packery\packery-mode.pkgd.min.js" />
@@ -235,6 +245,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\UserApi\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -246,6 +258,7 @@
     <Content Include="Views\Partial\SearchModalPartial.cshtml" />
     <Content Include="Views\Partial\NavbarPartial.cshtml" />
     <Content Include="Views\News\Contest.cshtml" />
+    <Content Include="Views\News\News.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
