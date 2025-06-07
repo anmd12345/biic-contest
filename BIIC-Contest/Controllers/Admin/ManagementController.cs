@@ -10,5 +10,17 @@ namespace BIIC_Contest.Controllers.Admin
         {
             return View();
         }
+
+        [Route("hoat-dong")]
+        public ActionResult ActivityLog()
+        {
+            return View();
+        }
+
+        [Route("quan-ly-nguoi-dung")]
+        public ActionResult UserManagement()
+        {
+            return View();
+        }
     }
 }

@@ -304,6 +304,8 @@
     <Content Include="Views\Partial\FaviconPartial.cshtml" />
     <Content Include="Views\User\Signup.cshtml" />
     <Content Include="Views\Management\SystemConfig.cshtml" />
+    <Content Include="Views\Management\ActivityLog.cshtml" />
+    <Content Include="Views\Management\UserManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
