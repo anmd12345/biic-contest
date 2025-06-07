@@ -195,6 +195,8 @@
     <Content Include="assets\img\generic\auto.png" />
     <Content Include="assets\img\generic\default-dark.png" />
     <Content Include="assets\img\generic\default-light.png" />
+    <Content Include="assets\img\spot-illustrations\auth-dark.png" />
+    <Content Include="assets\img\spot-illustrations\auth.png" />
     <Content Include="assets\img\system\default_banner.jpg" />
     <Content Include="assets\img\system\default_logo.jpg" />
     <Content Include="assets\img\icons\favicon.jpg" />
@@ -265,6 +267,7 @@
     <Content Include="Views\News\News.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Partial\FaviconPartial.cshtml" />
+    <Content Include="Views\User\Signup.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

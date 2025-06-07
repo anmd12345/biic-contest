@@ -13,5 +13,10 @@ namespace BIIC_Contest.Controllers
         {
             return View();
         }
+
+        public ActionResult Signup()
+        {
+            return View();
+        }
     }
 }
