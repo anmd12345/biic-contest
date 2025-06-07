@@ -11,5 +11,6 @@
 
         //Admin Routes
         public const string CONFIG_WEB_PAGE = "/quan-ly-he-thong/cai-dat-thong-tin";
+        public const string ACTIVITY_LOG_PAGE = "/quan-ly-he-thong/hoat-dong";
     }
 }
