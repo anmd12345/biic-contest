@@ -11,22 +11,20 @@ namespace BIIC_Contest.Repositorys
         private BIICConnectionDbContext db = BIICConnectionDbContext.getInstance;
 
         // Hàm thêm thông tin liên hệ
-        public bool createContactMessage(string fullname, string email, string phone, string message)
+        public void createContactMessage(string fullname, string email, string phone, string message, string ip)
         {
             try
             {
-                contact_message newContactMessage = createNewContactMessage(fullname, email, phone, message);
+                contact_message newContactMessage = createNewContactMessage(fullname, email, phone, message, ip);
                 db.contact_messages.InsertOnSubmit(newContactMessage);
                 db.SubmitChanges();
-                return true;
             }
             catch
             {
-                return false;
             }
         }
 
-        private contact_message createNewContactMessage(string fullname, string email, string phone, string message)
+        private contact_message createNewContactMessage(string fullname, string email, string phone, string message, string ip)
         {
             return new contact_message
             {
@@ -35,7 +33,7 @@ namespace BIIC_Contest.Repositorys
                 phone = phone,
                 message = message,
                 send_at = DateTimeHelper.getFormattedDateNow(),
-                send_ip = IPHelper.getClientIp(),
+                send_ip = ip
             };
         }
     }

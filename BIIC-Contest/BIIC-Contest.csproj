@@ -48,6 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -129,25 +130,41 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\ContactMessageApiController.cs" />
     <Compile Include="Apis\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Configs\GoogleMapConfig.cs" />
+    <Compile Include="Constants\MessageConstant.cs" />
+    <Compile Include="Constants\ResponseCodeConstant.cs" />
     <Compile Include="Constants\ResourceConstant.cs" />
     <Compile Include="Constants\RouteConstant.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Databases\BIICConnectionDbContext.cs" />
+    <Compile Include="Dtos\ContactMessageDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\IPHelper.cs" />
+    <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Helpers\ValidateDataHelper.cs" />
+    <Compile Include="Models\BIICConnectionDb.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BIICConnectionDb.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositorys\UserRepository.cs" />
+    <Compile Include="Repositorys\ContactMessageRepo.cs" />
+    <Compile Include="Repositorys\UserRepo.cs" />
+    <Compile Include="Services\ContactMessageService.cs" />
+    <Compile Include="Services\I\IContactMessageService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
@@ -205,6 +222,9 @@
     <Content Include="assets\js\config.js" />
     <Content Include="assets\js\phoenix.js" />
     <Content Include="Global.asax" />
+    <Content Include="scripts\fetch-api.js" />
+    <Content Include="scripts\get-ip.js" />
+    <Content Include="scripts\show-notification.js" />
     <Content Include="vendors\anchorjs\anchor.min.js" />
     <Content Include="vendors\bigpicture\BigPicture.js" />
     <Content Include="vendors\bootstrap\bootstrap.min.js" />
@@ -227,6 +247,7 @@
     <Content Include="vendors\popper\popper.min.js" />
     <Content Include="vendors\simplebar\simplebar.min.css" />
     <Content Include="vendors\simplebar\simplebar.min.js" />
+    <Content Include="vendors\sweet-alert\sweetalert2%4011.js" />
     <Content Include="vendors\tinymce\icons\default\icons.min.js" />
     <Content Include="vendors\tinymce\models\dom\model.min.js" />
     <Content Include="vendors\tinymce\plugins\image\plugin.min.js" />
@@ -253,9 +274,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Models\BIICConnectionDb.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>BIICConnectionDb.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Models\BIICConnectionDb.dbml.layout">
+      <DependentUpon>BIICConnectionDb.dbml</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Partial\Footer1Partial.cshtml" />
@@ -269,6 +297,9 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Partial\FaviconPartial.cshtml" />
     <Content Include="Views\User\Signup.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

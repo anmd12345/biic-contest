@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -19,6 +20,8 @@ namespace BIIC_Contest
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            ConfigureApiResponsesToJson();
         }
 
         //Chặn request chứa script nguy hiểm
@@ -33,5 +36,19 @@ namespace BIIC_Contest
                 Response.End();
             }
         }
+
+        private void ConfigureApiResponsesToJson()
+        {
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings =
+                new JsonSerializerSettings
+                {
+                    Formatting = Formatting.Indented,
+                    TypeNameHandling = TypeNameHandling.All,
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    PreserveReferencesHandling = PreserveReferencesHandling.None
+                };
+            GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+        }
+
     }
 }
