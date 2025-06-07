@@ -9,6 +9,12 @@ namespace BIIC_Contest.Controllers
     public class NewsController : Controller
     {
         // GET: News
+
+        public ActionResult News()
+        {
+            return View();
+        }
+
         public ActionResult Contest()
         {
             return View();
