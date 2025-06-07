@@ -1,4 +1,4 @@
-﻿
+﻿@using BIIC_Contest.Constants
 @{
     Layout = null;
 }
@@ -71,8 +71,8 @@
                                 <div class="col mx-auto">
                                     <div class="auth-form-box">
                                         <div class="text-center mb-7">
-                                            <a class="d-flex flex-center text-decoration-none mb-4" href="../../../index.html">
-                                                <div class="d-flex align-items-center fw-bolder fs-3 d-inline-block"><img src="~/assets/img/system/default_logo.jpg" alt="phoenix" width="58" /></div>
+                                            <a class="d-flex flex-center text-decoration-none mb-4" href="@RouteConstant.HOME_PAGE">
+                                                <div class="d-flex align-items-center fw-bolder fs-3 d-inline-block"><img src="@ResourceConstant.DEFAULT_LOGO_URL" alt="BIIC Logo" width="58" /></div>
                                             </a>
                                             <h3 class="text-body-highlight">Sign In</h3>
                                             <p class="text-body-tertiary">Get access to your account</p>
@@ -93,9 +93,14 @@
                                             <div class="col-auto">
                                                 <div class="form-check mb-0"><input class="form-check-input" id="basic-checkbox" type="checkbox" checked="checked" /><label class="form-check-label mb-0" for="basic-checkbox">Remember me</label></div>
                                             </div>
-                                            <div class="col-auto"><a class="fs-9 fw-semibold" href="../../../pages/authentication/card/forgot-password.html">Forgot Password?</a></div>
-                                        </div><button class="btn btn-primary w-100 mb-3">Sign In</button>
-                                        <div class="text-center"><a class="fs-9 fw-bold" href="../../../pages/authentication/card/sign-up.html">Create an account</a></div>
+                                            <div class="col-auto">
+                                                <a class="fs-9 fw-semibold" href="@RouteConstant.FORGOT_PASSWORD_PAGE">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary w-100 mb-3">Sign In</button>
+                                        <div class="text-center">
+                                            <a class="fs-9 fw-bold" href="@RouteConstant.SIGNUP_PAGE">Create an account</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
