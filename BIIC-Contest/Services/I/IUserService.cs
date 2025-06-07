@@ -1,7 +1,10 @@
-﻿namespace BIIC_Contest.Services.I
+﻿using BIIC_Contest.Dtos;
+
+namespace BIIC_Contest.Services.I
 {
     internal interface IUserService
     {
         // Define methods for user management
+        UserDto login(string username, string password);
     }
 }
