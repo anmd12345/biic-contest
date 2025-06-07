@@ -1,9 +1,6 @@
 ﻿using BIIC_Contest.Repositorys;
 using BIIC_Contest.Services.I;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace BIIC_Contest.Services
 {
