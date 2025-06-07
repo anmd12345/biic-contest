@@ -141,6 +141,7 @@
     <Compile Include="Constants\ResponseCodeConstant.cs" />
     <Compile Include="Constants\ResourceConstant.cs" />
     <Compile Include="Constants\RouteConstant.cs" />
+    <Compile Include="Controllers\Admin\ManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
@@ -214,6 +215,7 @@
     <Content Include="assets\img\generic\auto.png" />
     <Content Include="assets\img\generic\default-dark.png" />
     <Content Include="assets\img\generic\default-light.png" />
+    <Content Include="assets\img\icons\image-icon.png" />
     <Content Include="assets\img\spot-illustrations\auth-dark.png" />
     <Content Include="assets\img\spot-illustrations\auth.png" />
     <Content Include="assets\img\system\default_banner.jpg" />
@@ -232,7 +234,11 @@
     <Content Include="vendors\choices\choices.min.js" />
     <Content Include="vendors\countup\countUp.umd.js" />
     <Content Include="vendors\dayjs\dayjs.min.js" />
+    <Content Include="vendors\dropzone\dropzone-min.js" />
+    <Content Include="vendors\dropzone\dropzone.css" />
     <Content Include="vendors\feather-icons\feather.min.js" />
+    <Content Include="vendors\flatpickr\flatpickr.min.css" />
+    <Content Include="vendors\flatpickr\flatpickr.min.js" />
     <Content Include="vendors\fontawesome\all.min.js" />
     <Content Include="vendors\glightbox\glightbox.min.css" />
     <Content Include="vendors\glightbox\glightbox.min.js" />
@@ -297,6 +303,7 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Partial\FaviconPartial.cshtml" />
     <Content Include="Views\User\Signup.cshtml" />
+    <Content Include="Views\Management\SystemConfig.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

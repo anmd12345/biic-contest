@@ -7,5 +7,9 @@
         public const string LOGIN_PAGE = "/User/Login";
         public const string SIGNUP_PAGE = "/User/Signup";
         public const string FORGOT_PASSWORD_PAGE = "/User/ForgotPassword";
+
+
+        //Admin Routes
+        public const string CONFIG_WEB_PAGE = "/quan-ly-he-thong/cai-dat-thong-tin";
     }
 }
