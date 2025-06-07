@@ -4,7 +4,7 @@ namespace BIIC_Contest.Helpers
 {
     public class IPHelper
     {
-        public static string GetClientIp()
+        public static string getClientIp()
         {
             var context = HttpContext.Current;
             if (context == null) return null;

@@ -1,6 +1,6 @@
 ﻿@using BIIC_Contest.Configs
 @{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Liên hệ";
     var googleMapApiKey = "https://maps.googleapis.com/maps/api/js?key=" + GoogleMapConfig.GOOGLE_MAP_API_KEY + "&callback=initMap";
 }
 
@@ -33,11 +33,17 @@
                 <h3 class="mb-3">Liên hệ, góp ý tại đây</h3>
                 <p class="mb-7">Nếu bạn có bất kỳ thắc mắc hoặc góp ý nào, chúng tôi luôn sẵn lòng lắng nghe, hãy trao đổi và liên hệ với chúng tôi bất cứ lúc nào.</p>
                 <div class="row g-4">
-                    <div class="col-12"><input class="form-control bg-body-emphasis" type="text" name="name" placeholder="Họ và tên" required="required" /></div>
-                    <div class="col-12"><input class="form-control bg-body-emphasis" type="email" name="email" placeholder="Email" required="required" /></div>
-                    <div class="col-12"><textarea class="form-control bg-body-emphasis" rows="6" name="message" placeholder="Nội dung tin nhắn" required="required"></textarea></div>
-                    <div class="col-12 d-grid"><button class="btn btn-outline-primary" type="button">Gửi</button></div>
-                    <div class="feedback"></div>
+                    <div class="col-12"><input class="form-control bg-body-emphasis" id="fullname" type="text" name="name" placeholder="Họ và tên" required="required" /></div>
+                    <div class="col-12"><input class="form-control bg-body-emphasis" id="phone" type="text" name="phone" placeholder="Số điện thoại" required="required" /></div>
+                    <div class="col-12"><input class="form-control bg-body-emphasis" id="email" type="email" name="email" placeholder="Email" required="required" /></div>
+                    <div class="col-12"><textarea class="form-control bg-body-emphasis" id="message" rows="6" name="message" placeholder="Nội dung tin nhắn" required="required"></textarea></div>
+                    <div class="col-12 d-grid">
+                        <button class="btn btn-primary" onclick="sendContactMessage(this)" type="button">Gửi</button>
+                        <button class="btn btn-primary" type="button" hidden id="btn-loading">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Đang gửi...
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,7 +76,7 @@
 </section>
 
 @section scripts{
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    @*google map*@
     <script>
         function initMap() {
             const location = { lat: 10.9863221, lng: 106.6761426 };
@@ -85,7 +91,45 @@
             });
         }
     </script>
-
     <script async defer src="@googleMapApiKey"></script>
+    <script src="~/scripts/fetch-api.js"></script>
+    <script src="~/scripts/get-ip.js"></script>
+    <script src="~/scripts/show-notification.js"></script>
+    <script src="~/vendors/sweet-alert/sweetalert2@11.js"></script>
+    <script>
+        const btnLoading = document.getElementById("btn-loading");
+
+        async function sendContactMessage(button) {
+            btnLoading.hidden = false;
+            button.hidden = true;
+
+            const fullname = document.querySelector('#fullname').value;
+            const phone = document.querySelector('#phone').value;
+            const email = document.querySelector('#email').value;
+            const message = document.querySelector('#message').value;
+            const ip = await getIP();
+            const url = "/apis/v1/contact-message/save-contact-message"
+            const postData = {
+                fullname: fullname,
+                email: email,
+                phone: phone,
+                message: message,
+                ip: ip
+            }
+
+            const data = await postApi(url, postData);
+
+            if (data.success) {
+                showSuccessNotification(data.message)
+            }
+
+            if (!data.success) {
+                showErrorNotification(data.message);
+            }
+
+            btnLoading.hidden = true;
+            button.hidden = false;
+        }
+    </script>
 }
 

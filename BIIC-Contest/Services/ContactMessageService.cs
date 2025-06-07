@@ -1,9 +1,6 @@
-﻿using BIIC_Contest.Repositorys;
+﻿using BIIC_Contest.Helpers;
+using BIIC_Contest.Repositorys;
 using BIIC_Contest.Services.I;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace BIIC_Contest.Services
 {
@@ -12,9 +9,24 @@ namespace BIIC_Contest.Services
         // Lớp này sẽ sử lý logic và thực hiện các thao tác liên quan đến thông tin liên hệ
         private ContactMessageRepo repo = new ContactMessageRepo();
 
-        public void createContactMessage(string fullname, string email, string phone, string message)
+        public short createContactMessage(string fullname, string email, string phone, string message, string ip)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (ValidateDataHelper.isNullOrEmpty(fullname)) return 1;
+                if (ValidateDataHelper.isNullOrEmpty(phone)) return 2;
+                if (!ValidateDataHelper.isValidPhoneNumber(phone)) return 3;
+                //if (!ValidateDataHelper.isNullOrEmpty(email)) return 4;
+                if (!ValidateDataHelper.isValidEmail(email)) return 5;
+                if (ValidateDataHelper.isNullOrEmpty(message)) return 6;
+
+                repo.createContactMessage(fullname, email, phone, message, ip);
+                return 0;
+            }
+            catch
+            {
+                return 7;
+            }
         }
     }
 }
