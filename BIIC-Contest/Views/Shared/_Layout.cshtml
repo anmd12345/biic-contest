@@ -23,7 +23,8 @@
     <script src="~/assets/js/config.js"></script>
 
     <!-- css -->
-    <link href="/vendors/mapbox-gl/mapbox-gl.css" rel="stylesheet">
+    @RenderSection("styles", required:false)
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
@@ -55,7 +56,7 @@
     </script>
 </head>
 
-<body style="--phoenix-scroll-margin-top: 1.2rem;">
+<body style="--phoenix-scroll-margin-top: 1.2rem; overflow-x: hidden">
     <main class="main" id="top">
 
         <!-- Navbar -->
@@ -91,16 +92,11 @@
     <script src="~/vendors/list.js/list.min.js"></script>
     <script src="~/vendors/feather-icons/feather.min.js"></script>
     <script src="~/vendors/dayjs/dayjs.min.js"></script>
-    <script src="~/vendors/mapbox-gl/mapbox-gl.js"></script>
     <script src="~/assets/js/phoenix.js"></script>
-    <script src="~/vendors/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="~/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
-    <script src="~/vendors/isotope-packery/packery-mode.pkgd.min.js"></script>
-    <script src="~/vendors/bigpicture/BigPicture.js"></script>
-    <script src="~/vendors/countup/countUp.umd.js"></script>
+   
 
     <!-- js -->
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>
