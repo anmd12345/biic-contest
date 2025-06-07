@@ -135,6 +135,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Constants\RouteConstant.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -244,6 +245,7 @@
     <Content Include="Views\Partial\SettingCanvasPartial.cshtml" />
     <Content Include="Views\Partial\SearchModalPartial.cshtml" />
     <Content Include="Views\Partial\NavbarPartial.cshtml" />
+    <Content Include="Views\News\Contest.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
