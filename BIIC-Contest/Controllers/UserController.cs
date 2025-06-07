@@ -9,7 +9,7 @@ namespace BIIC_Contest.Controllers
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Index()
+        public ActionResult Login()
         {
             return View();
         }
