@@ -38,5 +38,10 @@ namespace BIIC_Contest.Controllers
         {
             return PartialView();
         }
+
+        public ActionResult FaviconPartial()
+        {
+            return PartialView();
+        }
     }
 }

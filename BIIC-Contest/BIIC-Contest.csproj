@@ -134,15 +134,21 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Constants\ResourceConstant.cs" />
     <Compile Include="Constants\RouteConstant.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorys\UserRepository.cs" />
+    <Compile Include="Services\I\IUserService.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\theme-rtl.min.css" />
@@ -190,6 +196,8 @@
     <Content Include="assets\img\generic\auto.png" />
     <Content Include="assets\img\generic\default-dark.png" />
     <Content Include="assets\img\generic\default-light.png" />
+    <Content Include="assets\img\spot-illustrations\auth-dark.png" />
+    <Content Include="assets\img\spot-illustrations\auth.png" />
     <Content Include="assets\img\system\default_banner.jpg" />
     <Content Include="assets\img\system\default_logo.jpg" />
     <Content Include="assets\img\icons\favicon.jpg" />
@@ -246,7 +254,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\UserApi\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -259,6 +266,9 @@
     <Content Include="Views\Partial\NavbarPartial.cshtml" />
     <Content Include="Views\News\Contest.cshtml" />
     <Content Include="Views\News\News.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Partial\FaviconPartial.cshtml" />
+    <Content Include="Views\User\Signup.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

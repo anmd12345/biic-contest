@@ -13,17 +13,13 @@
 
     <title>BIIC - @ViewBag.Title</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/img/icons/favicon.jpg">
-    <link rel="icon" type="image/jpeg" sizes="32x32" href="~/assets/img/icons/favicon.jpg">
-    <link rel="icon" type="image/jpeg" sizes="16x16" href="~/assets/img/icons/favicon.jpg">
-    <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/icons/favicon.jpg">
-    <meta name="msapplication-TileImage" content="~/assets/img/icons/favicon.jpg">
+    @Html.Action("FaviconPartial", "Partial")
     <meta name="theme-color" content="#ffffff">
     <script src="~/vendors/simplebar/simplebar.min.js"></script>
     <script src="~/assets/js/config.js"></script>
 
     <!-- css -->
-    @RenderSection("styles", required:false)
+    @RenderSection("styles", required: false)
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -63,7 +59,7 @@
         @Html.Action("NavbarPartial", "Partial")
 
         <!-- Search Modal
-                Modal here -->
+            Modal here -->
         <!-- Content -->
         @RenderBody()
 
