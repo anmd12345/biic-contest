@@ -1,14 +1,18 @@
-﻿@{
+﻿@using BIIC_Contest.Configs
+@{
     ViewBag.Title = "Contact";
+    var googleMapApiKey = "https://maps.googleapis.com/maps/api/js?key=" + GoogleMapConfig.GOOGLE_MAP_API_KEY + "&callback=initMap";
 }
 
+@section styles{
+}
 
 <section class="bg-body-emphasis">
     <div class="container-small px-lg-7 px-xxl-3">
         <div class="row g-5 g-lg-5 mb-3">
             <div class="col-md-6 mb-5 mb-md-0 text-center text-md-start">
-                <h3 class="mb-3">Stay connected</h3>
-                <p class="mb-5">Stay connected with BIIC's Help Center; BIIC is available for your necessities at all times.</p>
+                <h3 class="mb-3">Hãy nối với chúng tôi ngay!</h3>
+                <p class="mb-5">Hãy liên hệ với chúng tôi thông qua các phương thức liên lạc dưới đây. Chúng tôi sẽ hỗ trợ mọi thắc mắc của bạn mọi lúc mọi nơi.</p>
                 <div class="d-flex flex-column align-items-center align-items-md-start gap-3 gap-md-0">
                     <div class="d-md-flex align-items-center">
                         <div class="icon-wrapper shadow-info"><span class="uil uil-phone text-primary fs-4 z-1 ms-2" data-bs-theme="light"></span></div>
@@ -26,35 +30,35 @@
                 </div>
             </div>
             <div class="col-md-6 text-center text-md-start">
-                <h3 class="mb-3">Drop us a line</h3>
-                <p class="mb-7">If you have any query or suggestion , we are open to learn from you, Lets talk, reach us anytime.</p>
-                <form class="row g-4">
-                    <div class="col-12"><input class="form-control bg-body-emphasis" type="text" name="name" placeholder="Name" required="required" /></div>
+                <h3 class="mb-3">Liên hệ, góp ý tại đây</h3>
+                <p class="mb-7">Nếu bạn có bất kỳ thắc mắc hoặc góp ý nào, chúng tôi luôn sẵn lòng lắng nghe, hãy trao đổi và liên hệ với chúng tôi bất cứ lúc nào.</p>
+                <div class="row g-4">
+                    <div class="col-12"><input class="form-control bg-body-emphasis" type="text" name="name" placeholder="Họ và tên" required="required" /></div>
                     <div class="col-12"><input class="form-control bg-body-emphasis" type="email" name="email" placeholder="Email" required="required" /></div>
-                    <div class="col-12"><textarea class="form-control bg-body-emphasis" rows="6" name="message" placeholder="Message" required="required"></textarea></div>
-                    <div class="col-12 d-grid"><button class="btn btn-outline-primary" type="submit">Submit</button></div>
+                    <div class="col-12"><textarea class="form-control bg-body-emphasis" rows="6" name="message" placeholder="Nội dung tin nhắn" required="required"></textarea></div>
+                    <div class="col-12 d-grid"><button class="btn btn-outline-primary" type="button">Gửi</button></div>
                     <div class="feedback"></div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
-<section class="bg-body-emphasis pb-0">
+<section class="bg-body-emphasis">
     <div class="container-small px-lg-7 px-xxl-3">
         <div class="row justify-content-center">
             <div class="col-12 text-center">
                 <div class="card py-md-9 px-md-13 border-0 z-1 shadow-lg cta-card">
-                    <div class="bg-holder" style="background-image:url(../../assets/img/bg/bg-18.png);background-position:right;background-size:auto;"></div>
+                    <div class="bg-holder" style="background-image:url(/assets/img/bg/bg-18.png);background-position:right;background-size:auto;"></div>
                     <div class="card-body position-relative p-0">
-                        <div class="mb-3 text-center text-sm-start">
-                            <h2 class="text-primary fw-bolder mb-3 text-center">Address</h2>
-                            <h4>If you need to find us:</h4>
+                        <div class="mb-3">
+                            <h2 class="text-primary fw-bolder mb-3 text-center pt-3">Địa chỉ</h2>
+                            <h4 class="text-start px-3">Nếu bạn cần tìm chúng tôi:</h4>
                         </div>
-                        <p class="column-md-1">Do not lose your potential customers to others. Tell them exactly where you are with Geolocation enabled Phoenix admin dashboard, No need to take the burden of communicating directly. You can easily tell your customers where to find you with precise location map. Getting closer was never easier!</p>
+                        <p class="column-md-1 mw-100 text-start px-3">Vị trí của chúng tôi đã được hiện thị bên dưới. Bằng cách sử dụng bản đồ minh họa trực quan bên dưới, quý khách có thể dễ dàng đến văn phòng để được hỗ trợ và tư vấn trực tiếp.</p>
                         <div class="row">
-                            <div class="col-12 p-0">
+                            <div class="w-75 p-0 mx-auto">
                                 <div class="mapbox-container rounded-3 border overflow-hidden mt-3 mb-6">
-                                    <div id="mapbox" data-mapbox='{"attributionControl":false,"center":[-74.0020158,40.7228022],"zoom":14,"scrollZoom":false}' style="height: 381px"></div>
+                                    <div id="map" style="height: 381px"></div>
                                 </div>
                             </div>
                         </div>
@@ -67,5 +71,21 @@
 
 @section scripts{
     <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script>
+        function initMap() {
+            const location = { lat: 10.9863221, lng: 106.6761426 };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 100,
+                center: location,
+            });
+
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map,
+            });
+        }
+    </script>
+
+    <script async defer src="@googleMapApiKey"></script>
 }
 
