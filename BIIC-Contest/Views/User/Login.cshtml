@@ -59,14 +59,17 @@
                                     <div class="bg-holder" style="background-image:url(/assets/img/bg/38.png);"></div>
                                     <div class="position-relative px-4 px-lg-7 pt-7 pb-7 pb-sm-5 text-center text-md-start pb-lg-7 pb-md-7">
                                         <h3 class="mb-3 text-body-emphasis fs-7">BIIC Authentication</h3>
-                                        <p class="text-body-tertiary">Give yourself some hassle-free development process with the uniqueness of Phoenix!</p>
+                                        <p class="text-body-tertiary">Give yourself some hassle-free development process with the uniqueness of BIIC!</p>
                                         <ul class="list-unstyled mb-0 w-max-content w-md-auto">
                                             <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-body-tertiary fw-semibold">Fast</span></li>
                                             <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-body-tertiary fw-semibold">Simple</span></li>
-                                            <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-body-tertiary fw-semibold">Responsive</span></li>
+                                            <li class="d-flex align-items-center"><span class="uil uil-check-circle text-success me-2"></span><span class="text-body-tertiary fw-semibold">Convenient</span></li>
                                         </ul>
                                     </div>
-                                    <div class="position-relative z-n1 mb-6 d-none d-md-block text-center mt-md-15"><img class="auth-title-box-img d-dark-none" src="~/assets/img/spot-illustrations/auth.png" alt="" /><img class="auth-title-box-img d-light-none" src="~/assets/img/spot-illustrations/auth-dark.png" alt="" /></div>
+                                    <div class="position-relative z-n1 mb-6 d-none d-md-block text-center mt-md-15">
+                                        <img style="border-top-left-radius: 20%; border-bottom-right-radius: 20%" class="auth-title-box-img d-dark-none" src="@ResourceConstant.DEFAULT_BANNER_URL" alt="" />
+                                        <img style="border-top-left-radius: 20%; border-bottom-right-radius: 20%" class="auth-title-box-img d-light-none" src="@ResourceConstant.DEFAULT_BANNER_URL" alt="" />
+                                    </div>
                                 </div>
                                 <div class="col mx-auto">
                                     <div class="auth-form-box">
@@ -74,32 +77,48 @@
                                             <a class="d-flex flex-center text-decoration-none mb-4" href="@RouteConstant.HOME_PAGE">
                                                 <div class="d-flex align-items-center fw-bolder fs-3 d-inline-block"><img src="@ResourceConstant.DEFAULT_LOGO_URL" alt="BIIC Logo" width="58" /></div>
                                             </a>
-                                            <h3 class="text-body-highlight">Sign In</h3>
-                                            <p class="text-body-tertiary">Get access to your account</p>
-                                        </div><button class="btn btn-phoenix-secondary w-100 mb-3"><span class="fab fa-google text-danger me-2 fs-9"></span>Sign in with google</button><button class="btn btn-phoenix-secondary w-100"><span class="fab fa-facebook text-primary me-2 fs-9"></span>Sign in with facebook</button>
+                                            <h3 class="text-body-highlight">Đăng Nhập</h3>
+                                            <p class="text-body-tertiary">Truy cập tài khoản của bạn tại đây</p>
+                                        </div>
+                                        <button class="btn btn-phoenix-secondary w-100 mb-3">
+                                            <span class="fab fa-google text-danger me-2 fs-9"></span>
+                                            Đăng nhập với Google
+                                        </button>
+                                        <button class="btn btn-phoenix-secondary w-100">
+                                            <span class="fab fa-facebook text-primary me-2 fs-9"></span>
+                                            Đăng nhập với Facebook
+                                        </button>
                                         <div class="position-relative">
                                             <hr class="bg-body-secondary mt-5 mb-4" />
-                                            <div class="divider-content-center bg-body-emphasis">or use email</div>
+                                            <div class="divider-content-center bg-body-emphasis">hoặc sử dụng email</div>
                                         </div>
                                         <div class="mb-3 text-start">
-                                            <label class="form-label" for="email">Email address</label>
+                                            <label class="form-label" for="email">Địa chỉ Email</label>
                                             <div class="form-icon-container"><input class="form-control form-icon-input" id="email" type="email" placeholder="name@example.com" /><span class="fas fa-user text-body fs-9 form-icon"></span></div>
                                         </div>
                                         <div class="mb-3 text-start">
-                                            <label class="form-label" for="password">Password</label>
-                                            <div class="form-icon-container" data-password="data-password"><input class="form-control form-icon-input pe-6" id="password" type="password" placeholder="Password" data-password-input="data-password-input" /><span class="fas fa-key text-body fs-9 form-icon"></span><button class="btn px-3 py-0 h-100 position-absolute top-0 end-0 fs-7 text-body-tertiary" data-password-toggle="data-password-toggle"><span class="uil uil-eye show"></span><span class="uil uil-eye-slash hide"></span></button></div>
+                                            <label class="form-label" for="password">Mật khẩu</label>
+                                            <div class="form-icon-container" data-password="data-password">
+                                                <input class="form-control form-icon-input pe-6" id="password" type="password" placeholder="Mật khẩu" data-password-input="data-password-input" /><span class="fas fa-key text-body fs-9 form-icon"></span><button class="btn px-3 py-0 h-100 position-absolute top-0 end-0 fs-7 text-body-tertiary" data-password-toggle="data-password-toggle"><span class="uil uil-eye show"></span><span class="uil uil-eye-slash hide"></span></button>
+                                            </div>
                                         </div>
                                         <div class="row flex-between-center mb-7">
                                             <div class="col-auto">
-                                                <div class="form-check mb-0"><input class="form-check-input" id="basic-checkbox" type="checkbox" checked="checked" /><label class="form-check-label mb-0" for="basic-checkbox">Remember me</label></div>
+                                                <div class="form-check mb-0">
+                                                    <input class="form-check-input" id="basic-checkbox" type="checkbox" checked="checked" />
+                                                    <label class="form-check-label mb-0" for="basic-checkbox">Lưu mật khẩu</label>
+                                                </div>
                                             </div>
                                             <div class="col-auto">
-                                                <a class="fs-9 fw-semibold" href="@RouteConstant.FORGOT_PASSWORD_PAGE">Forgot Password?</a>
+                                                <a class="fs-9 fw-semibold" href="@RouteConstant.FORGOT_PASSWORD_PAGE">Quên mật khẩu?</a>
                                             </div>
                                         </div>
-                                        <button class="btn btn-primary w-100 mb-3">Sign In</button>
+                                        <button class="btn btn-primary w-100 mb-3">Đăng Nhập</button>
                                         <div class="text-center">
-                                            <a class="fs-9 fw-bold" href="@RouteConstant.SIGNUP_PAGE">Create an account</a>
+                                            <a class="fs-9 fw-bold" href="@RouteConstant.SIGNUP_PAGE">Tạo tài khoản</a>
+                                        </div>
+                                        <div class="text-center">
+                                            <a class="fs-9 fw-bold" href="@RouteConstant.HOME_PAGE">Trang chủ</a>
                                         </div>
                                     </div>
                                 </div>
