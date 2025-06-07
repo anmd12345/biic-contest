@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BIIC_Contest.Repositorys
 {
-    public class UserRepository
+    public class UserRepo
     {
         //Code here
     }
