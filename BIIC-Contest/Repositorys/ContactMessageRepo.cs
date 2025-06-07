@@ -7,5 +7,7 @@ namespace BIIC_Contest.Repositorys
         private BIICConnectionDbContext db = BIICConnectionDbContext.getInstance;
 
 
+        // Method to add a contact message
+
     }
 }

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace BIIC_Contest.Databases
 {
-    public class BIICConnectionDbContext : BIICConnectionDbDataContext
+    public sealed class BIICConnectionDbContext : BIICConnectionDbDataContext
     {
         private static BIICConnectionDbContext instance;
         private static readonly object lockProcess = new object();
