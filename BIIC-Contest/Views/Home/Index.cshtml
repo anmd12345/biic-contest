@@ -248,29 +248,84 @@
     </div>
 </section>
 
+<div class="modal fade" id="top-event-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="top-event-modal" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-body-highlight p-0">
+            <div class="modal-body p-0 w-100 position-relative">
+                <button class="btn btn-sm position-absolute z-3" style="right: 0; top: 0;" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="fas fa-times text-danger"></span>
+                </button>
 
+                <div id="event-carousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="hoverbox rounded w-100">
+                                <img class="img-fluid w-100 rounded" src="~/assets/img/event/banner_event_1.jpg" alt="Banner 1" />
+                                <div class="backdrop-faded">
+                                    <div class="d-sm-flex d-md-block d-lg-flex flex-between-center">
+                                        <div class="d-flex gap-3 justify-content-end w-100">
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-clock fs-9 me-2"></span>2 days
+                                            </h5>
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-user fs-9 me-2"></span>From 1 to people
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-<!-- <section class="bg-body-emphasis pb-0">
-  <div class="container-small px-lg-7 px-xxl-3">
-    <div class="row justify-content-center">
-      <div class="col-12 text-center">
-        <div class="card py-md-9 px-md-13 border-0 z-1 shadow-lg cta-card">
-          <div class="bg-holder" style="background-image:url(/assets/img/bg/bg-18.png);background-position:right;background-size:auto;"></div>
-          <div class="card-body position-relative"><img class="img-fluid mb-5 d-dark-none" src="~/assets/img/spot-illustrations/27.png" width="210" alt="..." /><img class="img-fluid mb-5 d-light-none" src="~/assets/img/spot-illustrations/dark_27.png" width="210" alt="..." />
-            <div class="d-flex align-items-center fw-bold justify-content-center mb-3">
-              <p class="mb-0 text-danger">HỖ TRỢ Ở ĐÂY</p>
+                        <div class="carousel-item">
+                            <div class="hoverbox rounded w-100">
+                                <img class="img-fluid rounded w-100" src="~/assets/img/event/banner_event_1.jpg" alt="Banner 2" />
+                                <div class="backdrop-faded">
+                                    <div class="d-sm-flex d-md-block d-lg-flex flex-between-center">
+                                        <div class="d-flex gap-3 justify-content-end w-100">
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-clock fs-9 me-2"></span>2 days
+                                            </h5>
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-user fs-9 me-2"></span>From 1 to people
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="hoverbox rounded w-100">
+                                <img class="img-fluid rounded w-100" src="~/assets/img/event/banner_event_1.jpg" alt="Banner 3" />
+                                <div class="backdrop-faded">
+                                    <div class="d-sm-flex d-md-block d-lg-flex flex-between-center">
+                                        <div class="d-flex gap-3 justify-content-end w-100">
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-clock fs-9 me-2"></span>2 days
+                                            </h5>
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-user fs-9 me-2"></span>From 1 to people
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#event-carousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#event-carousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
             </div>
-            <h1 class="fs-6 fs-sm-4 fs-lg-2 fw-bolder lh-sm mb-3">Join<span class="gradient-text-primary mx-2">Phoenix</span><span>Today</span></h1>
-            <form class="d-flex justify-content-center mb-3 px-xxl-12">
-              <div class="d-grid d-sm-block"></div><input class="form-control me-3" id="ctaEmail1" type="email" placeholder="Email" aria-describedby="ctaEmail1" /><button class="btn btn-primary" type="submit">Subscribe</button>
-            </form>
-            <p>Best support in the world, Only Phoenix can ensure </p>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-</section> -->
+</div>
+
 
 @section scripts{
     <script src="~/vendors/isotope-layout/isotope.pkgd.min.js"></script>
@@ -278,4 +333,11 @@
     <script src="~/vendors/isotope-packery/packery-mode.pkgd.min.js"></script>
     <script src="~/vendors/bigpicture/BigPicture.js"></script>
     <script src="~/vendors/countup/countUp.umd.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () {
+            const modal = new bootstrap.Modal(document.getElementById('top-event-modal'));
+            modal.show();
+        });
+    </script>
 }
