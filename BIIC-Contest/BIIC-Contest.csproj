@@ -140,7 +140,9 @@
     <Compile Include="Constants\MessageConstant.cs" />
     <Compile Include="Constants\ResponseCodeConstant.cs" />
     <Compile Include="Constants\ResourceConstant.cs" />
+    <Compile Include="Constants\RoleConstant.cs" />
     <Compile Include="Constants\RouteConstant.cs" />
+    <Compile Include="Constants\SessionConstant.cs" />
     <Compile Include="Controllers\Admin\ManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -148,11 +150,13 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Databases\BIICConnectionDbContext.cs" />
     <Compile Include="Dtos\ContactMessageDto.cs" />
+    <Compile Include="Dtos\RoleDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Helpers\IPHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\ValidateDataHelper.cs" />
@@ -163,6 +167,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorys\ContactMessageRepo.cs" />
+    <Compile Include="Repositorys\RoleRepo.cs" />
     <Compile Include="Repositorys\UserRepo.cs" />
     <Compile Include="Services\ContactMessageService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
