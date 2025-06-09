@@ -1,7 +1,7 @@
 ﻿using BIIC_Contest.Services;
 using System.Web.Mvc;
 using BIIC_Contest.Constants;
-using BIIC_Contest.Helpers;
+using BIIC_Contest.Entity;
 
 namespace BIIC_Contest.Apis
 {
@@ -19,12 +19,12 @@ namespace BIIC_Contest.Apis
                 short responseCode = contactMessageService.createContactMessage(fullname, email, phone, message, ip);
 
                 if (responseCode == (short)ResponseCodeConstant.SUCCESS)
-                    return Json(new { success = true, message = MessageConstant.ContactNotifications[responseCode] });
-                return Json(new { success = false, message = MessageConstant.ContactNotifications[responseCode] });
+                    return Json(new BasicResponseEntity(true, MessageConstant.ContactNotifications[responseCode]));
+                return Json(new BasicResponseEntity(false, MessageConstant.ContactNotifications[responseCode]));
             }
             catch
             {
-                return Json(new { success = false, message = MessageConstant.ContactNotifications[(short)ResponseCodeConstant.UNKNOWN_ERROR] });
+                return Json(new BasicResponseEntity(false, MessageConstant.ContactNotifications[(short)ResponseCodeConstant.UNKNOWN_ERROR]));
             }
         }
 
