@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Trang chủ";
 }
 
 <section class="bg-body-emphasis pb-4 mb-4" id="home">
@@ -326,7 +326,6 @@
     </div>
 </div>
 
-
 @section scripts{
     <script src="~/vendors/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="~/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
@@ -335,7 +334,7 @@
     <script src="~/vendors/countup/countUp.umd.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () {
+        document.addEventListener('DOMContentLoaded', () => {
             const modal = new bootstrap.Modal(document.getElementById('top-event-modal'));
             modal.show();
         });

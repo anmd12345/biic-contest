@@ -95,18 +95,26 @@
     <script src="~/scripts/fetch-api.js"></script>
     <script src="~/scripts/get-ip.js"></script>
     <script src="~/scripts/show-notification.js"></script>
-    <script src="~/vendors/sweet-alert/sweetalert2@11.js"></script>
     <script>
         const btnLoading = document.getElementById("btn-loading");
 
         async function sendContactMessage(button) {
             btnLoading.hidden = false;
             button.hidden = true;
+            const fullnameEl = document.querySelector('#fullname');
+            const phoneEl = document.querySelector('#phone');
+            const emailEl = document.querySelector('#email');
+            const messageEl = document.querySelector('#message');
 
-            const fullname = document.querySelector('#fullname').value;
-            const phone = document.querySelector('#phone').value;
-            const email = document.querySelector('#email').value;
-            const message = document.querySelector('#message').value;
+            fullnameEl.disabled = true;
+            phoneEl.disabled = true;
+            emailEl.disabled = true;
+            messageEl.disabled = true;
+
+            const fullname = fullnameEl.value;
+            const phone = phoneEl.value;
+            const email = emailEl.value;
+            const message = messageEl.value;
             const ip = await getIP();
             const url = "/apis/v1/contact-message/save-contact-message"
             const postData = {
@@ -119,12 +127,16 @@
 
             const data = await postApi(url, postData);
 
-            if (data.success) {
-                showSuccessNotification(data.message)
+            if (data.Success) {
+                showSuccessNotification(data.Message)
             }
 
-            if (!data.success) {
-                showErrorNotification(data.message);
+            if (!data.Success) {
+                showErrorNotification(data.Message);
+                fullnameEl.disabled = false;
+                phoneEl.disabled = false;
+                emailEl.disabled = false;
+                messageEl.disabled = false;
             }
 
             btnLoading.hidden = true;

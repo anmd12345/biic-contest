@@ -20,7 +20,9 @@ namespace BIIC_Contest.Services
                 if (!ValidateDataHelper.isValidEmail(email)) return 5;
                 if (ValidateDataHelper.isNullOrEmpty(message)) return 6;
 
-                repo.createContactMessage(fullname, email, phone, message, ip);
+                string sendAt = DateTimeHelper.getFormattedDateNow();
+
+                repo.createContactMessage(fullname, email, phone, message, ip, sendAt);
                 return 0;
             }
             catch

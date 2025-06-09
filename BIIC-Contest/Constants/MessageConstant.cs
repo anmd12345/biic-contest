@@ -13,5 +13,15 @@
             "Vui lòng nhập nội dung tin nhắn của bạn.",
             "Đã có lỗi xảy ra trong quá trình gửi thông tin liên hệ, vui lòng thử lại sau."
         };
+
+        //Tên quyền + mô tả
+        public static string[][] RoleNames = new string[][]
+        {
+            new string[] { "unknown", "Unknown role" },
+            new string[] { "admin", "Quản trị trang" },
+            new string[] { "examiner", "Giám khảo" },
+            new string[] { "employee", "Nhân viên" },
+            new string[] { "user", "Người dùng" },
+        };
     }
 }
