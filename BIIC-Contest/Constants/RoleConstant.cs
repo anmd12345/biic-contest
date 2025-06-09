@@ -1,10 +1,10 @@
 ﻿namespace BIIC_Contest.Constants
 {
-    public class RoleConstant
+    public enum RoleConstant
     {
-        public const string ADMIN = "admin";
-        public const string EMPLOYEE = "employee";
-        public const string EXAMINER = "examiner";
-        public const string USER = "user";
+        ADMIN = 1,
+        EXAMINER = 2,
+        EMPLOYEE = 3,
+        USER = 4
     }
 }
