@@ -1,4 +1,4 @@
-﻿namespace BIIC_Contest.Entity
+﻿namespace BIIC_Contest.Entitys
 {
     public class BasicResponseEntity
     {

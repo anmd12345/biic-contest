@@ -1,7 +1,7 @@
 ﻿using BIIC_Contest.Services;
 using System.Web.Mvc;
 using BIIC_Contest.Constants;
-using BIIC_Contest.Entity;
+using BIIC_Contest.Entitys;
 
 namespace BIIC_Contest.Apis
 {
