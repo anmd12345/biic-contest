@@ -1,5 +1,4 @@
 ﻿using BIIC_Contest.Databases;
-using BIIC_Contest.Helpers;
 using BIIC_Contest.Models;
 
 namespace BIIC_Contest.Repositorys
@@ -11,11 +10,11 @@ namespace BIIC_Contest.Repositorys
         private BIICConnectionDbContext db = BIICConnectionDbContext.getInstance;
 
         // Hàm thêm thông tin liên hệ
-        public void createContactMessage(string fullname, string email, string phone, string message, string ip)
+        public void createContactMessage(string fullname, string email, string phone, string message, string ip, string sendAt)
         {
             try
             {
-                contact_message newContactMessage = createNewContactMessage(fullname, email, phone, message, ip);
+                contact_message newContactMessage = createNewContactMessage(fullname, email, phone, message, ip, sendAt);
                 db.contact_messages.InsertOnSubmit(newContactMessage);
                 db.SubmitChanges();
             }
@@ -24,7 +23,7 @@ namespace BIIC_Contest.Repositorys
             }
         }
 
-        private contact_message createNewContactMessage(string fullname, string email, string phone, string message, string ip)
+        private contact_message createNewContactMessage(string fullname, string email, string phone, string message, string ip, string sendAt)
         {
             return new contact_message
             {
@@ -32,7 +31,7 @@ namespace BIIC_Contest.Repositorys
                 email = email,
                 phone = phone,
                 message = message,
-                send_at = DateTimeHelper.getFormattedDateNow(),
+                send_at = sendAt,
                 send_ip = ip
             };
         }
