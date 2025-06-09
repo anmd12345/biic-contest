@@ -5,20 +5,14 @@ namespace BIIC_Contest.Controllers.Admin
     [RoutePrefix("quan-ly-he-thong")]
     public class ManagementController : Controller
     {
-        [Route("cai-dat-thong-tin")]
+        [Route("")]
         public ActionResult SystemConfig()
         {
             return View();
         }
 
-        [Route("hoat-dong")]
+        [Route("nhat-ky-hoat-dong")]
         public ActionResult ActivityLog()
-        {
-            return View();
-        }
-
-        [Route("quan-ly-nguoi-dung")]
-        public ActionResult UserManagement()
         {
             return View();
         }

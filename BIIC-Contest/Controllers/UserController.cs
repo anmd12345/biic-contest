@@ -9,11 +9,14 @@ namespace BIIC_Contest.Controllers
     public class UserController : Controller
     {
         // GET: User
+
+        [Route("dang-nhap")]
         public ActionResult Login()
         {
             return View();
         }
 
+        [Route("dang-ky")]
         public ActionResult Signup()
         {
             return View();

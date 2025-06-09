@@ -144,6 +144,7 @@
     <Compile Include="Constants\RouteConstant.cs" />
     <Compile Include="Constants\SessionConstant.cs" />
     <Compile Include="Controllers\Admin\ManagementController.cs" />
+    <Compile Include="Controllers\Admin\UserManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
@@ -284,7 +285,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -313,7 +314,7 @@
     <Content Include="Views\User\Signup.cshtml" />
     <Content Include="Views\Management\SystemConfig.cshtml" />
     <Content Include="Views\Management\ActivityLog.cshtml" />
-    <Content Include="Views\Management\UserManagement.cshtml" />
+    <Content Include="Views\UserManagement\ListUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
