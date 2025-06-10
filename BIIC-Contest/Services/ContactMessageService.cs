@@ -1,6 +1,8 @@
 ﻿using BIIC_Contest.Helpers;
+using BIIC_Contest.Models;
 using BIIC_Contest.Repositorys;
 using BIIC_Contest.Services.I;
+using System.Collections.Generic;
 
 namespace BIIC_Contest.Services
 {
@@ -29,6 +31,11 @@ namespace BIIC_Contest.Services
             {
                 return 7;
             }
+        }
+
+        public List<contact_message> findAll()
+        {
+            return repo.findAll();
         }
     }
 }
