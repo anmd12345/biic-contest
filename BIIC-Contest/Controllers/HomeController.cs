@@ -9,6 +9,7 @@ namespace BIIC_Contest.Controllers
 {
     public class HomeController : Controller
     {
+        //Hello
         public ActionResult Index()
         {
             return Redirect(RouteConstant.HOME_PAGE);
