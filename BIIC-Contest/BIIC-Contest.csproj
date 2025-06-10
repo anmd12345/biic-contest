@@ -143,6 +143,7 @@
     <Compile Include="Constants\RoleConstant.cs" />
     <Compile Include="Constants\RouteConstant.cs" />
     <Compile Include="Constants\SessionConstant.cs" />
+    <Compile Include="Controllers\Admin\ContactMessageManagementController.cs" />
     <Compile Include="Controllers\Admin\ManagementController.cs" />
     <Compile Include="Controllers\Admin\UserManagementController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -319,6 +320,8 @@
     <Content Include="Views\UserManagement\ListUser.cshtml" />
     <Content Include="Views\UserManagement\UserInformation.cshtml" />
     <Content Include="Views\Test\TestLogin.cshtml" />
+    <Content Include="Views\ContactMessageManagement\ListContactMessage.cshtml" />
+    <Content Include="Views\ContactMessageManagement\ContactMessageDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
