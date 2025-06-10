@@ -56,3 +56,5 @@ nunit-*.xml
 .vs/
 BIIC-Contest/obj/
 BIIC-Contest/Models/
+BIIC-Contest/Controllers/TestController.cs
+BIIC-Contest/Views/Test
