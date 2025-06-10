@@ -148,12 +148,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Databases\BIICConnectionDbContext.cs" />
     <Compile Include="Dtos\ContactMessageDto.cs" />
     <Compile Include="Dtos\RoleDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
-    <Compile Include="Entity\BasicResponseEntity.cs" />
+    <Compile Include="Entitys\BasicResponseEntity.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -233,6 +234,7 @@
     <Content Include="assets\js\config.js" />
     <Content Include="assets\js\phoenix.js" />
     <Content Include="Global.asax" />
+    <Content Include="scripts\cache-js.js" />
     <Content Include="scripts\fetch-api.js" />
     <Content Include="scripts\get-ip.js" />
     <Content Include="scripts\show-notification.js" />
@@ -316,6 +318,7 @@
     <Content Include="Views\Management\ActivityLog.cshtml" />
     <Content Include="Views\UserManagement\ListUser.cshtml" />
     <Content Include="Views\UserManagement\UserInformation.cshtml" />
+    <Content Include="Views\Test\TestLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
