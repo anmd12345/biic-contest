@@ -1,5 +1,7 @@
 ﻿using BIIC_Contest.Databases;
 using BIIC_Contest.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BIIC_Contest.Repositorys
 {
@@ -21,6 +23,12 @@ namespace BIIC_Contest.Repositorys
             catch
             {
             }
+        }
+
+
+        public List<contact_message> findAll()
+        {
+            return db.contact_messages.ToList();
         }
 
         private contact_message createNewContactMessage(string fullname, string email, string phone, string message, string ip, string sendAt)

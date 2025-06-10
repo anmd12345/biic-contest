@@ -28,5 +28,12 @@ namespace BIIC_Contest.Apis
             }
         }
 
+        [Route("list-contact-message")]
+        [HttpGet]
+        public JsonResult ListContactMessage()
+        {
+            return null;
+        }
+
     }
 }
