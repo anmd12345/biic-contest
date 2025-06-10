@@ -24,3 +24,14 @@ function showSuccessNotification(message) {
         }
     });
 }
+
+function showSuccessNotification(message, callback, timeout) {
+    Swal.fire({
+        icon: 'success',
+        title: 'Thành công',
+        text: message,
+        timer: timeout || 2000,
+        showConfirmButton: false,
+        willClose: callback
+    });
+}
