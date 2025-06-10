@@ -22,19 +22,25 @@ namespace BIIC_Contest.Apis
                 if (response != null)
                 {
                     Session[SessionConstant.CURRENT_USER] = response;
-                    return Json(JsonHelper.ConfiguratingJson(response));
+                    var message = new BasicResponseEntity(
+                        true,
+                        "Đăng nhập thành công!",
+                        response
+                    );
+
+                    return Json(message);
                 }
-                return Json(JsonHelper.ConfiguratingJson(new BasicResponseEntity(
+                return Json(new BasicResponseEntity(
                     false,
                     "Thông tin đăng nhập không chính xác!"
-                )));
+                ));
             }
             catch (Exception ex)
             {
-                return Json(JsonHelper.ConfiguratingJson(new BasicResponseEntity(
+                return Json(new BasicResponseEntity(
                     false,
                     "Lỗi hệ thống! Không thể đăng nhập bây giờ (" + ex.Message + ")."
-                )));
+                ));
             }
         }
     }

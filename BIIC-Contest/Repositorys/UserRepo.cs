@@ -30,7 +30,7 @@ namespace BIIC_Contest.Repositorys
 
         public user findByEmailAndPassword(string phone, string password)
         {
-            return db.users.FirstOrDefault(u => u.phone.Equals(phone) && u.password.Equals(password));
+            return db.users.FirstOrDefault(u => u.email.Equals(phone) && u.password.Equals(password));
         }
     }
 }
