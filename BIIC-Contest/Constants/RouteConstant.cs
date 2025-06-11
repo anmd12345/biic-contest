@@ -9,6 +9,7 @@
         //Classic Routes
         public const string HOME_PAGE = "/trang-chu";
         public const string CONTACT_PAGE = "/lien-he";
+        public const string NEWS_PAGE = "/tin-tuc";
         public const string LOGIN_PAGE = "/dang-nhap";
         public const string SIGNUP_PAGE = "/dang-ky";
         public const string FORGOT_PASSWORD_PAGE = "/quen-mat-khau";
