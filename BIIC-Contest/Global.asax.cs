@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BIIC_Contest.Constants;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,23 @@ namespace BIIC_Contest
                 };
             GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
         }
+
+        protected void Application_Error()
+        {
+            var exception = Server.GetLastError() as HttpException;
+
+            if (exception != null && exception.GetHttpCode() == 404)
+            {
+                string currentUrl = Request.Url.AbsolutePath;
+                Response.Redirect(RouteConstant._404);
+
+            }
+            else if (exception != null && exception.GetHttpCode() == 500)
+            {
+                //Response.Redirect(RouteConstant.SERVER_INTERNAL);
+            }
+        }
+
 
     }
 }
