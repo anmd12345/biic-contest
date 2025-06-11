@@ -146,6 +146,7 @@
     <Compile Include="Controllers\Admin\ContactMessageManagementController.cs" />
     <Compile Include="Controllers\Admin\ManagementController.cs" />
     <Compile Include="Controllers\Admin\UserManagementController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\css\404-500.css" />
     <Content Include="assets\css\theme-rtl.min.css" />
     <Content Include="assets\css\theme.min.css" />
     <Content Include="assets\css\user-rtl.min.css" />
@@ -219,13 +221,24 @@
     <Content Include="assets\img\blog\blog-5.png" />
     <Content Include="assets\img\brand2\b.png" />
     <Content Include="assets\img\event\banner_event_1.jpg" />
+    <Content Include="assets\img\event\doi_tuong_1.jpg" />
+    <Content Include="assets\img\event\giai_thuong_1.jpg" />
+    <Content Include="assets\img\event\lich_trinh_1.jpg" />
     <Content Include="assets\img\gallery\19.png" />
     <Content Include="assets\img\gallery\20.png" />
     <Content Include="assets\img\gallery\21.png" />
     <Content Include="assets\img\generic\auto.png" />
     <Content Include="assets\img\generic\default-dark.png" />
     <Content Include="assets\img\generic\default-light.png" />
+    <Content Include="assets\img\icons\404.png" />
+    <Content Include="assets\img\icons\500.png" />
+    <Content Include="assets\img\icons\alien-500.png" />
+    <Content Include="assets\img\icons\alien.png" />
+    <Content Include="assets\img\icons\estela.png" />
     <Content Include="assets\img\icons\image-icon.png" />
+    <Content Include="assets\img\icons\satellite-500.png" />
+    <Content Include="assets\img\icons\ufo-500.png" />
+    <Content Include="assets\img\icons\ufo.png" />
     <Content Include="assets\img\spot-illustrations\auth-dark.png" />
     <Content Include="assets\img\spot-illustrations\auth.png" />
     <Content Include="assets\img\system\default_banner.jpg" />
@@ -288,7 +301,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Home.cshtml" />
+    <Content Include="Views\News\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -310,8 +323,7 @@
     <Content Include="Views\Partial\SettingCanvasPartial.cshtml" />
     <Content Include="Views\Partial\SearchModalPartial.cshtml" />
     <Content Include="Views\Partial\NavbarPartial.cshtml" />
-    <Content Include="Views\News\Contest.cshtml" />
-    <Content Include="Views\News\News.cshtml" />
+    <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Partial\FaviconPartial.cshtml" />
     <Content Include="Views\User\Signup.cshtml" />
@@ -322,6 +334,8 @@
     <Content Include="Views\Test\TestLogin.cshtml" />
     <Content Include="Views\ContactMessageManagement\ListContactMessage.cshtml" />
     <Content Include="Views\ContactMessageManagement\ContactMessageDetail.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\ServerInternal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

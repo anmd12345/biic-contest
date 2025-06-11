@@ -54,13 +54,14 @@
 </head>
 
 <body style="--phoenix-scroll-margin-top: 1.2rem; overflow-x: hidden">
-    <main class="main" id="top">
+    <main class="main" id="top" style=" overflow-x: hidden">
 
         <!-- Navbar -->
         @Html.Action("NavbarPartial", "Partial")
 
-        <!-- Search Modal
-            Modal here -->
+        <!-- Search Modal -->
+        @Html.Action("SearchModalPartial", "Partial")
+
         <!-- Content -->
         @RenderBody()
 
@@ -92,7 +93,6 @@
     <script src="~/vendors/mapbox-gl/mapbox-gl.js"></script>
     <script src="~/assets/js/phoenix.js"></script>
     <script src="~/vendors/sweet-alert/sweetalert2@11.js"></script>
-
 
     <!-- js -->
     @RenderSection("scripts", required: false)

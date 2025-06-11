@@ -1,131 +1,402 @@
-﻿
-@{
-    ViewBag.Title = "News";
+﻿@{
+    ViewBag.Title = "Trang chủ";
 }
 
+@*<section class="bg-body-emphasis pb-4 mb-4" id="home">
+        <div class="container-small hero-header-container px-lg-7 px-xxl-3">
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-auto order-0 order-md-1 text-end order-1">
+                    <div class="position-relative p-5 p-md-7 d-lg-none">
+                        <div class="bg-holder" style="background-image:url(/assets/img/bg/bg-23.png);background-size:contain;"></div>
+                        <div class="position-relative">
+                            <img class="w-100 shadow-lg d-dark-none rounded-2" src="~/assets/img/system/default_banner.jpg" alt="hero-header" />
+                            <img class="w-100 shadow-lg d-light-none rounded-2" src="~/assets/img/system/default_banner.jpg" alt="hero-header" />
+                        </div>
+                    </div>
+                    <div class="hero-image-container position-absolute top-0 bottom-0 end-0 d-none d-lg-block">
+                        <div class="position-relative h-100 w-100">
+                            <div class="position-absolute h-100 top-0 d-flex align-items-center end-0 hero-image-container-bg">
+                                <img class="pt-7 pt-md-0 w-100" src="~/assets/img/bg/bg-1-2.png" alt="hero-header" />
+                            </div>
+                            <div class="position-absolute h-100 top-0 d-flex align-items-center end-0">
+                                <img class="pt-7 pt-md-0 w-100 shadow-lg d-dark-none rounded-2" src="~/assets/img/system/default_banner.jpg" alt="hero-header" />
+                                <img class="pt-7 pt-md-0 w-100 shadow-lg d-light-none rounded-2" src="~/assets/img/system/default_banner.jpg" alt="hero-header" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 text-lg-start text-center order-0 position-relative">
+                    <h1 class="fs-3 fs-lg-2 fs-md-1 fs-lg-2 fs-xl-1 fs fw-black mb-4">Trung tâm Sáng kiến cộng đồng và Hỗ trợ khởi nghiệp (BIIC)</h1>
+                    <p class="mb-5">Trung tâm Sáng kiến cộng đồng và Hỗ trợ khởi nghiệp (BIIC)</p>
+                </div>
+            </div>
+        </div>
+    </section>*@
 
-@section styles{
-    <link href="~/vendors/choices/choices.min.css" rel="stylesheet">
-    <link href="~/vendors/glightbox/glightbox.min.css" rel="stylesheet">
-}
+<!-- Logo nhà tài trợ (nếu cần thì thêm vào đây) -->
+<!-- <section class="py-5 pt-xl-13 bg-body-emphasis">
+    <div class="container-small px-lg-7 px-xxl-3">
+    <div class="row g-0">
+        <div class="col-6 col-md-3">
+        <div class="p-2 p-lg-5 d-flex flex-center h-100 border-1 border-dashed border-bottom border-translucent border-end"><img class="w-100" src="~/assets/img/brand2/netflix-n.png" alt="" /></div>
+        </div>
+        <div class="col-6 col-md-3">
+        <div class="p-2 p-lg-5 d-flex flex-center h-100 border-1 border-dashed border-bottom border-translucent border-end-md"><img class="w-100" src="~/assets/img/brand2/blender.png" alt="" /></div>
+        </div>
+        <div class="col-6 col-md-3">
+        <div class="p-2 p-lg-5 d-flex flex-center h-100 border-1 border-dashed border-bottom border-translucent border-end border-end-md"><img class="w-100" src="~/assets/img/brand2/upwork.png" alt="" /></div>
+        </div>
+        <div class="col-6 col-md-3">
+        <div class="p-2 p-lg-5 d-flex flex-center h-100 border-1 border-dashed border-bottom border-translucent border-end-lg-0"><img class="w-100" src="~/assets/img/brand2/facebook-f.png" alt="" /></div>
+        </div>
+        <div class="col-6 col-md-3">
+        <div class="p-2 p-lg-5 d-flex flex-center h-100 border-1 border-dashed border-end border-bottom border-translucent border-bottom-md-0"><img class="w-100" src="~/assets/img/brand2/pocket.png" alt="" /></div>
+        </div>
+        <div class="col-6 col-md-3">
+        <div class="p-2 p-lg-5 d-flex flex-center h-100 border-1 border-dashed border-end-md border-bottom border-translucent border-bottom-md-0"><img class="w-100" src="~/assets/img/brand2/mail-bluster-1.png" alt="" /></div>
+        </div>
+        <div class="col-6 col-md-3">
+        <div class="p-2 p-lg-5 d-flex flex-center h-100 border-1 border-dashed border-end border-translucent"><img class="w-100" src="~/assets/img/brand2/discord.png" alt="" /></div>
+        </div>
+        <div class="col-6 col-md-3">
+        <div class="p-2 p-lg-5 d-flex flex-center h-100 border-1 border-dashed border-end-lg-0 border-translucent"><img class="w-100" src="~/assets/img/brand2/google-g.png" alt="" /></div>
+        </div>
+    </div>
+    </div>
+</section> -->
+<!-- Bài viết, thông báo, tin tức mới nhất hoặc sự kiện, cuộc thi (còn thời gian đăng ký)  -->
+<!-- <section class="pb-0 bg-body-emphasis overflow-hidden position-static mb-8">
+    <div class="container-small px-lg-7 px-xxl-3">
+      <div class="row">
+        <div class="col-lg-6 mb-6 text-center text-lg-start z-2">
+          <h2 class="text-primary fw-bolder mb-3">Bài viết, tin tức nổi bật ở đây</h2>
+          <h4 class="mb-3 text-body-emphasis">More than 2 Millions happy<br />Customers and counting</h4>
+          <p class="mb-5">You may now concentrate on the functionality and other <br class="d-none d-sm-block" />aspects of your web products thanks to Phoenix's strength<br class="d-none d-sm-block" />before leaving the UI design to us. It is simple to complete<br class="d-none d-sm-block" />the work after checking and double-checking.</p>
+        </div>
+        <div class="col-lg-6 z-2">
+          <div class="carousel slide" id="carouselExampleIndicators" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="row g-1 g-lg-0 g-xl-1 pb-lg-3 pb-xl-0 ps-lg-1 ps-xl-0">
+                  <div class="col-lg-6 col-xl-5 text-center">
+                    <div class="testimonial-avatar-container d-inline-block position-relative">
+                      <div class="bg-holder" style="background-image:url(/assets/img/bg/bg-2.png);background-size:contain;"></div>
+                      <img class="rounded-3 mb-lg-0 opacity-100 position-relative" src="~/assets/img/blog/blog-1.png" width="153" height="153" alt="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-xl-7 text-center text-lg-start">
+                    <div class="mb-4" data-bs-theme="light"><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span></div>
+                    <h3 class="fs-7 fs-xl-6 mb-5 lh-sm me-md-7 me-lg-0">Brilliant app! Will definitely going to be my first choice starting from today</h3>
+                    <h6>Monica Gomez</h6>
+                    <h6 class="fw-normal">UX designer, Google</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="row g-1 g-lg-0 g-xl-1 pb-lg-3 pb-xl-0 ps-lg-1 ps-xl-0">
+                  <div class="col-lg-6 col-xl-5 text-center">
+                    <div class="testimonial-avatar-container d-inline-block position-relative">
+                      <div class="bg-holder" style="background-image:url(/assets/img/bg/bg-2.png);background-size:contain;"></div>
 
-<div class="content pt-4 pb-4">
-    <div class="pb-4">
-        <img class="rounded w-100 object-fit-cover mb-5 mb-md-6 mb-xl-8" src="~/assets/img/generic/34.png" alt="" style="min-height: 250px;" />
-        <div class="row gx-lg-9">
-            <div class="col-xl-12 border-end-xl">
-                <div class="card mb-9">
-                    <div class="card-body">
-                        <h1 class="lh-sm fs-6 fs-xxl-4 mb-2">Brandmyth presents- Shironamhin 25 years celebration with symphony orchestra</h1>
-                        <p class="fs-8 mb-4 text-body-tertiary">Tavern on the Greend, New York</p>
-                        <div class="card mb-5 mb-xxl-7">
-                            <div class="card-body">
-                                <div class="row gy-5">
-                                    <div class="col-md-6 d-flex justify-content-between">
-                                        <div>
-                                            <div class="mb-3">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="px-2 py-1 bg-info-subtle rounded"><span class="text-info" data-feather="map-pin"></span></div>
-                                                    <h5 class="ms-2 text-body-emphasis mb-0">Location</h5>
-                                                </div>
-                                            </div>
-                                            <p class="lh-sm mb-0 text-body-tertiary">36/4A, James Tiberius Auditorium,<br />Vancouver, British Columbia, Canada </p>
+                      <img class="rounded-3 mb-lg-0 opacity-100 position-relative" src="~/assets/img/blog/blog-2.png" width="154" alt="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-xl-7 text-center text-lg-start">
+                    <div class="mb-4" data-bs-theme="light"><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span></div>
+                    <h3 class="fs-7 fs-xl-6 mb-5 lh-sm me-md-7 me-lg-0">“Excellent to work with and comfortable to customize. This is what I was looking for till the date!”</h3>
+                    <h6>Marc Chiasson</h6>
+                    <h6 class="fw-normal">UX designer, Adobe</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="row g-1 g-lg-0 g-xl-1 pb-lg-3 pb-xl-0 ps-lg-1 ps-xl-0">
+                  <div class="col-lg-6 col-xl-5 text-center">
+                    <div class="testimonial-avatar-container d-inline-block position-relative">
+                      <div class="bg-holder" style="background-image:url(/assets/img/bg/bg-2.png);background-size:contain;"></div>
+
+                      <img class="rounded-3 mb-lg-0 opacity-100 position-relative" src="~/assets/img/blog/blog-3.png" width="154" alt="" />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-xl-7 text-center text-lg-start">
+                    <div class="mb-4" data-bs-theme="light"><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span><span class="fa fa-star text-primary"></span></div>
+                    <h3 class="fs-7 fs-xl-6 mb-5 lh-sm me-md-7 me-lg-0">“Phoenix is all you can ask for. This is perfect fit for everything you might want to work on!”</h3>
+                    <h6>Axel Barry</h6>
+                    <h6 class="fw-normal">UX designer, Apple</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section> -->
+<!-- Danh sách bài viết, tin tức,... -->
+<section class="bg-body-emphasis mb-3" id="blog">
+    <div class="container-small px-lg-7 px-xxl-3">
+        <div class="mb-4 text-center text-sm-start">
+            <h2 class="text-primary fw-bolder mb-3 text-uppercase">Cuộc thi nổi bật</h2>
+        </div>
+        <div class="row h-100 g-3 justify-content-center">
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-1.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">2563</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">125</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">125</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Cuộc thi</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-2.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">1256</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">325</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">32</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Cuộc thi</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-3.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">142</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">123</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">22</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Cuộc thi</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-4.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">2563</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">325</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">112</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Cuộc thi</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-6">
+            <a class="btn btn-outline-primary" href="#!">
+                Hiển thị thêm
+                <span class="fa-solid fa-angle-right ms-2"></span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="bg-body-emphasis" id="blog">
+    <div class="container-small px-lg-7 px-xxl-3">
+        <div class="mb-4 text-center text-sm-start">
+            <h2 class="text-primary fw-bolder mb-3 text-uppercase">Tin tức mới nhất</h2>
+        </div>
+        <div class="row h-100 g-3 justify-content-center">
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-1.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">2563</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">125</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">125</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Tin tức</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-2.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">1256</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">325</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">32</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Sự kiện</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-3.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">142</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">123</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">22</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Thông báo</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-3.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">142</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">123</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">22</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Thông báo</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-3.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">142</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">123</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">22</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Thông báo</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-3.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">142</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">123</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">22</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Thông báo</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-3.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">142</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">123</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">22</span></a></div>
+                        </div><span class="badge badge-phoenix badge-phoenix-primary mb-2">Thông báo</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4><a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">Đọc thêm<span class="fa-solid fa-angle-right ms-2"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3 mb-3 mb-md-0">
+                <div class="card text-white dark__text-gray-1100 h-100">
+                    <img class="rounded-top h-100 object-fit-cover" src="~/assets/img/blog/blog-4.png" alt="..." />
+                    <div class="card-body rounded-top">
+                        <div class="d-flex align-items-cente mb-3">
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-eye text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">2563</span></a></div>
+                            <div class="d-flex align-items-center me-3"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-heart text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">325</span></a></div>
+                            <div class="d-flex align-items-center"><a class="btn-link text-decoration-none d-flex align-items-center" href="#!"><span class="fa-solid fa-comment text-body-quaternary me-1"></span><span class="text-body fs-10 lh-1">112</span></a></div>
+                        </div>
+                        <span class="badge badge-phoenix badge-phoenix-primary mb-2">Cuộc thi</span>
+                        <h4 class="fw-bold mb-3 lh-sm line-clamp-2">Cuộc thi Nghiên cứu khoa học tỉnh Bình Dương lần I </h4>
+                        <a class="btn-link px-0 d-flex align-items-center fs-9 fw-bold" href="#!" role="button">
+                            Đọc thêm
+                            <span class="fa-solid fa-angle-right ms-2"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-6">
+            <a class="btn btn-outline-primary" href="#!">
+                Hiển thị thêm
+                <span class="fa-solid fa-angle-right ms-2"></span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="top-event-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="top-event-modal" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-body-highlight p-0">
+            <div class="modal-body p-0 w-100 position-relative">
+                <button class="btn btn-sm position-absolute z-3" style="right: 0; top: 0;" data-bs-dismiss="modal" aria-label="Close">
+                    <span class="fas fa-times text-danger"></span>
+                </button>
+
+                <div id="event-carousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="hoverbox rounded w-100">
+                                <img class="img-fluid w-100 rounded" src="~/assets/img/event/banner_event_1.jpg" alt="Banner 1" />
+                                <div class="backdrop-faded">
+                                    <div class="d-sm-flex d-md-block d-lg-flex flex-between-center">
+                                        <div class="d-flex gap-3 justify-content-end w-100">
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-clock fs-9 me-2"></span>Còn 2 ngày để đăng ký
+                                            </h5>
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-user fs-9 me-2"></span>Đã có 100 hồ sơ đăng ký
+                                            </h5>
                                         </div>
-                                        <div class="my-4 mx-3 border-start border-translucent d-none d-md-block"></div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <div class="d-flex align-items-center">
-                                                <div class="px-2 py-1 bg-primary-subtle rounded"><span class="text-primary" data-feather="clock"></span></div>
-                                                <h5 class="ms-2 mb-0">Date &amp; Time</h5>
-                                            </div>
-                                        </div>
-                                        <p class="lh-sm mb-0 text-body-tertiary">28th June - 2nd July 2022,<br />10 am - 4 pm Eastern Daylight Time</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row g-2">
-                            <div class="col-12 col-md-auto flex-md-grow-1">
-                                <button class="btn btn-primary w-100" type="button">Get Tickets</button>
+
+                        <div class="carousel-item">
+                            <div class="hoverbox rounded w-100">
+                                <img class="img-fluid rounded w-100" src="~/assets/img/event/banner_event_1.jpg" alt="Banner 2" />
+                                <div class="backdrop-faded">
+                                    <div class="d-sm-flex d-md-block d-lg-flex flex-between-center">
+                                        <div class="d-flex gap-3 justify-content-end w-100">
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-clock fs-9 me-2"></span>Còn 2 ngày để đăng ký
+                                            </h5>
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-user fs-9 me-2"></span>Đã có 100 hồ sơ đăng ký
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-4 col-sm-auto flex-sm-grow-1 flex-md-grow-0">
-                                <button class="btn btn-phoenix-primary w-100" type="button">
-                                    <span class="fa-solid fa-eye me-2"></span>1233
-                                </button>
-                            </div>
-                            <div class="col-4 col-sm-auto">
-                                <button class="btn btn-phoenix-primary w-100" type="button">
-                                    <span class="fa-solid fa-heart me-2"></span>3677
-                                </button>
-                            </div>
-                            <div class="col-4 col-sm-auto">
-                                <button class="btn btn-phoenix-primary w-100" type="button">
-                                    <span class="fa-solid fa-share-nodes me-2"></span>4467
-                                </button>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="hoverbox rounded w-100">
+                                <img class="img-fluid rounded w-100" src="~/assets/img/event/banner_event_1.jpg" alt="Banner 3" />
+                                <div class="backdrop-faded">
+                                    <div class="d-sm-flex d-md-block d-lg-flex flex-between-center">
+                                        <div class="d-flex gap-3 justify-content-end w-100">
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-clock fs-9 me-2"></span>Còn 2 ngày để đăng ký
+                                            </h5>
+                                            <h5 class="text-secondary-lighter fw-normal">
+                                                <span class="fa-solid fa-user fs-9 me-2"></span>Đã có 100 hồ sơ đăng ký
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <h2 class="mb-3">About this event</h2>
-                <p class="text-justify text-body-secondary mb-6 mb-xxl-8">The Festival Season hopes to continue its rescheduled events in 2023 during the spring block. This will be a continuation of the tradition for the loyal fanbase to watch a jam-packed day full of exciting top-notch performances. With a unique lineup, you’ll know what to expect and get ready to embrace the festivity. Moreover, we’ve added a detailed list of the performers, with details of dates, lineups and prospective entry requirements. We will keep you posted with necessary updates regarding the event.</p>
-                <h4 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Singers:</h4>
-                <p>To join the festival, you’ll need to register through <a href="mailto:register@event.com">register@event.com </a>after confirming the payment, you’ll be provided with a unique ID number that you’ll need to show before the authority to get the tickets.</p>
-                <p>The ID number will be unique to all members, so it’s requested that you don’t share it with anyone. Any damage regarding a misused ID will not be ours to compensate or refund.Enjoy!</p>
-                <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
-                    <div class="col-3"><a href="~/assets/img/gallery/19.png" data-gallery="gallery-posts-undefined"><img class="rounded h-100 w-100 object-fit-cover" src="~/assets/img/gallery/19.png" alt="..." /></a></div>
-                    <div class="col-3"><a href="~/assets/img/gallery/20.png" data-gallery="gallery-posts-undefined"><img class="rounded h-100 w-100 object-fit-cover" src="~/assets/img/gallery/20.png" alt="..." /></a></div>
-                    <div class="col-6"><a href="~/assets/img/gallery/21.png" data-gallery="gallery-posts-undefined"><img class="rounded h-100 w-100 object-fit-cover" src="~/assets/img/gallery/21.png" alt="..." /></a></div>
-                </div>
-                <h4 class="mb-3 text-body-highlight fs-xxl-6">Topic To Be Covered:</h4>
-                <ul class="mb-6 ps-4">
-                    <li>Latest Update With Bitcoin</li>
-                    <li>Blockchain Vs Bitcoin</li>
-                    <li>Why Do We Need CryptoCurrency?</li>
-                    <li>Bitcoin History</li>
-                    <li>Bitcoin Vs Ethereum</li>
-                    <li>How Big Is Cryptocurrency Right Now?</li>
-                    <li>Crypto Scams &amp; How To Identify Them</li>
-                    <li>Is it Worth Buying To Keep?</li>
-                </ul>
-                <h4 class="mb-3 text-body-highlight fs-xxl-6">Refund Policy:</h4>
-                <ul class="mb-6 ps-4">
-                    <li>Contact the organizer to request a refund.</li>
-                    <li>Eventbrite's fee is nonrefundable.</li>
-                </ul>
-                <h3 class="mb-3 fw-bold text-body-highlight fs-7 fs-xxl-6">Responses:</h3>
-                <div class="d-flex mb-6">
-                    <div class="me-3">
-                        <p class="mb-2 text-body-secondary">Going</p>
-                        <h3 class="text-body-secondary">4,569</h3>
-                    </div>
-                    <div class="my-3 mx-2 mx-sm-3 border-start"></div>
-                    <div class="mx-3">
-                        <p class="mb-2 text-body-secondary">Interested</p>
-                        <h3 class="text-body-secondary">15,652</h3>
-                    </div>
-                    <div class="my-3 mx-2 mx-sm-3 border-start"></div>
-                    <div class="ms-3">
-                        <p class="mb-2 text-body-secondary">Share</p>
-                        <h3 class="text-body-secondary">11,236</h3>
-                    </div>
-                </div>
-                <h3 class="mb-3 fw-bold text-body-highlight fs-7">Share with Friends:</h3>
-                <div class="d-flex mb-5">
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-brands fa-facebook text-facebbok"></span>
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#event-carousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-brands fa-facebook-messenger"></span>
-                    </button>
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-brands fa-twitter text-info"></span>
-                    </button>
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-solid fa-envelope text-danger"></span>
-                    </button>
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-brands fa-linkedin-in text-info"></span>
+                    <button class="carousel-control-next" type="button" data-bs-target="#event-carousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
                     </button>
                 </div>
             </div>
@@ -134,8 +405,16 @@
 </div>
 
 @section scripts{
-    <script src="~/vendors/choices/choices.min.js"></script>
-    <script src="~/vendors/glightbox/glightbox.min.js"></script>
+    <script src="~/vendors/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="~/vendors/isotope-packery/packery-mode.pkgd.min.js"></script>
+    <script src="~/vendors/bigpicture/BigPicture.js"></script>
+    <script src="~/vendors/countup/countUp.umd.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = new bootstrap.Modal(document.getElementById('top-event-modal'));
+            modal.show();
+        });
+    </script>
 }
-
-
