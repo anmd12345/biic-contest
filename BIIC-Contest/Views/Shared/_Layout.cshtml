@@ -22,6 +22,7 @@
     <!-- css -->
     @RenderSection("styles", required: false)
 
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
@@ -35,6 +36,8 @@
         .mix-blame-mode {
             mix-blend-mode: multiply;
         }
+
+/*        Hiệu ứng cuộn của mục giới thiệu */
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(40px);
@@ -46,6 +49,48 @@
                 opacity: 1;
                 transform: none;
             }
+            /*Hiệu ứng logoShowcase*/
+        .marquee-container-logo {
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .marquee-logo {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 20s linear infinite;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .marquee-item {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+            .marquee-item img {
+                max-width: 120px;
+                height: auto;
+                filter: brightness(100%);
+                transition: all 0.3s ease;
+            }
+
+                .marquee-item img:hover {
+                    filter: none;
+                }
+
+                @@keyframes marquee {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(-50%); }
+                }
+
     </style>
     <script>
         var phoenixIsRTL = window.config.config.phoenixIsRTL;
