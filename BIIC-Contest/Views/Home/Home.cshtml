@@ -132,6 +132,33 @@
       </div>
     </div>
 </section> -->
+<section class="section-introduce bg-body-emphasis py-6" id="introduce">
+    <div class="container-small px-lg-7 px-xxl-3">
+        <div class="row align-items-center">
+            <div class="col-md-7 mb-4 mb-md-0">
+                <div class="intro-content">
+                    <h2 class="text-primary fw-bolder mb-4 reveal-on-scroll">GIỚI THIỆU CUỘC THI</h2>
+                    <p class="mb-3 reveal-on-scroll" style="transition-delay:0.1s">
+                        Nhằm tìm kiếm các giải pháp công nghệ, trí tuệ nhân tạo và tự động hóa có khả năng ứng dụng vào thực tiễn xây dựng thành phố Bình Dương thông minh, phát triển bền vững góp phần thực hiện công cuộc chuyển đổi số, chuyển đổi xanh, hướng đến mục tiêu phát triển bền vững của tỉnh Bình Dương. Được sự chỉ đạo của Ban Thường vụ Tỉnh ủy, Ban Thường vụ Tỉnh đoàn phối hợp cùng Sở Khoa học và Công nghệ tỉnh Bình Dương xây dựng Kế hoạch tổ chức Cuộc thi STEM và AI năm 2025 với chủ đề “Thành phố thông minh – phát triển bền vững”
+                    </p>
+                    <p class="mb-3 reveal-on-scroll" style="transition-delay:0.2s">
+                        Thúc đẩy nghiên cứu, sáng tạo và ứng dụng trí tuệ nhân tạo (AI) vào các sáng kiến, cải tiến kỹ thuật nhằm xây dựng Thành phố thông minh Bình Dương – phát triển bền vững. Khuyến khích các cá nhân, tổ chức, doanh nghiệp, trường đại học tham gia phát triển giải pháp công nghệ có tính ứng dụng thực tiễn cao
+                    </p>
+                    <p class="mb-3 reveal-on-scroll" style="transition-delay:0.3s">
+                        Góp phần hiện thực hóa mục tiêu phát triển Bình Dương theo mô hình thành phố thông minh, đổi mới sáng tạo, nâng cao chất lượng quản lý đô thị, dịch vụ công, giao thông, môi trường, năng lượng
+                    </p>
+                    <p class="text-info fw-semibold reveal-on-scroll" style="transition-delay:0.4s">
+                        Cuộc thi được thiết kế để thử thách kiến thức, kỹ năng của đoàn viên, thanh niên, các doanh nghiệp từ lập trình và điều khiển Robot thực tế cho đến việc phát triển các ứng dụng phần mềm sáng tạo
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-5 text-center">
+                <img src="https://images.unsplash.com/photo-1520110120835-c96534a4c984?q=80&w=1467&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Giới thiệu" class="img-fluid rounded-3 shadow-lg reveal-on-scroll" style="transition-delay:0.5s">
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Danh sách bài viết, tin tức,... -->
 <section class="bg-body-emphasis" id="blog">
     <div class="container-small px-lg-7 px-xxl-3">
@@ -337,6 +364,20 @@
         document.addEventListener('DOMContentLoaded', () => {
             const modal = new bootstrap.Modal(document.getElementById('top-event-modal'));
             modal.show();
+
+            // Create animation for the introduce section
+            const revealElements = document.querySelectorAll('.reveal-on-scroll');
+            function revealOnScroll() {
+                const windowHeight = window.innerHeight;
+                revealElements.forEach(el => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - 80) {
+                        el.classList.add('revealed');
+                    }
+                });
+            }
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll();
         });
     </script>
 }
