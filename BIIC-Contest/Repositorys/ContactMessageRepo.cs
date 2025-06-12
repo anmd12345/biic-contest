@@ -16,8 +16,8 @@ namespace BIIC_Contest.Repositorys
         {
             try
             {
-                contact_message newContactMessage = createNewContactMessage(fullname, email, phone, message, ip, sendAt);
-                db.contact_messages.InsertOnSubmit(newContactMessage);
+                tbl_contact_message newContactMessage = createNewContactMessage(fullname, email, phone, message, ip, sendAt);
+                db.tbl_contact_messages.InsertOnSubmit(newContactMessage);
                 db.SubmitChanges();
             }
             catch
@@ -26,14 +26,14 @@ namespace BIIC_Contest.Repositorys
         }
 
 
-        public List<contact_message> findAll()
+        public List<tbl_contact_message> findAll()
         {
-            return db.contact_messages.ToList();
+            return db.tbl_contact_messages.ToList();
         }
 
-        private contact_message createNewContactMessage(string fullname, string email, string phone, string message, string ip, string sendAt)
+        private tbl_contact_message createNewContactMessage(string fullname, string email, string phone, string message, string ip, string sendAt)
         {
-            return new contact_message
+            return new tbl_contact_message
             {
                 fullname = fullname,
                 email = email,

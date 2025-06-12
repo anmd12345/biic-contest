@@ -14,7 +14,7 @@ namespace BIIC_Contest.Controllers.Admin
         [Route("danh-sach-tin-nhan")]
         public ActionResult ListContactMessage()
         {
-            List<contact_message> contactMessages = contactMessageService.findAll();
+            List<tbl_contact_message> contactMessages = contactMessageService.findAll();
             
             ViewBag.contactMessages = contactMessages;
            

@@ -17,7 +17,7 @@ namespace BIIC_Contest.Services
         //nên cần chuyển đổi từ đối tượng user -> UserDto.
         public UserDto login(string username, string password)
         {
-            user userResponse = repo.findByEmailAndPassword(username, HashHelper.hashPassword(password));
+            tbl_user userResponse = repo.findByEmailAndPassword(username, HashHelper.hashPassword(password));
 
             if (userResponse == null)
             {
@@ -28,7 +28,7 @@ namespace BIIC_Contest.Services
         }
 
 
-        private UserDto convertToUserDto(user userResponse)
+        private UserDto convertToUserDto(tbl_user userResponse)
         {
             if (userResponse == null)
                 return null;
@@ -43,9 +43,9 @@ namespace BIIC_Contest.Services
                 CreatedAt = userResponse.created_at,
                 Role = new RoleDto
                 {
-                    RoleId = userResponse.role.role_id,
-                    RoleName = userResponse.role.role_name,
-                    RoleDescription = userResponse.role.role_description
+                    RoleId = userResponse.tbl_role.role_id,
+                    RoleName = userResponse.tbl_role.role_name,
+                    RoleDescription = userResponse.tbl_role.description
                 },
                 SpecialtyField = userResponse.specialty_field
             };

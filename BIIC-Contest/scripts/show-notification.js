@@ -10,7 +10,7 @@
     });
 }
 
-function showSuccessNotification(message) {
+function showSuccessContactNotification(message) {
     Swal.fire({
         icon: "success",
         title: "Thành công!",
@@ -25,7 +25,7 @@ function showSuccessNotification(message) {
     });
 }
 
-function showSuccessNotification(message, callback, timeout) {
+function showSuccessLoginNotification(message, callback, timeout) {
     Swal.fire({
         icon: 'success',
         title: 'Thành công',

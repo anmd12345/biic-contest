@@ -8,29 +8,29 @@ namespace BIIC_Contest.Repositorys
     {
         private BIICConnectionDbContext db = BIICConnectionDbContext.getInstance;
 
-        public user findById(int id)
+        public tbl_user findById(int id)
         {
-            return db.users.FirstOrDefault(u => u.user_id == id);
+            return db.tbl_users.FirstOrDefault(u => u.user_id == id);
         }
 
-        public user findByPhone(string phone)
+        public tbl_user findByPhone(string phone)
         {
-            return db.users.FirstOrDefault(u => u.phone.Equals(phone));
+            return db.tbl_users.FirstOrDefault(u => u.phone.Equals(phone));
         }
 
-        public user findByEmail(string email)
+        public tbl_user findByEmail(string email)
         {
-            return db.users.FirstOrDefault(u => u.email.Equals(email));
+            return db.tbl_users.FirstOrDefault(u => u.email.Equals(email));
         }
 
-        public user findByPhoneAndPassword(string phone, string password)
+        public tbl_user findByPhoneAndPassword(string phone, string password)
         {
-            return db.users.FirstOrDefault(u => u.phone.Equals(phone) && u.password.Equals(password));
+            return db.tbl_users.FirstOrDefault(u => u.phone.Equals(phone) && u.password.Equals(password));
         }
 
-        public user findByEmailAndPassword(string phone, string password)
+        public tbl_user findByEmailAndPassword(string phone, string password)
         {
-            return db.users.FirstOrDefault(u => u.email.Equals(phone) && u.password.Equals(password));
+            return db.tbl_users.FirstOrDefault(u => u.email.Equals(phone) && u.password.Equals(password));
         }
     }
 }

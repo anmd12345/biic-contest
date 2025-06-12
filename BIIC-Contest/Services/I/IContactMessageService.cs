@@ -7,6 +7,6 @@ namespace BIIC_Contest.Services.I
     {
         // Khai báo các phương thức cần thiết để quản lý thông tin liên hệ
         short createContactMessage(string fullname, string email, string phone, string message, string ip);
-        List<contact_message> findAll();
+        List<tbl_contact_message> findAll();
     }
 }
