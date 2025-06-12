@@ -128,7 +128,7 @@
             const data = await postApi(url, postData);
 
             if (data.Success) {
-                showSuccessNotification(data.Message)
+                showSuccessContactNotification(data.Message)
             }
 
             if (!data.Success) {

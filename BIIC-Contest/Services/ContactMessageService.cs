@@ -33,7 +33,7 @@ namespace BIIC_Contest.Services
             }
         }
 
-        public List<contact_message> findAll()
+        public List<tbl_contact_message> findAll()
         {
             return repo.findAll();
         }
