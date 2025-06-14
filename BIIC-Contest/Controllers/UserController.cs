@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BIIC_Contest.Controllers
@@ -19,6 +18,13 @@ namespace BIIC_Contest.Controllers
         [Route("dang-ky")]
         public ActionResult Signup()
         {
+            return View();
+        }
+
+        [Route("ho-so")]
+        public ActionResult Profile()
+        {
+           
             return View();
         }
     }
