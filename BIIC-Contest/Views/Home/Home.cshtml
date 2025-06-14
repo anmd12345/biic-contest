@@ -7,14 +7,16 @@
     <link href="~/vendors/choices/choices.min.css" rel="stylesheet">
     <link href="~/vendors/glightbox/glightbox.min.css" rel="stylesheet">
     <link href="~/vendors/mapbox-gl/mapbox-gl.css" rel="stylesheet">
+    <link href="~/vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
+    <link href="~/vendors/dropzone/dropzone.css" rel="stylesheet" />
 }
 
 
 @*Ảnh bị mờ, tìm cách fix*@
-<div class="content pt-4">
+<div class="content pt-4 overflow-x-hidden">
     <div class="pb-3">
         <img class="rounded w-100 object-fit-fill mb-5 mb-md-6 mb-xl-8" style="max-height: 500px;min-height: 250px;" src="~/assets/img/event/banner_event_1.jpg" alt="" />
-        <div class="row gx-lg-9">
+        <div class="row gx-lg-12">
             <div class="col-xl-12">
                 <div class="card mb-9">
                     <div class="card-body">
@@ -49,7 +51,7 @@
                         </div>
                         <div class="row g-2">
                             <div class="col-12 col-md-auto flex-md-grow-1">
-                                <button class="btn btn-primary w-100" type="button">Đăng Ký Tham Gia</button>
+                                <button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#kanbanAddTask">Đăng Ký Tham Gia</button>
                             </div>
                             <div class="col-4 col-sm-auto flex-sm-grow-1 flex-md-grow-0">
                                 <button class="btn btn-phoenix-primary w-100" type="button">
@@ -120,8 +122,8 @@
                     <p class="text-justify text-body-secondary">
                         <b>🍁🍁🍁Giải thưởng: </b> Tổng trị giá giải thưởng 150 triệu đồng và nhiều cơ hội hỗ trợ phát triển dự án
                     </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>👉🖋Đơn đăng ký: </b>https://drive.google.com/.../1bEwQ2WcxyaVlag...
+                    <p class="text-body-secondary">
+                        <b>👉🖋Đơn đăng ký: </b> <span>https://drive.google.com/.../1bEwQ2WcxyaVlag...</span>
                     </p>
                     <p class="text-justify text-body-secondary">
                         <b>👉⏰Thời hạn đăng ký: </b>Từ 05/10/2024 đến 31/10/2024.
@@ -207,59 +209,148 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
-            @*<div class="col-xl-4">
-                    <div class="row g-0 py-3 border-bottom border-dashed align-items-end justify-content-between">
-                        <div class="col-auto">
-                            <h3 class="flex-1 mb-0 text-nowrap me-3">Sự kiện sắp tới</h3>
+
+
+
+<div class="modal fade" data-bs-backdrop="static" id="kanbanAddTask" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body pb-0">
+                <div class="row p-2">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h3 class="mb-0 text-body-emphasis fw-semibold">Đăng ký dự thi</h3>
+                        <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Đóng">
+                            <span class="fas fa-times fs-10 me-1" data-fa-transform="up-1"></span>
+                            Đóng
+                        </button>
+                    </div>
+                    <div class="kanban-create-board row">
+                        <div class="col-xxl-12 col-xl-12 col-12 pb-4 order-1 order-xl-0">
+                            <div class="theme-wizard theme-wizard-progress" data-theme-wizard="data-theme-wizard" data-create-board="data-create-board" data-wizard-modal-disabled="data-wizard-modal-disabled">
+                                <div class="mt-6 border-bottom-0">
+                                    <p class="mb-0 text-body-secondary">Bước <span data-kanban-step="data-kanban-step">1 - Cung cấp thông tin người đăng ký</span></p>
+                                    <ul class="nav justify-content-between nav-wizard nav-wizard-progress">
+                                        <li class="nav-item"><a class="nav-link active fw-semibold" href="#create-board-tab1" data-bs-toggle="tab" data-wizard-step="1 - Cung cấp thông tin người đăng ký"></a></li>
+                                        <li class="nav-item"><a class="nav-link fw-semibold" href="#create-board-tab2" data-bs-toggle="tab" data-wizard-step="2 - Cung cấp thông tin bài dự thi"></a></li>
+                                        <li class="nav-item"><a class="nav-link fw-semibold" href="#create-board-tab3" data-bs-toggle="tab" data-wizard-step="3 - Đính kèm tệp dự thi"></a></li>
+                                    </ul>
+                                </div>
+                                <div class="mt-6">
+                                    <div class="pb-0">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" role="tabpanel" aria-labelledby="create-board-tab1" id="create-board-tab1">
+                                                <p class="mb-4">Vui lòng nhập đầy đủ thông tin đăng ký cuộc thi!</p>
+                                                <form id="createBoardForm1" novalidate="novalidate" data-wizard-form="1">
+                                                    <div class="form-floating">
+                                                        <input class="form-control" type="text" name="create-board-name" id="create-boardwizard-name" placeholder="Nhập họ và tên" />
+                                                        <label for="create-boardwizard-name">Họ và tên</label>
+                                                    </div>
+
+                                                    <div class="form-floating mt-4">
+                                                        <input class="form-control datetimepicker" id="floatingInputStartDate" type="text" placeholder="end date" data-options='{"disableMobile":true}' />
+                                                        <label for="floatingInputStartDate">Ngày sinh</label>
+                                                    </div>
+                                                    <div class="form-floating mt-4">
+                                                        <input class="form-control" type="text" name="create-board-name" id="create-boardwizard-name" placeholder="Nhập số điện thoại" />
+                                                        <label for="create-boardwizard-name">Số điện thoại</label>
+                                                    </div>
+                                                    <div class="form-floating mt-4">
+                                                        <input class="form-control" type="text" name="create-board-name" id="create-boardwizard-name" placeholder="Nhập địa chỉ Email" />
+                                                        <label for="create-boardwizard-name">Địa chỉ Email</label>
+                                                    </div>
+                                                    <div class="form-floating mt-4">
+                                                        <textarea class="form-control" placeholder="Địa chỉ" name="create-board-message" id="create-board-wizard-des" style="height: 128px"></textarea>
+                                                        <label for="create-board-wizard-des">Địa chỉ</label>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" aria-labelledby="create-board-tab2" id="create-board-tab2">
+                                                <p class="mb-4">Vui lòng cung cấp thông tin bài dự thi</p>
+                                                <form id="createBoardForm2" novalidate="novalidate" data-wizard-form="2">
+                                                    <div class="form-floating mt-4">
+                                                        <select class="form-select" name="create-board-type" id="create-boardwizard-type">
+                                                            <option selected="selected" disabled="disabled" value="">Chọn lĩnh vực sáng kiến</option>
+                                                            <option value="1">technical</option>
+                                                            <option value="2">external</option>
+                                                            <option value="3">organizational</option>
+                                                        </select>
+                                                        <label for="create-boardwizard-type">Lĩnh vực sáng kiến</label>
+                                                    </div>
+                                                </form>
+                                                <div class="form-floating mt-4">
+                                                    <textarea class="form-control" placeholder="Mô tả sáng kiến" name="create-board-message" id="create-board-wizard-des" style="height: 128px"></textarea>
+                                                    <label for="create-board-wizard-des">Mô tả sáng kiến</label>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane" role="tabpanel" aria-labelledby="create-board-tab3" id="create-board-tab3">
+                                                <p class="mb-4">Đính kèm bài dự thi của bạn (chấp nhận các định dạng file pdf, docx, jpg/png, mp4 với dung lượng tối đa từng file là 20MB)</p>
+                                                <form id="createBoardForm3" novalidate="novalidate" data-wizard-form="3">
+                                                    <div class="col-12">
+                                                        <input class="btn-check kanban-swatch-radio" type="radio" name="board-custom-image" id="boardCustomImage" />
+                                                        <div class="dropzone dropzone-single p-0 w-100" id="dropzone" data-dropzone="data-dropzone" data-options='{"url":"valid/url","maxFiles":1,"maxFilesize":5,"acceptedFiles":"image/*","dictDefaultMessage":"Choose or Drop a file here"}'>
+                                                            <div class="fallback"><input type="file" name="file" /></div>
+                                                            <div class="dz-message text-body-tertiary text-opacity-85 text-center py-0" data-dz-message="data-dz-message">
+                                                                <div class="dz-message-text py-3">allow: pdf, docx, jpg/png, mp4<br /><img class="mt-3" src="../../assets/img/icons/image-icon.png" width="30" alt="" /></div><button class="btn dz-upload-btn border-0 position-absolute z-5 bg-black bg-opacity-50 text-white mt-3 ms-3 px-3" data-dz-message="data-dz-message">Change Picture<span class="fa-solid fa-camera fs-10 ms-1"></span></button>
+                                                            </div>
+                                                            <div class="dz-preview m-0">
+                                                                <div class="rounded-2 position-relative" style="height: 144px">
+                                                                    <input class="btn-check kanban-swatch-radio kanban-custom-bg-radio" type="radio" value="kanban-custom-bg" name="board-img" id="kanban-custom-bg" /><label class="kanban-radio-bg-image w-100 h-100" for="kanban-custom-bg"><img class="rounded-2 w-100 h-100 object-fit-cover" src="~/assets/img/icons/file-bg.png" alt="..." data-dz-thumbnail="data-dz-thumbnail" /></label><button class="btn border-0 position-absolute top-0 end-0 z-5 bg-black bg-opacity-50 text-white mt-3 me-3 px-3 cursor-pointer" data-dz-remove="data-dz-remove"><span class="fa-solid fa-xmark cursor-pointer"></span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="border-bottom border-translucent d-flex flex-row pb-3 mt-3">
+                                                            <div class="border border-translucent rounded-3 flex-center d-flex" style="width:64px; height: 64px">
+                                                                <div class="fa-solid fa-file-zipper fa-2x text-body-quaternary text-opacity-75"></div>
+                                                            </div>
+                                                            <div class="flex-1 ms-3 d-flex flex-column">
+                                                                <h5 class="lh-sm">All_images.zip</h5>
+                                                                <p class="lh-1 fs-9 text-body-tertiary fw-medium mb-0">21st Decemver, 12:56 PM</p>
+                                                                <div class="d-flex text-body-tertiary mt-auto">
+                                                                    <button class="btn p-0 fs-8 text-body-tertiary me-3">
+                                                                        <span class="fas fa-comment" data-fa-transform="shrink-4"></span>
+                                                                    </button>
+                                                                    <button class="btn p-0 fs-8 text-body-tertiary me-3">
+                                                                        <span class="fas fa-trash" data-fa-transform="shrink-4"></span>
+                                                                    </button>
+                                                                    <button class="btn p-0 fs-8 text-body-tertiary">
+                                                                        <span class="fas fa-pencil" data-fa-transform="shrink-4"></span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <div class="border-top-0 mt-10">
+                                                    <div class="d-flex pager wizard list-inline mb-0">
+                                                        <button class="btn btn-link ps-0" type="button" data-board-prev-btn="data-board-prev-btn"><span class="fas fa-chevron-left me-1" data-fa-transform="shrink-3"></span>Bước trước đó</button>
+                                                        <div class="flex-1 text-end">
+                                                            <button class="btn btn-primary px-6 px-sm-6" type="submit">Đăng ký dự thi<span class="fas fa-chevron-right ms-1" data-fa-transform="shrink-3"> </span></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-top-0 mt-10" data-wizard-footer="data-wizard-footer">
+                                    <div class="d-flex pager wizard list-inline mb-0">
+                                        <button class="d-none btn btn-link ps-0" type="button" data-wizard-prev-btn="data-wizard-prev-btn"><span class="fas fa-chevron-left me-1" data-fa-transform="shrink-3"></span>Bước trước đó</button>
+                                        <div class="flex-1 text-end">
+                                            <button class="btn btn-primary px-6 px-sm-6" type="submit" data-wizard-next-btn="data-wizard-next-btn">Bước kế tiếp<span class="fas fa-chevron-right ms-1" data-fa-transform="shrink-3"> </span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="py-3 border-bottom border-translucent border-dashed">
-                        <div class="d-flex flex-between-center">
-                            <p class="text-warning fs-10 mb-0 fw-bold mb-1">Thứ 2, 11/06/2025 - 23/06/2025</p>
-                            <div class="btn-reveal-trigger">
-                                <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none d-flex btn-reveal" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a><a class="dropdown-item" href="#!">Download</a><a class="dropdown-item" href="#!">Report abuse</a></div>
-                            </div>
-                        </div><a class="text-primary-hover text-body-highlight fw-bold mb-2 line-clamp-1 me-5 lh-base" href="#!">Sự kiện sắp tới 1</a>
-                        <p class="text-body-secondary fs-9 mb-2">Tổ chức bởi<br /><a class="fw-bold text-primary" href="#!">IAFM - International Academy of Tech</a></p>
-                        <p class="fs-10 text-body-tertiary text-opacity-85">64 người đã xem</p>
-                        <p class="fs-9 text-body-tertiary fw-bold mb-0">
-                            <span class="fa-solid fa-map-marker-alt text-body-secondary me-1"></span>
-                            Địa điểm tổ chức
-                        </p>
-                    </div>
-                    <div class="py-3 border-bottom border-translucent border-dashed">
-                        <div class="d-flex flex-between-center">
-                            <p class="text-warning fs-10 mb-0 fw-bold mb-1">Thứ 2, 11/06/2025 - 23/06/2025</p>
-                            <div class="btn-reveal-trigger">
-                                <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none d-flex btn-reveal" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a><a class="dropdown-item" href="#!">Download</a><a class="dropdown-item" href="#!">Report abuse</a></div>
-                            </div>
-                        </div><a class="text-primary-hover text-body-highlight fw-bold mb-2 line-clamp-1 me-5 lh-base" href="#!">Sự kiện sắp tới 2</a>
-                        <p class="text-body-secondary fs-9 mb-2">Tổ chức bởi<br /><a class="fw-bold text-primary" href="#!">IAFM - International Academy of Tech</a></p>
-                        <p class="fs-10 text-body-tertiary text-opacity-85">64 người đã xem</p>
-                        <p class="fs-9 text-body-tertiary fw-bold mb-0">
-                            <span class="fa-solid fa-map-marker-alt text-body-secondary me-1"></span>
-                            Địa điểm tổ chức
-                        </p>
-                    </div>
-                    <div class="py-3 border-bottom border-translucent border-dashed">
-                        <div class="d-flex flex-between-center">
-                            <p class="text-warning fs-10 mb-0 fw-bold mb-1">Thứ 2, 11/06/2025 - 23/06/2025</p>
-                            <div class="btn-reveal-trigger">
-                                <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none d-flex btn-reveal" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h"></span></button>
-                                <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a><a class="dropdown-item" href="#!">Download</a><a class="dropdown-item" href="#!">Report abuse</a></div>
-                            </div>
-                        </div><a class="text-primary-hover text-body-highlight fw-bold mb-2 line-clamp-1 me-5 lh-base" href="#!">Sự kiện sắp tới 3</a>
-                        <p class="text-body-secondary fs-9 mb-2">Tổ chức bởi<br /><a class="fw-bold text-primary" href="#!">IAFM - International Academy of Tech</a></p>
-                        <p class="fs-10 text-body-tertiary text-opacity-85">64 người đã xem</p>
-                        <p class="fs-9 text-body-tertiary fw-bold mb-0">
-                            <span class="fa-solid fa-map-marker-alt text-body-secondary me-1"></span>
-                            Địa điểm tổ chức
-                        </p>
-                    </div>
-                </div>*@
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -272,4 +363,6 @@
     <script src="~/vendors/isotope-packery/packery-mode.pkgd.min.js"></script>
     <script src="~/vendors/bigpicture/BigPicture.js"></script>
     <script src="~/vendors/countup/countUp.umd.js"></script>
+    <script src="~/vendors/flatpickr/flatpickr.min.js"></script>
+    <script src="~/vendors/dropzone/dropzone-min.js"></script>
 }

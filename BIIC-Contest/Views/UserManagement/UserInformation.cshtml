@@ -1,7 +1,6 @@
 ﻿
 @{
     ViewBag.Title = "UserInformation";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="pt-5 pb-9">
@@ -92,17 +91,23 @@
                             Thông tin người dùng
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-nowrap" id="permission-tab" data-bs-toggle="tab" href="#tab-permission" role="tab" aria-controls="permission" aria-selected="true">
+                            <span class="fas fa-lock me-2"></span>
+                            Quyền sử dụng hệ thống
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="tab-content" id="profileTabContent">
-                <div class="tab-pane fade show active" id="tab-personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
+                <div class="tab-pane fade  show active" id="tab-personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
                     <div class="row gx-3 gy-4 mb-5">
                         <div class="col-12 col-lg-6">
                             <label class="form-label text-body-highlight fs-8 ps-0 text-capitalize lh-sm" for="fullName">Họ và tên</label>
                             <input class="form-control" id="fullName" type="text" placeholder="Họ và tên" />
                         </div>
                         <div class="col-12 col-lg-6">
-                            <label class="form-label text-body-highlight fs-8 ps-0 text-capitalize lh-sm" for="roles">Phân quyền</label>
+                            <label class="form-label text-body-highlight fs-8 ps-0 text-capitalize lh-sm" for="roles">Phân quyền tài khoản</label>
                             <select class="form-select" id="roles" onchange="selectedRole(this)">
                                 <option value="0">Chưa chọn quyền</option>
                                 <option value="2">Ban giám khảo</option>
@@ -125,9 +130,64 @@
                             <input class="form-control" id="specialty-field" type="text" placeholder="Chuyên môn" />
                         </div>
                     </div>
-                    <div class="text-end"><button class="btn btn-primary px-7">Lưu thay đổi</button></div>
                 </div>
             </div>
+
+            <div class="tab-content" id="permissionTabContent">
+                <div class="tab-pane fade" id="tab-permission" role="tabpanel" aria-labelledby="permission-tab">
+                    <div class="row gx-3 gy-4 mb-5">
+                        <div class="col-12 col-lg-6">
+                            <div class="border-bottom border-translucent border-dashed pb-3 mb-4">
+                                <h5 class="text-body mb-3 text-uppercase">Bài dự thi của thí sinh</h5>
+                                <div class="form-check"><input class="form-check-input" id="showEmail" type="checkbox" name="showEmail" /><label class="form-check-label fs-8" for="showEmail">Cho phép xem bài dự thi</label></div>
+                                <div class="form-check"><input class="form-check-input" id="showExperiences" type="checkbox" name="showExperiences" /><label class="form-check-label fs-8" for="showExperiences">Cho phép chấm bài dự thi</label></div>
+                                <div class="form-check"><input class="form-check-input" id="showFollowers" type="checkbox" name="showFollowers" /><label class="form-check-label fs-8" for="showFollowers">Cho phép chỉnh sửa điểm</label></div>
+                                <div class="form-check"><input class="form-check-input" id="showFollowers" type="checkbox" name="showFollowers" /><label class="form-check-label fs-8" for="showFollowers">Cho phép chỉnh sửa bài dự thi</label></div>
+                                <div class="form-check"><input class="form-check-input" id="showFollowers" type="checkbox" name="showFollowers" /><label class="form-check-label fs-8" for="showFollowers">Cho phép xem tất cả điểm số</label></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="border-bottom border-translucent border-dashed pb-3 mb-4">
+                                <h5 class="text-body mb-3 text-uppercase">Hoạt động trên hệ thống</h5>
+                                <div class="form-check"><input class="form-check-input" id="tagGroupMembers" type="radio" name="tagPermission" /><label class="form-check-label fs-8" for="tagGroupMembers">Được phép truy cập</label></div>
+                                <div class="form-check"><input class="form-check-input" id="tagEveryone" type="radio" checked="checked" name="tagPermission" /><label class="form-check-label fs-8" for="tagEveryone">Không được phép</label></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="border-bottom border-translucent border-dashed pb-3 mb-4">
+                                <h5 class="text-body mb-3 text-uppercase">Tạo tài khoản</h5>
+                                <div class="form-check"><input class="form-check-input" id="tagGroupMembers" type="radio" name="tagPermission" /><label class="form-check-label fs-8" for="tagGroupMembers">Được phép truy cập</label></div>
+                                <div class="form-check"><input class="form-check-input" id="tagEveryone" type="radio" checked="checked" name="tagPermission" /><label class="form-check-label fs-8" for="tagEveryone">Không được phép</label></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="border-bottom border-translucent border-dashed pb-3 mb-4">
+                                <h5 class="text-body mb-3 text-uppercase">HỘP THƯ</h5>
+                                <div class="form-check form-switch"><input class="form-check-input" id="showPhone" type="checkbox" name="showPhone" /><label class="form-check-label fs-8" for="showPhone">Cho phép xem hộp thư đến</label></div>
+                                <div class="form-check form-switch"><input class="form-check-input" id="showPhone" type="checkbox" name="showPhone" /><label class="form-check-label fs-8" for="showPhone">Cho phép gửi thư</label></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="border-bottom border-translucent border-dashed pb-3 mb-4">
+                                <h5 class="text-body mb-3 text-uppercase">Chỉnh sửa thông tin trang web</h5>
+                                <div class="form-check"><input class="form-check-input" id="tagGroupMembers" type="radio" name="tagPermission" /><label class="form-check-label fs-8" for="tagGroupMembers">Được phép truy cập</label></div>
+                                <div class="form-check"><input class="form-check-input" id="tagEveryone" type="radio" checked="checked" name="tagPermission" /><label class="form-check-label fs-8" for="tagEveryone">Không được phép</label></div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <div class="border-bottom border-translucent border-dashed pb-3 mb-4">
+                                <h5 class="text-body mb-3 text-uppercase">Tin tức, cuộc thi</h5>
+                                <div class="form-check"><input class="form-check-input" id="showEmail" type="checkbox" name="showEmail" /><label class="form-check-label fs-8" for="showEmail">Cho phép tạo và đăng</label></div>
+                                <div class="form-check"><input class="form-check-input" id="showExperiences" type="checkbox" name="showExperiences" /><label class="form-check-label fs-8" for="showExperiences">Cho phép chỉnh sửa</label></div>
+                                <div class="form-check"><input class="form-check-input" id="showFollowers" type="checkbox" name="showFollowers" /><label class="form-check-label fs-8" for="showFollowers">Cho phép xóa</label></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-end"><button class="btn btn-primary px-7">Lưu thay đổi</button></div>
         </div>
     </div>
 </section>

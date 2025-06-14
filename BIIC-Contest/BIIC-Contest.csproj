@@ -235,6 +235,7 @@
     <Content Include="assets\img\icons\alien-500.png" />
     <Content Include="assets\img\icons\alien.png" />
     <Content Include="assets\img\icons\estela.png" />
+    <Content Include="assets\img\icons\file-bg.png" />
     <Content Include="assets\img\icons\image-icon.png" />
     <Content Include="assets\img\icons\satellite-500.png" />
     <Content Include="assets\img\icons\ufo-500.png" />
@@ -336,6 +337,7 @@
     <Content Include="Views\ContactMessageManagement\ContactMessageDetail.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\ServerInternal.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
