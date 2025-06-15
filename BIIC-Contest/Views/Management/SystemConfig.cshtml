@@ -21,29 +21,7 @@
                 <h4 class="mb-3">Tên viết tắt</h4>
                 <input class="form-control mb-5" type="text" maxlength="50" placeholder="Tên viết tắt..." />
 
-                <h4 class="mb-3">Tên đầy đủ</h4>
-                <input class="form-control mb-5" type="text" maxlength="255" placeholder="Tên đầy đủ..." />
-
-                <div class="mb-6">
-                    <h4 class="mb-3">Mô tả ngắn về tổ chức</h4>
-                    <textarea class="form-control" rows="5" name="content" placeholder="Mô tả..."></textarea>
-                </div>
-
                 <h4 class="mb-3">Logo tổ chức</h4>
-                <div class="dropzone dropzone-multiple p-0 mb-5" id="my-awesome-dropzone" data-dropzone="data-dropzone">
-                    <div class="fallback"><input name="file" type="file" multiple="multiple" /></div>
-                    <div class="dz-preview d-flex flex-wrap">
-                        <div class="border border-translucent bg-body-emphasis rounded-3 d-flex flex-center position-relative me-2 mb-2" style="height:80px;width:80px;">
-                            <img class="dz-image" src="~/assets/img/system/default_logo.jpg" alt="..." data-dz-thumbnail="data-dz-thumbnail" />
-                            <a class="dz-remove text-body-quaternary" href="#!" data-dz-remove="data-dz-remove">
-                                <span data-feather="x"></span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="dz-message text-body-tertiary text-opacity-85" data-dz-message="data-dz-message">Drag your photo here<span class="text-body-secondary px-1">or</span><button class="btn btn-link p-0" type="button">Browse from device</button><br /><img class="mt-3 me-2" src="~/assets/img/icons/image-icon.png" width="40" alt="" /></div>
-                </div>
-
-                <h4 class="mb-3">Banner giới thiệu</h4>
                 <div class="dropzone dropzone-multiple p-0 mb-5" id="my-awesome-dropzone" data-dropzone="data-dropzone">
                     <div class="fallback"><input name="file" type="file" multiple="multiple" /></div>
                     <div class="dz-preview d-flex flex-wrap">
@@ -106,16 +84,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="d-flex col-xl-12 pt-3">
+                            <button class="btn btn-primary mb-2 mb-sm-0 w-auto ms-auto" type="button">
+                                <span data-feather="refresh-ccw" class="me-2"></span>
+                                Cập nhật
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="d-flex p-3 col-xl-8">
-            <button class="btn btn-primary mb-2 mb-sm-0 w-auto ms-auto" type="button">
-                <span data-feather="refresh-ccw" class="me-2"></span>
-                Cập nhật
-            </button>
-        </div>
+        
     </div>
 </div>
 
