@@ -2,6 +2,10 @@
 {
     public class RouteConstant
     {
+        //Api routes
+        public const string LOGIN_API = "/apis/v1/user/login";
+
+
         //Error Routes
         public const string _404 = "/404";
         public const string _500 = "/500";
