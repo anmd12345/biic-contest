@@ -150,7 +150,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Databases\BIICConnectionDbContext.cs" />
     <Compile Include="Dtos\ContactMessageDto.cs" />
