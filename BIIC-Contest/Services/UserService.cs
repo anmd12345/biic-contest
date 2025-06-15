@@ -47,7 +47,12 @@ namespace BIIC_Contest.Services
                     RoleName = userResponse.tbl_role.role_name,
                     RoleDescription = userResponse.tbl_role.description
                 },
-                SpecialtyField = userResponse.specialty_field
+                SpecialtyField = userResponse.specialty_field,
+                AvatarUrl = userResponse.avatar_url,
+                Permission = new PermissionDto
+                {
+                    
+                }
             };
         }
     }

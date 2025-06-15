@@ -153,6 +153,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Databases\BIICConnectionDbContext.cs" />
     <Compile Include="Dtos\ContactMessageDto.cs" />
+    <Compile Include="Dtos\PermissionDto.cs" />
     <Compile Include="Dtos\RoleDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Entitys\BasicResponseEntity.cs" />
@@ -220,6 +221,7 @@
     <Content Include="assets\img\blog\blog-5.png" />
     <Content Include="assets\img\brand2\b.png" />
     <Content Include="assets\img\event\banner_event_1.jpg" />
+    <Content Include="assets\img\event\banner_event_1.png" />
     <Content Include="assets\img\event\doi_tuong_1.jpg" />
     <Content Include="assets\img\event\giai_thuong_1.jpg" />
     <Content Include="assets\img\event\lich_trinh_1.jpg" />
@@ -340,7 +342,6 @@
     <Content Include="Views\Management\ActivityLog.cshtml" />
     <Content Include="Views\UserManagement\ListUser.cshtml" />
     <Content Include="Views\UserManagement\UserInformation.cshtml" />
-    <Content Include="Views\Test\TestLogin.cshtml" />
     <Content Include="Views\ContactMessageManagement\ListContactMessage.cshtml" />
     <Content Include="Views\ContactMessageManagement\ContactMessageDetail.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />

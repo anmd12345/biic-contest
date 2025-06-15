@@ -113,7 +113,11 @@
                                                 <a class="fs-9 fw-semibold" href="@RouteConstant.FORGOT_PASSWORD_PAGE">Quên mật khẩu?</a>
                                             </div>
                                         </div>
-                                        <a href="@RouteConstant.HOME_PAGE" class="btn btn-primary w-100 mb-3">Đăng Nhập</a>
+                                        <button class="btn btn-primary w-100 mb-3" onclick="handleLogin(this)">Đăng Nhập</button>
+                                        <button class="btn btn-primary w-100 mb-3" id="btn-spinner" type="button" style="display: none">
+                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            Vui lòng chờ...
+                                        </button>
                                         <div class="text-center">
                                             <a class="fs-9 fw-bold" href="@RouteConstant.SIGNUP_PAGE">Tạo tài khoản</a>
                                         </div>
@@ -142,6 +146,46 @@
     <script src="~/vendors/feather-icons/feather.min.js"></script>
     <script src="~/vendors/dayjs/dayjs.min.js"></script>
     <script src="~/assets/js/phoenix.js"></script>
+    <script src="~/vendors/sweet-alert/sweetalert2@11.js"></script>
+    <script src="~/scripts/show-notification.js"></script>
+    <script src="~/scripts/fetch-api.js"></script>
+    <script>
+        async function handleLogin(btnLogin) {
+            const usernameEl = document.getElementById('username')
+            const passwordEl = document.getElementById('password')
+            const btnSpinner = document.getElementById('btn-spinner')
+            const url = '@RouteConstant.LOGIN_API'
+            const postData = {
+                username: usernameEl.value,
+                password: passwordEl.value
+            }
+
+            btnLogin.style.display = 'none'
+            btnSpinner.style.display = 'block'
+            usernameEl.disabled = true
+            passwordEl.disabled = true
+
+            try {
+                const response = await postApi(url, postData)
+                if (response.Success) {
+                    showSuccessLoginNotification(response.Message, () => {window.location.href = '@RouteConstant.HOME_PAGE';}, 1000)
+                    return;
+                }
+
+                if (!response.Success) {
+                    showErrorNotification(response.Message)
+                    btnLogin.style.display = 'block'
+                    btnSpinner.style.display = 'none'
+                    usernameEl.disabled = false
+                    passwordEl.disabled = false
+                    return
+                }
+
+            } catch (ex) {
+                console.log(ex)
+            }
+        }
+    </script>
 </body>
 
 </html>
