@@ -1,5 +1,6 @@
 ﻿namespace BIIC_Contest.Entitys
 {
+    //Message entity for basic responses
     public class BasicResponseEntity
     {
         private bool success;
