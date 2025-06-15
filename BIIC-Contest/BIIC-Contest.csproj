@@ -239,6 +239,13 @@
     <Content Include="assets\img\icons\satellite-500.png" />
     <Content Include="assets\img\icons\ufo-500.png" />
     <Content Include="assets\img\icons\ufo.png" />
+    <Content Include="assets\img\sponsors\sponsor1.png" />
+    <Content Include="assets\img\sponsors\sponsor2.png" />
+    <Content Include="assets\img\sponsors\sponsor3.png" />
+    <Content Include="assets\img\sponsors\sponsor4.png" />
+    <Content Include="assets\img\sponsors\sponsor5.jpg" />
+    <Content Include="assets\img\sponsors\sponsor6.png" />
+    <Content Include="assets\img\sponsors\sponsor7.png" />
     <Content Include="assets\img\spot-illustrations\auth-dark.png" />
     <Content Include="assets\img\spot-illustrations\auth.png" />
     <Content Include="assets\img\system\default_banner.jpg" />
@@ -275,6 +282,8 @@
     <Content Include="vendors\lodash\lodash.min.js" />
     <Content Include="vendors\mapbox-gl\mapbox-gl.css" />
     <Content Include="vendors\mapbox-gl\mapbox-gl.js" />
+    <Content Include="vendors\marquee\marqueeLogo.css" />
+    <Content Include="vendors\marquee\marqueeLogo.js" />
     <Content Include="vendors\popper\popper.min.js" />
     <Content Include="vendors\simplebar\simplebar.min.css" />
     <Content Include="vendors\simplebar\simplebar.min.js" />
