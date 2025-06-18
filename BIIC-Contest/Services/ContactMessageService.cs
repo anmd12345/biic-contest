@@ -2,6 +2,7 @@
 using BIIC_Contest.Models;
 using BIIC_Contest.Repositorys;
 using BIIC_Contest.Services.I;
+using System;
 using System.Collections.Generic;
 
 namespace BIIC_Contest.Services
@@ -18,7 +19,7 @@ namespace BIIC_Contest.Services
                 if (ValidateDataHelper.isNullOrEmpty(fullname)) return 1;
                 if (ValidateDataHelper.isNullOrEmpty(phone)) return 2;
                 if (!ValidateDataHelper.isValidPhoneNumber(phone)) return 3;
-                //if (!ValidateDataHelper.isNullOrEmpty(email)) return 4;
+                if (ValidateDataHelper.isNullOrEmpty(email)) return 4;
                 if (!ValidateDataHelper.isValidEmail(email)) return 5;
                 if (ValidateDataHelper.isNullOrEmpty(message)) return 6;
 

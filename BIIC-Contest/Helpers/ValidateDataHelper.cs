@@ -20,21 +20,24 @@ namespace BIIC_Contest.Helpers
         //Trả về true nếu email hợp lệ
         public static bool isValidEmail(string email)
         {
-            /* if (string.IsNullOrWhiteSpace(email))
-                 return false;
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
 
-             email = email.Trim();
+            email = email.Trim();
 
-             return Regex.IsMatch(email,
-                 @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
-                 RegexOptions.IgnoreCase);*/
-            return true;
+            return Regex.IsMatch(
+                email,
+                @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                RegexOptions.IgnoreCase
+            );
         }
+
+
 
         //Trả về true nếu chuỗi rỗng, null hoặc chỉ chứa khoảng trắng
         public static bool isNullOrEmpty(string text)
         {
-            return string.IsNullOrWhiteSpace(text);
+            return text == "" || text == null || text.Trim() == "";
         }
     }
 }
