@@ -7,7 +7,7 @@ namespace BIIC_Contest.Controllers
     {
         public ActionResult Index()
         {
-            return Redirect(RouteConstant.HOME_PAGE);
+            return RedirectToAction("Home");
         }
 
         [Route("trang-chu")]

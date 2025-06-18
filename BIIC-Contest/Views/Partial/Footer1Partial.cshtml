@@ -1,4 +1,10 @@
-﻿<div class="position-relative">
+﻿@using BIIC_Contest.Constants
+@using BIIC_Contest.Dtos
+@{
+    SystemDto currentSystem = Session[SessionConstant.CURRENT_SYSTEM] as SystemDto;
+}
+
+<div class="position-relative">
     <div class="bg-holder footer-bg" style="background-image:url(/assets/img/bg/bg-19.png);background-size:auto;"></div>
 
     <div class="bg-holder" style="background-image:url(/assets/img/bg/bg-right-20.png);background-position:right;background-size:auto;"></div>
@@ -10,9 +16,9 @@
             <div class="container-small px-lg-7 px-xxl-3">
                 <div class="row position-relative">
                     <div class="col-12 col-sm-12 col-lg-5 mb-4 order-0 order-sm-0">
-                        <a href="#"><img class="mb-3" style="border-radius: 30%" src="~/assets/img/icons/favicon.jpg" height="48" alt="" /></a>
-                        <h3 class="text-white">BIIC</h3>
-                        <p class="text-white opacity-50">All over the world. Alice in <br />wonderland and other places.</p>
+                        <a href="#"><img class="mb-3" style="border-radius: 30%" src="~/assets/img/system/@currentSystem.LogoUrl" height="48" alt="" /></a>
+                        <h3 class="text-white">@currentSystem.ShortTitle</h3>
+                        <p class="text-white opacity-50">@currentSystem.Address</p>
                     </div>
                     <div class="col-lg-7">
                         <div class="row justify-content-between">

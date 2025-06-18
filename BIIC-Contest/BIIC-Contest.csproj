@@ -156,6 +156,7 @@
     <Compile Include="Dtos\ContactMessageDto.cs" />
     <Compile Include="Dtos\PermissionDto.cs" />
     <Compile Include="Dtos\RoleDto.cs" />
+    <Compile Include="Dtos\SystemDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Entitys\BasicResponseEntity.cs" />
     <Compile Include="Global.asax.cs">
@@ -165,6 +166,7 @@
     <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Helpers\IPHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Helpers\PhoneNumberHelper.cs" />
     <Compile Include="Helpers\ValidateDataHelper.cs" />
     <Compile Include="Models\BIICConnectionDb.designer.cs">
       <AutoGen>True</AutoGen>
@@ -174,10 +176,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorys\ContactMessageRepo.cs" />
     <Compile Include="Repositorys\RoleRepo.cs" />
+    <Compile Include="Repositorys\SystemRepo.cs" />
     <Compile Include="Repositorys\UserRepo.cs" />
     <Compile Include="Services\ContactMessageService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
+    <Compile Include="Services\I\ISystemService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
+    <Compile Include="Services\SystemService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
