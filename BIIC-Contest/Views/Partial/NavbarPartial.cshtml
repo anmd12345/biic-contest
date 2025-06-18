@@ -2,6 +2,7 @@
 @using BIIC_Contest.Dtos
 @{
     UserDto currentUser = Session[SessionConstant.CURRENT_USER] as UserDto;
+    SystemDto currentSystem = Session[SessionConstant.CURRENT_SYSTEM] as SystemDto;
 }
 
 @section styles{
@@ -18,8 +19,8 @@
     <nav class="navbar navbar-expand-lg container-small px-3 px-lg-7 px-xxl-3">
         <a class="navbar-brand flex-1 flex-lg-grow-0" href="@RouteConstant.HOME_PAGE">
             <div class="d-flex align-items-center">
-                <img class="d-dark-none" src="~/assets/img/system/default_logo.jpg" alt="biic_logo" width="60" />
-                <h5 class="logo-text ms-2">BIIC</h5>
+                <img class="d-dark-none" src="~/assets/img/system/@(currentSystem.LogoUrl)" alt="biic_logo" width="60" />
+                <h5 class="logo-text ms-2">@currentSystem.ShortTitle</h5>
             </div>
         </a>
         <div class="d-lg-none d-flex">
@@ -96,15 +97,6 @@
                 <li class="nav-item border-bottom border-translucent border-bottom-lg-0">
                     <a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="@RouteConstant.CONTACT_PAGE">Liên hệ</a>
                 </li>
-                @if (currentUser == null)
-                {
-                    <li class="nav-item border-bottom border-translucent border-bottom-lg-0">
-                        <a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="@RouteConstant.LOGIN_PAGE">Đăng nhập</a>
-                    </li>
-                    <li class="nav-item border-bottom border-translucent border-bottom-lg-0">
-                        <a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="@RouteConstant.SIGNUP_PAGE">Đăng ký</a>
-                    </li>
-                }
             </ul>
 
             <div class="d-grid d-lg-flex align-items-center">
@@ -123,8 +115,8 @@
                 <a class="text-body-quaternary text-body-tertiary-hover pe-2 d-none d-lg-inline lh-sm" href="#" data-bs-toggle="modal" data-bs-target="#searchBoxModal"><span data-feather="search" style="height: 20px; width: 20px;"></span></a>
                 @if (currentUser == null)
                 {
-                    <a class="btn btn-link text-body order-1 order-lg-0 pe-2 me-lg-2 " href="@RouteConstant.LOGIN_PAGE">Đăng nhập</a>
-                    <a class="btn btn-phoenix-primary me-4 order-0" href="@RouteConstant.SIGNUP_PAGE"><span class="fw-bold">Đăng ký</span></a>
+                    <a class="btn btn-link text-body border-0 order-lg-0 pe-2 me-lg-2" href="@RouteConstant.LOGIN_PAGE">Đăng nhập</a>
+                    <a class="btn btn-phoenix-primary border-1 me-lg-2" href="@RouteConstant.SIGNUP_PAGE"><span class="fw-bold">Đăng ký</span></a>
                 }
 
                 @if (currentUser != null)

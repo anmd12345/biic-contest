@@ -1,7 +1,7 @@
-﻿@using BIIC_Contest.Models
+﻿@using BIIC_Contest.Dtos
 @{
     ViewBag.Title = "Danh sách tin nhắn liên hệ";
-    List<tbl_contact_message> contactMessages = ViewBag.contactMessages;
+    List<ContactMessageDto> contactMessages = ViewBag.contactMessages;
 }
 
 <div class="content pt-0">
@@ -34,7 +34,7 @@
                                     <div class="d-flex align-items-center">
                                         <span class="me-2 nav-icons uil uil-inbox"></span>
                                         <span class="flex-1">Hộp thư đến</span>
-                                        <span class="nav-item-count">5</span>
+                                        <span class="nav-item-count">@contactMessages.Count</span>
                                     </div>
                                 </a>
                             </li>
@@ -68,38 +68,39 @@
                             <div class="form-check mb-0 fs-8"><input class="form-check-input" type="checkbox" data-bulk-select-row="data-bulk-select-row" /></div>
                             <div><button class="btn p-0 me-2 text-body-quaternary hover text-body-tertiary text-opacity-85" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Archive"><span class="fas fa-archive fs-10"></span></button><button class="btn p-0 me-2 text-body-quaternary hover text-body-tertiary text-opacity-85" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete"><span class="fas fa-trash fs-10"></span></button><button class="btn p-0 me-2 text-body-quaternary hover text-body-tertiary text-opacity-85" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Star"><span class="fas fa-star fs-10"></span></button><button class="btn p-0 text-body-quaternary hover text-body-tertiary text-opacity-85" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tags"><span class="fas fa-tag fs-10"></span></button></div>
                         </div>
-
-
                         @foreach (var contact in contactMessages)
                         {
+
+
                             <div class="border-top border-translucent hover-actions-trigger py-3">
-                                <div class="row align-items-sm-center gx-2">
+                                <div class="row align-items-sm-center gx-2 mb-3 mb-lg-0">
                                     <div class="col-auto">
                                         <div class="d-flex flex-column flex-sm-row">
                                             <input class="form-check-input mb-2 m-sm-0 me-sm-2" type="checkbox" id="checkbox-1" data-bulk-select-row="data-bulk-select-row" />
-                                            <button class="btn p-0">
-                                                <span class="fas text-warning fa-star"></span>
-                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <div class="avatar avatar-s  rounded-circle">
+                                        <div class="d-flex align-items-center position-relative">
                                             <span data-feather="mail"></span>
+                                            @if (!contact.IsSeen)
+                                            {
+                                                <span class="fa-solid fa-circle text-info new-page-indicator position-absolute" style="font-size: 6px; top: 0; right: 0"></span>
+                                            }
                                         </div>
                                     </div>
                                     <div class="col-auto">
-                                        <a class="text-body-emphasis fw-bold inbox-link fs-9" href="/quan-ly-tin-nhan/tin-nhan-chi-tiet">@contact.fullname</a>
+                                        <a class="text-body-emphasis inbox-link @(!contact.IsSeen ? "fw-bold" : "") fs-9" href="/quan-ly-tin-nhan/tin-nhan-chi-tiet">@contact.Fullname</a>
                                     </div>
                                     <div class="col-auto ms-auto">
                                         <div class="hover-actions end-0">
                                             <button class="btn btn-phoenix-secondary btn-icon dropdown-toggle dropdown-caret-none" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fa-solid fa-ellipsis"></span></button>
                                             <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Mark Unread</a><a class="dropdown-item" href="#!">Mark Important</a><a class="dropdown-item" href="#!">Archive</a><a class="dropdown-item" href="#!">Download</a><a class="dropdown-item" href="#!">Print</a><a class="dropdown-item" href="#!">Report Spam</a><a class="dropdown-item" href="#!">Report Phishing</a><a class="dropdown-item" href="#!">Mute Jessica Ball</a><a class="dropdown-item" href="#!">Block Jessica Ball</a><a class="dropdown-item text-danger" href="#!">Delete</a></div>
-                                        </div><span class="fs-10 fw-bold">1 M</span>
+                                        </div><span class="fs-10 fw-bold">@contact.SendAt</span>
                                     </div>
                                 </div>
                                 <div class="ms-4 mt-n3 mt-sm-0 ms-sm-11">
                                     <a class="d-block inbox-link" href="/quan-ly-tin-nhan/tin-nhan-chi-tiet">
-                                        <p class="fs-9 ps-0 text-body-tertiary mb-0 line-clamp-2">@contact.message</p>
+                                        <p class="fs-9 ps-0 text-body-tertiary @(!contact.IsSeen ? "fw-bold" : "") mb-0 line-clamp-2">@contact.Message</p>
                                     </a>
                                 </div>
                             </div>

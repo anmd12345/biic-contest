@@ -1,7 +1,11 @@
 ﻿@using BIIC_Contest.Configs
+@using BIIC_Contest.Dtos
+@using BIIC_Contest.Constants
+@using BIIC_Contest.Helpers
 @{
     ViewBag.Title = "Liên hệ";
     var googleMapApiKey = "https://maps.googleapis.com/maps/api/js?key=" + GoogleMapConfig.GOOGLE_MAP_API_KEY + "&callback=initMap";
+    SystemDto currentSystem = Session[SessionConstant.CURRENT_SYSTEM] as SystemDto;
 }
 
 @section styles{
@@ -16,15 +20,15 @@
                 <div class="d-flex flex-column align-items-center align-items-md-start gap-3 gap-md-0">
                     <div class="d-md-flex align-items-center">
                         <div class="icon-wrapper shadow-info"><span class="uil uil-phone text-primary fs-4 z-1 ms-2" data-bs-theme="light"></span></div>
-                        <div class="flex-1 ms-3"><a class="link-900" href="tel:+871406-7509">(871) 406-7509</a></div>
+                        <div class="flex-1 ms-3"><a class="link-900" href="tel:+871406-7509">@(PhoneNumberHelper.formatPhoneNumber(currentSystem.Phone))</a></div>
                     </div>
                     <div class="d-md-flex align-items-center">
                         <div class="icon-wrapper shadow-info"><span class="uil uil-envelope text-primary fs-4 z-1 ms-2" data-bs-theme="light"></span></div>
-                        <div class="flex-1 ms-3"><a class="fw-semibold text-body" href="mailto:biic@email.com">biic@email.com</a></div>
+                        <div class="flex-1 ms-3"><a class="fw-semibold text-body" href="mailto:biic@email.com">@currentSystem.Email</a></div>
                     </div>
                     <div class="mb-6 d-md-flex align-items-center">
                         <div class="icon-wrapper shadow-info"><span class="uil uil-map-marker text-primary fs-4 z-1 ms-2" data-bs-theme="light"></span></div>
-                        <div class="flex-1 ms-3"><a class="fw-semibold text-body" href="#!">39163 Amir Drive Suite 802</a></div>
+                        <div class="flex-1 ms-3"><a class="fw-semibold text-body" href="#!">@currentSystem.Address</a></div>
                     </div>
                     <div class="d-flex"><a href="#!"><span class="fa-brands fa-facebook fs-6 text-primary me-3"></span></a><a href="#!"><span class="fa-brands fa-twitter fs-6 text-primary me-3"></span></a><a href="#!"><span class="fa-brands fa-linkedin-in fs-6 text-primary"></span></a></div>
                 </div>
@@ -34,7 +38,7 @@
                 <p class="mb-7">Nếu bạn có bất kỳ thắc mắc hoặc góp ý nào, chúng tôi luôn sẵn lòng lắng nghe, hãy trao đổi và liên hệ với chúng tôi bất cứ lúc nào.</p>
                 <div class="row g-4">
                     <div class="col-12"><input class="form-control bg-body-emphasis" id="fullname" type="text" name="name" placeholder="Họ và tên" required="required" /></div>
-                    <div class="col-12"><input class="form-control bg-body-emphasis" id="phone" type="text" name="phone" placeholder="Số điện thoại" required="required" /></div>
+                    <div class="col-12"><input class="form-control bg-body-emphasis" id="phone" maxlength="10" type="text" name="phone" placeholder="Số điện thoại" required="required" /></div>
                     <div class="col-12"><input class="form-control bg-body-emphasis" id="email" type="email" name="email" placeholder="Email" required="required" /></div>
                     <div class="col-12"><textarea class="form-control bg-body-emphasis" id="message" rows="6" name="message" placeholder="Nội dung tin nhắn" required="required"></textarea></div>
                     <div class="col-12 d-grid">

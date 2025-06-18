@@ -146,6 +146,7 @@
     <Compile Include="Controllers\Admin\ContactMessageManagementController.cs" />
     <Compile Include="Controllers\Admin\ManagementController.cs" />
     <Compile Include="Controllers\Admin\UserManagementController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Dtos\ContactMessageDto.cs" />
     <Compile Include="Dtos\PermissionDto.cs" />
     <Compile Include="Dtos\RoleDto.cs" />
+    <Compile Include="Dtos\SystemDto.cs" />
     <Compile Include="Dtos\UserDto.cs" />
     <Compile Include="Entitys\BasicResponseEntity.cs" />
     <Compile Include="Global.asax.cs">
@@ -164,6 +166,7 @@
     <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Helpers\IPHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Helpers\PhoneNumberHelper.cs" />
     <Compile Include="Helpers\ValidateDataHelper.cs" />
     <Compile Include="Models\BIICConnectionDb.designer.cs">
       <AutoGen>True</AutoGen>
@@ -173,10 +176,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorys\ContactMessageRepo.cs" />
     <Compile Include="Repositorys\RoleRepo.cs" />
+    <Compile Include="Repositorys\SystemRepo.cs" />
     <Compile Include="Repositorys\UserRepo.cs" />
     <Compile Include="Services\ContactMessageService.cs" />
+    <Compile Include="Services\I\IBaseService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
+    <Compile Include="Services\I\ISystemService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
+    <Compile Include="Services\SystemService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +263,7 @@
     <Content Include="assets\img\user\default_logo.jpg" />
     <Content Include="assets\js\config.js" />
     <Content Include="assets\js\phoenix.js" />
+    <Content Include="assets\upload\videos\85YpIkbEsTTFc.mp4" />
     <Content Include="Global.asax" />
     <Content Include="scripts\cache-js.js" />
     <Content Include="scripts\fetch-api.js" />
@@ -323,6 +331,7 @@
       <LastGenOutput>BIICConnectionDb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="assets\upload\files\Nhom3.pdf" />
     <None Include="Models\BIICConnectionDb.dbml.layout">
       <DependentUpon>BIICConnectionDb.dbml</DependentUpon>
     </None>

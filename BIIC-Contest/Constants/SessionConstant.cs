@@ -6,6 +6,6 @@
         public const string CURRENT_USER = "currentUser";
 
         //Lưu thông tin trang web
-        public const string CURRENT_SYSTEM_INFO = "currentSystem";
+        public const string CURRENT_SYSTEM = "currentSystem";
     }
 }
