@@ -48,7 +48,7 @@ namespace BIIC_Contest.Services
                     RoleDescription = userResponse.tbl_role.description
                 },
                 SpecialtyField = userResponse.specialty_field,
-                AvatarUrl = userResponse.avatar_url,
+                AvatarUrl = userResponse.avatar,
                 Permission = new PermissionDto
                 {
                     

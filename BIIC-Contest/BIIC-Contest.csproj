@@ -146,6 +146,7 @@
     <Compile Include="Controllers\Admin\ContactMessageManagementController.cs" />
     <Compile Include="Controllers\Admin\ManagementController.cs" />
     <Compile Include="Controllers\Admin\UserManagementController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -256,6 +257,7 @@
     <Content Include="assets\img\user\default_logo.jpg" />
     <Content Include="assets\js\config.js" />
     <Content Include="assets\js\phoenix.js" />
+    <Content Include="assets\upload\videos\85YpIkbEsTTFc.mp4" />
     <Content Include="Global.asax" />
     <Content Include="scripts\cache-js.js" />
     <Content Include="scripts\fetch-api.js" />
@@ -323,6 +325,7 @@
       <LastGenOutput>BIICConnectionDb.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="assets\upload\files\Nhom3.pdf" />
     <None Include="Models\BIICConnectionDb.dbml.layout">
       <DependentUpon>BIICConnectionDb.dbml</DependentUpon>
     </None>

@@ -28,5 +28,14 @@ namespace BIIC_Contest.Helpers
             string hashedInput = hashPassword(input);
             return string.Equals(hashedInput, hashedPassword, StringComparison.OrdinalIgnoreCase);
         }
+
+        public static string generateSubmissionCode(string input)
+        {
+            using (var md5 = MD5.Create())
+            {
+                byte[] hash = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+                return BitConverter.ToString(hash).Replace("-", "").Substring(0, 6).ToUpper();
+            }
+        }
     }
 }
