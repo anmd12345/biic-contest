@@ -179,6 +179,7 @@
     <Compile Include="Repositorys\SystemRepo.cs" />
     <Compile Include="Repositorys\UserRepo.cs" />
     <Compile Include="Services\ContactMessageService.cs" />
+    <Compile Include="Services\I\IBaseService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
     <Compile Include="Services\I\ISystemService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
