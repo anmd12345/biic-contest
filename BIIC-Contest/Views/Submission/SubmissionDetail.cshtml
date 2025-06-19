@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewBag.Title = "SubmissionDetail";
+}
+
+<div class="content py-5">
+    <div class="pb-9">
+        <div class="row">
+            <div class="col-12">
+                <div class="row align-items-center justify-content-between g-3 mb-3">
+                    <div class="col-12 col-md-auto">
+                        <h2 class="mb-0">Bài dự thi DF9KSF</h2>
+                    </div>
+                    <div class="col-12 col-md-auto">
+                        <div class="d-flex">
+                            <div class="flex-1 d-md-none">
+                                <button class="btn px-3 btn-phoenix-secondary text-body-tertiary me-2" data-phoenix-toggle="offcanvas" data-phoenix-target="#productFilterColumn"><span class="fa-solid fa-bars"></span></button>
+                            </div>
+                            <button class="btn btn-primary me-2">
+                                <span class="me-2" data-feather="refresh-ccw"></span>
+                                <span>Cập nhật dữ liệu</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-0 g-md-4 g-xl-6">
+            <div class="col-md-5 col-lg-5 col-xl-4">
+                <div class="sticky-leads-sidebar">
+                    <div class="lead-details-offcanvas bg-body scrollbar phoenix-offcanvas phoenix-offcanvas-fixed" id="productFilterColumn">
+                        <div class="d-flex justify-content-between align-items-center mb-2 d-md-none">
+                            <h3 class="mb-0">Bài dự thi DF9KSF</h3>
+                            <button class="btn p-0" data-phoenix-dismiss="offcanvas">
+                                <span class="uil uil-times fs-7"></span>
+                            </button>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="row align-items-center g-3 text-center text-xxl-start">
+                                    <div class="col-12 col-xxl-auto">
+                                        <div class="avatar avatar-5xl"><img class="rounded-circle" src="~/assets/img/user/default_logo.jpg" alt="" /></div>
+                                    </div>
+                                    <div class="col-12 col-sm-auto flex-1">
+                                        <h3 class="fw-bolder mb-2">TÊN THÍ SINH</h3>
+                                        <p class="mb-0">NGÀY SINH</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-5">
+                                    <h3>Thông tin thí sinh</h3>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span data-feather="user" class="me-2"></span>
+                                        <h5 class="mb-0">Họ và tên</h5>
+                                    </div>
+                                    <p class="mb-0 text-body-secondary">Họ và tên</p>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span data-feather="calendar" class="me-2"></span>
+                                        <h5 class="text-body-highlight mb-0">Ngày sinh</h5>
+                                    </div>
+                                    <span>15/06/2009</span>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span class="me-2 uil uil-envelope-alt"> </span>
+                                        <h5 class="text-body-highlight mb-0">Email</h5>
+                                    </div>
+                                    <a href="mailto:shatinon@jeemail.com:">ansolo5@jeemail.com</a>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span class="me-2 uil uil-phone"> </span>
+                                        <h5 class="text-body-highlight mb-0">Phone</h5>
+                                    </div>
+                                    <a href="tel:+1234567890">+1234567890 </a>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span class="me-2 uil uil-estate"></span>
+                                        <h5 class="mb-0">Địa chỉ</h5>
+                                    </div>
+                                    <p class="mb-0 text-body-secondary">38/2 Penelope street</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="phoenix-offcanvas-backdrop d-lg-none top-0" data-phoenix-backdrop="data-phoenix-backdrop"></div>
+                </div>
+            </div>
+            <div class="col-md-7 col-lg-7 col-xl-8">
+                <div class="lead-details-container">
+                    <nav class="navbar pb-4 px-0 sticky-top bg-body nav-underline-scrollspy" id="navbar-deals-detail">
+                        <ul class="nav nav-underline fs-9">
+                            <li class="nav-item"><a class="nav-link me-2" href="#scrollspyTask">Bài dự thi</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#scrollspyAttachments">Tệp đính kèm</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#assignment-task">Chấm điểm</a></li>
+                        </ul>
+                    </nav>
+                    <div class="scrollspy-example rounded-2" data-bs-spy="scroll" data-bs-offset="0" data-bs-target="#navbar-deals-detail" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0">
+                        <div class="mb-8">
+                            <h2 class="mb-4" id="scrollspyTask">Thông tin bài dự thi</h2>
+                            <div class="row align-items-center g-0 justify-content-start mb-3">
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h5 class="text-body-highlight mb-0">Lĩnh vực sáng kiến</h5>
+                                    </div>
+                                    <span>Xã hội, khoa học</span>
+                                </div>
+                            </div>
+                            <div class="row align-items-center g-0 justify-content-start mb-3">
+                                <div class="mb-4">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h5 class="text-body-highlight mb-0">Mô tả sáng kiến</h5>
+                                    </div>
+                                    <span>Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học Xã hội, khoa học</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-8">
+                            <h2 class="mb-4" id="scrollspyAttachments">Các tệp đính kèm</h2>
+                            <div class="border-top border-dashed py-4">
+                                <div class="d-flex flex-between-center">
+                                    <div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <span class="fa-solid fa-image me-2 fs-9 text-body-tertiary"></span>
+                                            <p class="text-body-highlight mb-0 lh-1">All_images.zip</p>
+                                        </div>
+                                        <p class="fs-9 text-body-tertiary mb-0"><span>12.8 mB</span><span class="text-body-quaternary mx-1">|</span><a href="#!">Yves Tanguy </a><span class="text-body-quaternary mx-1">| </span><span class="text-nowrap">19th Dec, 08:56 PM</span></p>
+                                    </div>
+                                    <div class="btn-reveal-trigger">
+                                        <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h"></span></button>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a><a class="dropdown-item" href="#!">Download</a><a class="dropdown-item" href="#!">Report abuse</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top border-dashed py-4">
+                                <div class="d-flex flex-between-center">
+                                    <div>
+                                        <div class="d-flex align-items-center mb-1">
+                                            <span class="fa-solid fa-file-lines me-2 fs-9 text-body-tertiary"></span>
+                                            <p class="text-body-highlight mb-0 lh-1">Project.txt</p>
+                                        </div>
+                                        <p class="fs-9 text-body-tertiary mb-0"><span>123 kB</span><span class="text-body-quaternary mx-1">| </span><a href="#!">Shantinan Mekalan </a><span class="text-body-quaternary mx-1">| </span><span class="text-nowrap">12th Dec, 12:56 PM</span></p>
+                                    </div>
+                                    <div class="btn-reveal-trigger">
+                                        <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h"></span></button>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item" href="#!">Edit</a><a class="dropdown-item text-danger" href="#!">Delete</a><a class="dropdown-item" href="#!">Download</a><a class="dropdown-item" href="#!">Report abuse </a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 class="mb-4" id="assignment-task">Chấm điểm bài dự thi</h2>
+                            <div class="row justify-content-between align-items-md-center hover-actions-trigger btn-reveal-trigger border-translucent py-3 gx-0 border-top">
+                                <div class="col-12 col-lg-auto flex-1">
+                                    <div class="form-check mb-1 mb-md-0 d-flex align-items-center lh-1">
+                                        <span class="form-check-label mb-0 fs-8 me-2 line-clamp-1" for="checkbox-todo-0">Có tính sáng tạo</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-auto">
+                                    <div class="d-flex ms-4 lh-1 align-items-center">
+                                        <div class="text-body-tertiary fs-10 mb-md-0 me-2 me-lg-3 mb-0"><input class="form-control" /></div>
+                                        <div>
+                                            <p class="text-danger fs-10 ps-3 border-start fw-bold mb-md-0 mb-0">15</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between align-items-md-center hover-actions-trigger btn-reveal-trigger border-translucent py-3 gx-0 border-top">
+                                <div class="col-12 col-lg-auto flex-1">
+                                    <div class="form-check mb-1 mb-md-0 d-flex align-items-center lh-1">
+                                        <span class="form-check-label mb-0 fs-8 me-2 line-clamp-1" for="checkbox-todo-0">Có tính sáng tạo</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-auto">
+                                    <div class="d-flex ms-4 lh-1 align-items-center">
+                                        <div class="text-body-tertiary fs-10 mb-md-0 me-2 me-lg-3 mb-0"><input class="form-control" /></div>
+                                        <div>
+                                            <p class="text-danger fs-10 ps-3 border-start fw-bold mb-md-0 mb-0">15</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between align-items-md-center hover-actions-trigger btn-reveal-trigger border-translucent py-3 gx-0 border-top">
+                                <div class="col-12 col-lg-auto flex-1">
+                                    <div class="form-check mb-1 mb-md-0 d-flex align-items-center lh-1">
+                                        <span class="form-check-label mb-0 fs-8 me-2 line-clamp-1" for="checkbox-todo-0">Có tính sáng tạo</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-auto">
+                                    <div class="d-flex ms-4 lh-1 align-items-center">
+                                        <div class="text-body-tertiary fs-10 mb-md-0 me-2 me-lg-3 mb-0"><input class="form-control" /></div>
+                                        <div>
+                                            <p class="text-danger fs-10 ps-3 border-start fw-bold mb-md-0 mb-0">15</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between align-items-md-center hover-actions-trigger btn-reveal-trigger border-translucent py-3 gx-0 border-top">
+                                <div class="col-12 col-lg-auto flex-1">
+                                    <div class="form-check mb-1 mb-md-0 d-flex align-items-center lh-1">
+                                        <span class="form-check-label mb-0 fs-8 me-2 line-clamp-1" for="checkbox-todo-0">Có tính sáng tạo</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-lg-auto">
+                                    <div class="d-flex ms-4 lh-1 align-items-center">
+                                        <div class="text-body-tertiary fs-10 mb-md-0 me-2 me-lg-3 mb-0"><input class="form-control" /></div>
+                                        <div>
+                                            <p class="text-danger fs-10 ps-3 border-start fw-bold mb-md-0 mb-0">15</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
