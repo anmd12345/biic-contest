@@ -2,7 +2,7 @@
 
 namespace BIIC_Contest.Controllers
 {
-    public class SubmissionController : Controller
+    public class SubmissionController : BaseController
     {
         [Route("chi-tiet-bai-du-thi-v1")]
         public ActionResult SubmissionDetail()

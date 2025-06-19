@@ -3,7 +3,7 @@
 namespace BIIC_Contest.Controllers.Admin
 {
     [RoutePrefix("quan-ly-nguoi-dung")]
-    public class UserManagementController : Controller
+    public class UserManagementController : BaseController
     {
         [Route("")]
         public ActionResult ListUser()

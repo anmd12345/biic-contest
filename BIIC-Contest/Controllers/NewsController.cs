@@ -2,7 +2,7 @@
 
 namespace BIIC_Contest.Controllers
 {
-    public class NewsController : Controller
+    public class NewsController : BaseController
     {
         // GET: News
 
