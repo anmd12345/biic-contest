@@ -145,12 +145,14 @@
     <Compile Include="Constants\SessionConstant.cs" />
     <Compile Include="Controllers\Admin\ContactMessageManagementController.cs" />
     <Compile Include="Controllers\Admin\ManagementController.cs" />
+    <Compile Include="Controllers\Admin\SubmissionManagementController.cs" />
     <Compile Include="Controllers\Admin\UserManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
+    <Compile Include="Controllers\SubmissionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Databases\BIICConnectionDbContext.cs" />
     <Compile Include="Dtos\ContactMessageDto.cs" />
@@ -356,6 +358,9 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\ServerInternal.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\Submission\SubmissionDetail.cshtml" />
+    <Content Include="Views\SubmissionManagement\SubmissionDetail.cshtml" />
+    <Content Include="Views\SubmissionManagement\ListSubmission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
