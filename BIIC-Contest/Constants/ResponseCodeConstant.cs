@@ -9,6 +9,6 @@
         EMAIL_IS_NULL_OR_EMPTY = 4,
         EMAIL_IS_INVALID = 5,
         MESSAGE_IS_NULL_OR_EMPTY = 6,
-        UNKNOWN_ERROR = 7
+        UNKNOWN_ERROR = 7,
     }
 }
