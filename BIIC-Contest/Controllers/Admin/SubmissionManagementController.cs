@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace BIIC_Contest.Controllers.Admin
 {
-    public class SubmissionManagementController : Controller
+    public class SubmissionManagementController : BaseController
     {
         [Route("danh-sach-bai-du-thi")]
         public ActionResult ListSubmission()

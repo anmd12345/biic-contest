@@ -2,7 +2,7 @@
 
 namespace BIIC_Contest.Controllers
 {
-    public class ErrorController : Controller
+    public class ErrorController : BaseController
     {
         [Route("404")]
         public ActionResult NotFound()

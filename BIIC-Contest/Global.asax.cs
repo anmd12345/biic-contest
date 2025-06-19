@@ -57,13 +57,13 @@ namespace BIIC_Contest
 
             if (exception != null && exception.GetHttpCode() == 404)
             {
-                string currentUrl = Request.Url.AbsolutePath;
+                //string currentUrl = Request.Url.AbsolutePath;
                 Response.Redirect(RouteConstant._404);
 
             }
             else if (exception != null && exception.GetHttpCode() == 500)
             {
-                //Response.Redirect(RouteConstant.SERVER_INTERNAL);
+                Response.Redirect(RouteConstant._500);
             }
         }
 

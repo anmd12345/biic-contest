@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace BIIC_Contest.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         // GET: User
 

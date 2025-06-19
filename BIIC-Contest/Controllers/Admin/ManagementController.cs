@@ -3,7 +3,7 @@
 namespace BIIC_Contest.Controllers.Admin
 {
     [RoutePrefix("quan-ly-he-thong")]
-    public class ManagementController : Controller
+    public class ManagementController : BaseController
     {
         [Route("")]
         public ActionResult SystemConfig()

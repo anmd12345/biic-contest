@@ -6,7 +6,7 @@ using System.Web.Mvc;
 namespace BIIC_Contest.Controllers.Admin
 {
     [RoutePrefix("quan-ly-tin-nhan")]
-    public class ContactMessageManagementController : Controller
+    public class ContactMessageManagementController : BaseController
     {
         private ContactMessageService contactMessageService = new ContactMessageService();
 
