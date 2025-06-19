@@ -43,5 +43,30 @@ namespace BIIC_Contest.Apis
                 ));
             }
         }
+
+
+
+        [Route("us-signup")]
+        [HttpPost]
+        public JsonResult UserSignup(string fullname, string email, string phone, string password, string rePass)
+        {
+            try
+            {
+                var response = userService.signup(fullname, email, phone, password, "", rePass, (short)RoleConstant.USER);
+                
+                if (response != null)
+                {
+                    Session[SessionConstant.CURRENT_USER] = response.Data;
+                }
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                return Json(new BasicResponseEntity(
+                    false,
+                    MessageConstant.ErrorNotifications[2] + $"${ex.Message}"
+                ));
+            }
+        }
     }
 }

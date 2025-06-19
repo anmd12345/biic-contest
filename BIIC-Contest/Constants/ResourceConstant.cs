@@ -9,5 +9,9 @@ namespace BIIC_Contest.Constants
     {
         public const string DEFAULT_LOGO_URL = "/assets/img/system/default_logo.jpg";
         public const string DEFAULT_BANNER_URL = "/assets/img/system/default_banner.jpg";
+
+
+        public const string DEFAULT_AVATAR = "default_logo.jpg";
+
     }
 }

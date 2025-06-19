@@ -1,12 +1,16 @@
-﻿using BIIC_Contest.Dtos;
+﻿using BIIC_Contest.Constants;
+using BIIC_Contest.Dtos;
+using BIIC_Contest.Entitys;
 using BIIC_Contest.Helpers;
 using BIIC_Contest.Models;
 using BIIC_Contest.Repositorys;
 using BIIC_Contest.Services.I;
+using System.Security.Policy;
+using System.Web.Helpers;
 
 namespace BIIC_Contest.Services
 {
-    public class UserService : IUserService
+    public class UserService : IUserService, IBaseService
     {
         private UserRepo repo = new UserRepo();
 
@@ -24,12 +28,150 @@ namespace BIIC_Contest.Services
                 userResponse = repo.findByPhoneAndPassword(username, HashHelper.hashPassword(password));
             }
 
-            return convertToUserDto(userResponse);
+            return toDto(userResponse);
+        }
+
+        public BasicResponseEntity signup(string fullname, string email, string phone, string password, string specialtyField, string rePass, short role)
+        {
+            switch (role)
+            {
+                case (short)RoleConstant.ADMIN:
+                    break;
+                case (short)RoleConstant.EMPLOYEE:
+                    break;
+                case (short)RoleConstant.EXAMINER:
+                    break;
+                case (short)RoleConstant.USER:
+                    {
+                        if (ValidateDataHelper.isNullOrEmpty(fullname))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[5]
+                            );
+                        }
+
+                        if (ValidateDataHelper.isNullOrEmpty(email))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[3]
+                            );
+                        }
+
+                        if (ValidateDataHelper.isNullOrEmpty(phone))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[4]
+                            );
+                        }
+
+                        if (ValidateDataHelper.isNullOrEmpty(password))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[6]
+                            );
+                        }
+
+                        if (ValidateDataHelper.isNullOrEmpty(rePass))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[7]
+                            );
+                        }
+
+                        if(!ValidateDataHelper.isValidPhoneNumber(phone))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[9]
+                            );
+                        }
+
+                        if (!ValidateDataHelper.isValidEmail(email))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[10]
+                            );
+                        }
+
+                        if (!password.Equals(rePass)) {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[8]
+                            );
+                        }
+
+                        bool checkExistEmail = repo.checkExistByEmail(email);
+
+                        if (checkExistEmail)
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[0]
+                            );
+                        }
+
+                        bool checkExistPhone = repo.checkExistByPhone(phone);
+
+                        if (checkExistPhone)
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[1]
+                            );
+                        }
+
+                        string createdAt = DateTimeHelper.getFormattedDateNow();
+                        string passwordHashed = HashHelper.hashPassword(password);
+
+                        tbl_user user = repo.userSignup(fullname, email, phone, passwordHashed, createdAt);
+
+                        if (user != null)
+                        {
+                            UserDto data = toDto(user);
+                            return new BasicResponseEntity
+                            (
+                                true,
+                                MessageConstant.SuccessNotifications[0],
+                                data
+                            );
+                        }
+
+                        return new BasicResponseEntity
+                        (
+                            false,
+                            MessageConstant.ErrorNotifications[2]
+                        );
+                    }
+            }
+
+            return new BasicResponseEntity
+            (
+                false,
+                MessageConstant.ErrorNotifications[2]
+            );
         }
 
 
-        private UserDto convertToUserDto(tbl_user userResponse)
+        public dynamic toDto(dynamic model)
         {
+            tbl_user userResponse = model as tbl_user;
+
             if (userResponse == null)
                 return null;
 
@@ -51,9 +193,24 @@ namespace BIIC_Contest.Services
                 AvatarUrl = userResponse.avatar,
                 Permission = new PermissionDto
                 {
-                    
+
                 }
             };
+        }
+
+        public dynamic toDtos(dynamic models)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public dynamic toModel(dynamic dto)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public dynamic toModels(dynamic dtos)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

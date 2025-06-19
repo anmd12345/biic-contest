@@ -91,14 +91,18 @@
                                             <hr class="bg-body-secondary" />
                                             <div class="divider-content-center bg-body-emphasis">hoặc sử dụng email</div>
                                         </div>
-                                        <form>
+                                        <div>
                                             <div class="mb-3 text-start">
-                                                <label class="form-label" for="name">Họ và tên</label>
-                                                <input class="form-control" id="name" type="text" placeholder="Họ và tên" />
+                                                <label class="form-label" for="fullname">Họ và tên</label>
+                                                <input class="form-control" id="fullname" type="text" placeholder="Họ và tên" />
                                             </div>
                                             <div class="mb-3 text-start">
                                                 <label class="form-label" for="email">Địa chỉ Email</label>
                                                 <input class="form-control" id="email" type="email" placeholder="name@example.com" />
+                                            </div>
+                                            <div class="mb-3 text-start">
+                                                <label class="form-label" for="phone">Số điện thoại</label>
+                                                <input class="form-control" id="phone" type="text" maxlength="10" placeholder="Số điện thoại" />
                                             </div>
                                             <div class="row g-3 mb-3">
                                                 <div class="col-sm-6">
@@ -126,11 +130,11 @@
                                                 <input class="form-check-input" id="termsService" type="checkbox" />
                                                 <label class="form-label fs-9 text-transform-none" for="termsService">Tôi chấp nhận <a href="#!">điều khoản </a>và <a href="#!">chính sách</a></label>
                                             </div>
-                                            <button class="btn btn-primary w-100 mb-3">Đăng Ký</button>
+                                            <button class="btn btn-primary w-100 mb-3" onclick="signup(this)" type="button">Đăng Ký</button>
                                             <div class="text-center">
                                                 <a class="fs-9 fw-bold" href="@RouteConstant.LOGIN_PAGE">Đăng nhập bằng tài khoản đã có</a>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -156,6 +160,34 @@
     <script src="~/vendors/feather-icons/feather.min.js"></script>
     <script src="~/vendors/dayjs/dayjs.min.js"></script>
     <script src="~/assets/js/phoenix.js"></script>
+    <script src="~/vendors/sweet-alert/sweetalert2@11.js"></script>
+    <script src="~/scripts/fetch-api.js"></script>
+    <script src="~/scripts/show-notification.js"></script>
+
+    <script>
+        async function signup(btnSignup) {
+            const fullnameEl = document.getElementById('fullname');
+            const emailEl = document.getElementById('email');
+            const phoneEl = document.getElementById('phone');
+            const passwordEl = document.getElementById('password');
+            const confirmPasswordEl = document.getElementById('confirmPassword');
+
+            //Validate input fields
+
+            const url = `/apis/v1/user/us-signup`
+            const postData = {
+                fullname: fullnameEl.value.trim(),
+                email: emailEl.value.trim(),
+                phone: phoneEl.value.trim(),
+                password: passwordEl.value.trim(),
+                rePass: confirmPasswordEl.value.trim()
+            }
+
+            const response = await postApi(url, postData);
+            console.log('res: ')
+            console.log(response)
+        }
+    </script>
 </body>
 
 </html>
