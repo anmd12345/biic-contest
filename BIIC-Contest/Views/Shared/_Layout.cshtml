@@ -93,9 +93,19 @@
     <script src="~/vendors/mapbox-gl/mapbox-gl.js"></script>
     <script src="~/assets/js/phoenix.js"></script>
     <script src="~/vendors/sweet-alert/sweetalert2@11.js"></script>
-
+    <script src="~/scripts/fetch-api.js"></script>
+    <script src="~/scripts/show-notification.js"></script>
     <!-- js -->
     @RenderSection("scripts", required: false)
+    <script>
+        async function logout() {
+            const url = '/apis/v1/user/logout'
+
+            const res = await postApi(url, {})
+
+            window.location.reload()
+        }
+    </script>
 </body>
 
 </html>

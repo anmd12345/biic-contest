@@ -28,11 +28,16 @@
             "Xác nhận mật khẩu không hợp lệ, vui lòng nhập lại!",
             "Số điện thoại không hợp lệ, vui lòng nhập lại!",
             "Email không hợp lệ, vui lòng nhập lại!",
+            "Thông tin đăng nhập không chính xác!",
+            "Lỗi hệ thống! Không thể đăng nhập bây giờ",
+             "Lỗi hệ thống! Không thể đăng xuất bây giờ"
         };
 
         public static string[] SuccessNotifications = new string[]
         {
             "Đăng ký tài khoản thành công!",
+            "Đăng nhập thành công!",
+            "Đăng xuất thành công!",
         };
 
         //Tên quyền + mô tả
@@ -44,5 +49,7 @@
             new string[] { "employee", "Nhân viên" },
             new string[] { "user", "Người dùng" },
         };
+
+
     }
 }
