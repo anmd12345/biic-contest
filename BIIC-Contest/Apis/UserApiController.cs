@@ -33,7 +33,7 @@ namespace BIIC_Contest.Apis
                     );
 
                     //Ghi log hoạt động
-                    activityLogService.writeLog(ActivityLogMessageEntity.getMessage(response.Fullname, ActivityLogTypeConstant.LOGGED_SUCCESSFULLY), response.Fullname);
+                    activityLogService.writeLog(ActivityLogMessageEntity.getMessage(response.Fullname, ActivityLogTypeConstant.LOGGED_SUCCESSFULLY, ""), response.Fullname);
 
                     return Json(message);
                 }
