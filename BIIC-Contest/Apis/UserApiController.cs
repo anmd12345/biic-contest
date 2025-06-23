@@ -11,6 +11,7 @@ namespace BIIC_Contest.Apis
     public class UserApiController : Controller
     {
         private UserService userService = new UserService();
+        private ActivityLogService activityLogService = new ActivityLogService();
 
         [Route("login")]
         [HttpPost]
@@ -21,25 +22,52 @@ namespace BIIC_Contest.Apis
                 var response = userService.login(username, password);
                 if (response != null)
                 {
+                    //Gắn session
                     Session[SessionConstant.CURRENT_USER] = response;
+                    
+                    // Kết quả trả về của api
                     var message = new BasicResponseEntity(
                         true,
-                        "Đăng nhập thành công!",
+                        MessageConstant.SuccessNotifications[1],
                         response
                     );
+
+                    //Ghi log hoạt động
+                    activityLogService.writeLog(ActivityLogMessageEntity.getMessage(response.Fullname, ActivityLogTypeConstant.LOGGED_SUCCESSFULLY), response.Fullname);
 
                     return Json(message);
                 }
                 return Json(new BasicResponseEntity(
                     false,
-                    "Thông tin đăng nhập không chính xác!"
+                    MessageConstant.ErrorNotifications[11]
                 ));
             }
             catch (Exception ex)
             {
                 return Json(new BasicResponseEntity(
                     false,
-                    "Lỗi hệ thống! Không thể đăng nhập bây giờ (" + ex.Message + ")."
+                    MessageConstant.ErrorNotifications[12]
+                ));
+            }
+        }
+
+        [Route("logout")]
+        [HttpPost]
+        public JsonResult Logout()
+        {
+            try
+            {
+                Session[SessionConstant.CURRENT_USER] = null;
+                return Json(new BasicResponseEntity(
+                    true,
+                    MessageConstant.SuccessNotifications[2]
+                ));
+            }
+            catch (Exception ex)
+            {
+                return Json(new BasicResponseEntity(
+                    false,
+                    MessageConstant.ErrorNotifications[13]
                 ));
             }
         }
@@ -53,7 +81,7 @@ namespace BIIC_Contest.Apis
             try
             {
                 var response = userService.signup(fullname, email, phone, password, "", rePass, (short)RoleConstant.USER);
-                
+
                 if (response != null)
                 {
                     Session[SessionConstant.CURRENT_USER] = response.Data;
