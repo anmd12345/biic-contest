@@ -137,6 +137,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Configs\GoogleMapConfig.cs" />
+    <Compile Include="Controllers\Admin\ActivityLogController.cs" />
+    <Compile Include="Controllers\Admin\AssignmentManagementController.cs" />
+    <Compile Include="Controllers\Admin\BaseAdminController.cs" />
+    <Compile Include="Controllers\Admin\ContestManagementController.cs" />
+    <Compile Include="Controllers\Admin\DashboardController.cs" />
+    <Compile Include="Controllers\Admin\NewsManagementController.cs" />
+    <Compile Include="Controllers\RegisterContestController.cs" />
     <Compile Include="Entitys\ActivityLogMessageEntity.cs" />
     <Compile Include="Constants\ActivityLogTypeConstant.cs" />
     <Compile Include="Constants\MessageConstant.cs" />
@@ -146,7 +153,6 @@
     <Compile Include="Constants\RouteConstant.cs" />
     <Compile Include="Constants\SessionConstant.cs" />
     <Compile Include="Controllers\Admin\ContactMessageManagementController.cs" />
-    <Compile Include="Controllers\Admin\ManagementController.cs" />
     <Compile Include="Controllers\Admin\SubmissionManagementController.cs" />
     <Compile Include="Controllers\Admin\UserManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -303,6 +309,8 @@
     <Content Include="vendors\marquee\marqueeLogo.css" />
     <Content Include="vendors\marquee\marqueeLogo.js" />
     <Content Include="vendors\popper\popper.min.js" />
+    <Content Include="vendors\prism\prism-okaidia.css" />
+    <Content Include="vendors\prism\prism.js" />
     <Content Include="vendors\simplebar\simplebar.min.css" />
     <Content Include="vendors\simplebar\simplebar.min.js" />
     <Content Include="vendors\sweet-alert\sweetalert2%4011.js" />
@@ -326,12 +334,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\News\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\BaseAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\BIICConnectionDb.dbml">
@@ -357,7 +365,7 @@
     <Content Include="Views\Partial\FaviconPartial.cshtml" />
     <Content Include="Views\User\Signup.cshtml" />
     <Content Include="Views\Management\SystemConfig.cshtml" />
-    <Content Include="Views\Management\ActivityLog.cshtml" />
+    <Content Include="Views\ActivityLog\ActivityLog.cshtml" />
     <Content Include="Views\UserManagement\ListUser.cshtml" />
     <Content Include="Views\UserManagement\UserInformation.cshtml" />
     <Content Include="Views\ContactMessageManagement\ListContactMessage.cshtml" />
@@ -368,6 +376,14 @@
     <Content Include="Views\Submission\SubmissionDetail.cshtml" />
     <Content Include="Views\SubmissionManagement\SubmissionDetail.cshtml" />
     <Content Include="Views\SubmissionManagement\ListSubmission.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\RegisterContest\RegisterContest.cshtml" />
+    <Content Include="Views\Dashboard\Dashboard.cshtml" />
+    <Content Include="Views\NewsManagement\CreateNews.cshtml" />
+    <Content Include="Views\NewsManagement\ListNews.cshtml" />
+    <Content Include="Views\ContestManagement\ListContest.cshtml" />
+    <Content Include="Views\ContestManagement\CreateContest.cshtml" />
+    <Content Include="Views\AssignmentManagement\ListAssignment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

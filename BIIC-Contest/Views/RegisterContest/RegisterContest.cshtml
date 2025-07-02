@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "RegisterContest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+   
+}
+
+<div class="content pt-4 overflow-x-hidden">
+    <h2 class="mb-2 lh-sm text-center mb-5">Đăng ký tham gia cuộc thi</h2>
+    <div class="pb-3">
+        <div class="row gx-lg-12">
+            <div class="col-xl-12">
+                <div class="card mb-9">
+                    <div class="card-body">
+                        <div>
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-form-name">Họ và tên</label>
+                                <input class="form-control" id="basic-form-name" type="text" placeholder="Họ và tên" />
+                            </div>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="basic-form-dob">Ngày sinh</label>
+                                    <input class="form-control" id="basic-form-dob" type="date" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="basic-form-password">Số điện thoại</label>
+                                    <input class="form-control" id="basic-form-password" type="password" placeholder="Số điện thoại" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="basic-form-password">Địa chỉ email</label>
+                                    <input class="form-control" id="basic-form-password" type="password" placeholder="Địa chỉ email" />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-form-password">Địa chỉ</label>
+                                <textarea class="form-control" id="basic-form-textarea" rows="3" placeholder="Địa chỉ"></textarea>
+
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-form-gender">Lĩnh vực sáng kiến</label>
+                                <select class="form-select" id="basic-form-gender" aria-label="Default select example">
+                                    <option selected="selected">Chọn lĩnh vực sáng kiến</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="basic-form-textarea">Mô tả sáng kiến</label>
+                                <textarea class="form-control" id="basic-form-textarea" rows="3" placeholder="Mô tả sáng kiến"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Upload Image <span class="text-danger">(Chỉ cho phép file .doc, .docx, .pdf, .zip, .rar. Nếu bạn có nhiều file thì hãy zip hoặc rar lại để gửi)</span></label>
+                                <input class="form-control" type="file" />
+                            </div>
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+}
+

@@ -1,6 +1,5 @@
 ﻿using BIIC_Contest.Constants;
 using BIIC_Contest.Entitys;
-using BIIC_Contest.Helpers;
 using BIIC_Contest.Services;
 using System;
 using System.Web.Mvc;

@@ -1,12 +1,13 @@
-﻿using BIIC_Contest.Dtos;
+﻿using BIIC_Contest.Constants;
+using BIIC_Contest.Dtos;
 using BIIC_Contest.Services;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace BIIC_Contest.Controllers.Admin
 {
-    [RoutePrefix("quan-ly-tin-nhan")]
-    public class ContactMessageManagementController : BaseController
+    [RoutePrefix("tin-nhan")]
+    public class ContactMessageManagementController : BaseAdminController
     {
         private ContactMessageService contactMessageService = new ContactMessageService();
 
@@ -21,9 +22,21 @@ namespace BIIC_Contest.Controllers.Admin
             return View();
         }
 
-        [Route("tin-nhan-chi-tiet")]
-        public ActionResult ContactMessageDetail(/*int id*/)
+        [Route("chi-tiet-tin-nhan/{id}")]
+        public ActionResult ContactMessageDetail(int id)
         {
+            ContactMessageDto contactMessage = contactMessageService.getContactMessageById(id);
+
+            if (id <= 0 || contactMessage == null)
+            {
+                return Redirect(RouteConstant._404);
+            }
+
+            List<ContactMessageDto> contactMessages = contactMessageService.findAll();
+
+            ViewBag.contactMessages = contactMessages;
+            ViewBag.contactMessage = contactMessage;
+
             return View();
         }
     }

@@ -73,14 +73,7 @@
         {
             @Html.Action("Footer1Partial", "Partial")
         }
-
-        <!-- Support Chat -->
-        @Html.Action("SupportChatPartial", "Partial")
     </main>
-
-    <!-- Setting Canvas -->
-    @Html.Action("SettingCanvasPartial", "Partial")
-
     <script src="~/vendors/popper/popper.min.js"></script>
     <script src="~/vendors/bootstrap/bootstrap.min.js"></script>
     <script src="~/vendors/anchorjs/anchor.min.js"></script>
@@ -97,15 +90,7 @@
     <script src="~/scripts/show-notification.js"></script>
     <!-- js -->
     @RenderSection("scripts", required: false)
-    <script>
-        async function logout() {
-            const url = '/apis/v1/user/logout'
-
-            const res = await postApi(url, {})
-
-            window.location.reload()
-        }
-    </script>
+   
 </body>
 
 </html>

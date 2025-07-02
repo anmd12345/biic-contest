@@ -168,7 +168,7 @@
             try {
                 const response = await postApi(url, postData)
                 if (response.Success) {
-                    showSuccessLoginNotification(response.Message, () => {window.location.href = '@RouteConstant.HOME_PAGE';}, 1000)
+                    showSuccessLoginNotification(response.Message, () => {window.location.href = '@RouteConstant.DASHBOARD_PAGE';}, 1000)
                     return;
                 }
 

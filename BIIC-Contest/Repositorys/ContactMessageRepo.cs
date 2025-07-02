@@ -25,6 +25,11 @@ namespace BIIC_Contest.Repositorys
             }
         }
 
+        public tbl_contact_message findById(int id)
+        {
+            return db.tbl_contact_messages.FirstOrDefault(e=>e.contact_message_id == id);
+        }
+
 
         public List<tbl_contact_message> findAll()
         {

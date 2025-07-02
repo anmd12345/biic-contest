@@ -1,120 +1,28 @@
 ﻿@using BIIC_Contest.Constants
+@using BIIC_Contest.Dtos
 @{
     ViewBag.Title = "Chi tiết tin nhắn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    List<ContactMessageDto> contactMessages = ViewBag.contactMessages;
+
 }
 
-<div class="content pt-0">
+<div class="pt-0">
     <div class="email-container pt-0">
-        <div class="row gx-lg-6 gx-3 py-4 z-2 position-sticky bg-body email-header">
-            <div class="col-auto"><a class="btn btn-primary email-sidebar-width d-none d-lg-block" href="../../apps/email/compose.html">Compose</a><button class="btn px-3 btn-phoenix-secondary text-body-tertiary d-lg-none" data-phoenix-toggle="offcanvas" data-phoenix-target="#emailSidebarColumn"><span class="fa-solid fa-bars"></span></button></div>
-            <div class="col-auto d-lg-none"><a class="btn btn-primary px-3 px-sm-4" href="../../apps/email/compose.html"> <span class="d-none d-sm-inline-block">Compose</span><span class="d-sm-none fas fa-plus"></span></a></div>
-            <div class="col-auto flex-1">
-                <div class="search-box w-100">
-                    <form class="position-relative">
-                        <input class="form-control search-input search" type="search" placeholder="Search ..." aria-label="Search" />
-                        <span class="fas fa-search search-box-icon"></span>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="row g-lg-6 mb-8">
-            <div class="col-lg-auto">
-                <div class="email-sidebar email-sidebar-width bg-body phoenix-offcanvas phoenix-offcanvas-fixed" id="emailSidebarColumn">
-                    <div class="email-content scrollbar-overlay">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <p class="text-uppercase fs-10 text-body-tertiary text-opacity-85 mb-2 fw-bold">mailbox</p><button class="btn d-lg-none p-0 mb-2" data-phoenix-dismiss="offcanvas"><span class="uil uil-times fs-8"></span></button>
-                        </div>
-                        <ul class="nav flex-column border-top border-translucent fs-9 vertical-nav mb-4">
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="@RouteConstant.CONTACT_MESSAGE_MANAGEMENT_PAGE">
-                                    <div class="d-flex align-items-center"><span class="me-2 nav-icons uil uil-inbox"></span><span class="flex-1">Inbox</span><span class="nav-item-count">5</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none active" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="me-2 nav-icons uil uil-location-arrow"></span><span class="flex-1">Sent</span><span class="nav-item-count">23</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="me-2 nav-icons uil uil-pen"></span><span class="flex-1">Draft</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="me-2 nav-icons uil uil-exclamation-circle"></span><span class="flex-1">Spam</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="me-2 nav-icons uil uil-trash"></span><span class="flex-1">Trash</span></div>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="d-flex justify-content-between">
-                            <p class="text-uppercase fs-10 text-body-tertiary text-opacity-85 mb-2 fw-bold">Filtered</p><a class="fs-10 fw-bold" href="#!"><span class="fa-solid fa-plus me-2"></span>Add Folder</a>
-                        </div>
-                        <ul class="nav flex-column border-top border-translucent fs-9 vertical-nav mb-4">
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucenttext-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="me-2 nav-icons uil uil-star"></span><span class="flex-1">Starred</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucenttext-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="me-2 nav-icons uil uil-archive"></span><span class="flex-1">Archive</span></div>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="d-flex justify-content-between">
-                            <p class="text-uppercase fs-10 text-body-tertiary text-opacity-85 mb-2 fw-bold">Labels</p><a class="fs-10 fw-bold" href="#!"><span class="fa-solid fa-plus me-2"></span>Add Label</a>
-                        </div>
-                        <ul class="nav flex-column border-top border-translucent fs-9 vertical-nav">
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="ms-n1 me-1 fa-solid fa-circle text-primary" data-fa-transform="shrink-10"></span><span class="flex-1">Personal</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="ms-n1 me-1 fa-solid fa-circle text-primary-dark" data-fa-transform="shrink-10"></span><span class="flex-1">Work</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="ms-n1 me-1 fa-solid fa-circle text-success" data-fa-transform="shrink-10"></span><span class="flex-1">Payments</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="ms-n1 me-1 fa-solid fa-circle text-warning" data-fa-transform="shrink-10"></span><span class="flex-1">Invoices</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="ms-n1 me-1 fa-solid fa-circle text-danger" data-fa-transform="shrink-10"></span><span class="flex-1">Accounts</span></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-2 ps-0 pe-3 border-end border-bottom border-translucent text-start outline-none" aria-current="page" href="#!">
-                                    <div class="d-flex align-items-center"><span class="ms-n1 me-1 fa-solid fa-circle text-info" data-fa-transform="shrink-10"></span><span class="flex-1">Forums</span></div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="phoenix-offcanvas-backdrop d-lg-none top-0" data-phoenix-backdrop="data-phoenix-backdrop"></div>
-            </div>
+        <div class="row g-lg-6">
             <div class="col-3 d-none d-xxl-block">
                 <div class="email-content scrollbar">
                     <div class="px-lg-1">
                         <div class="d-flex align-items-center flex-wrap position-sticky pb-2 bg-body z-2 email-toolbar">
                             <div class="d-flex align-items-center flex-1 me-2">
-                                <button class="btn btn-sm p-0 me-2" type="button" onclick="location.reload()"><span class="text-primary fas fa-redo fs-10"></span></button>
+                                <button class="btn btn-sm p-0 me-2" type="button" onclick="location.reload()">
+                                    <span class="text-primary fas fa-redo fs-10"></span>
+                                </button>
                                 <p class="fw-semibold fs-10 text-body-tertiary text-opacity-85 mb-0 lh-sm text-nowrap">Last refreshed 1m ago</p>
                             </div>
                             <div class="d-flex">
-                                <p class="text-body-tertiary text-opacity-85 fs-9 fw-semibold mb-0 me-3"> <span class="text-body">1-7 </span>of <span class="text-body">205</span></p><button class="btn p-0 me-3" type="button"><span class="text-body-quaternary fa-solid fa-angle-left fs-10"></span></button><button class="btn p-0" type="button"><span class="text-primary fa-solid fa-angle-right fs-10"></span></button>
+                                <p class="text-body-tertiary text-opacity-85 fs-9 fw-semibold mb-0 me-3">
+                                <span class="text-body">1-7 </span>of <span class="text-body">205</span></p><button class="btn p-0 me-3" type="button"><span class="text-body-quaternary fa-solid fa-angle-left fs-10"></span></button><button class="btn p-0" type="button"><span class="text-primary fa-solid fa-angle-right fs-10"></span></button>
                             </div>
                         </div>
                         <div class="border-top border-translucent py-2 d-flex justify-content-between">

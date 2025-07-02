@@ -3,17 +3,9 @@ using System.Web.Mvc;
 
 namespace BIIC_Contest.Controllers.Admin
 {
-    [RoutePrefix("quan-ly-he-thong")]
-    public class ManagementController : BaseController
+    public class ActivityLogController : BaseAdminController
     {
-        private ActivityLogService activityLogService = new ActivityLogService();
-
-
-        [Route("")]
-        public ActionResult SystemConfig()
-        {
-            return View();
-        }
+        ActivityLogService activityLogService = new ActivityLogService();
 
         [Route("nhat-ky-hoat-dong")]
         public ActionResult ActivityLog()

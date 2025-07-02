@@ -2,13 +2,12 @@
 @using BIIC_Contest.Helpers
 @{
     ViewBag.Title = "Hoạt động trên hệ thống";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
     var logGroups = ViewBag.logs as Dictionary<string, List<ActivityLogDto>>;
 }
 
-@section styles{
-}
-
-<div class="content px-8 py-4">
+<div class="pb-5">
     <h3 class="mb-5">Hoạt động trên hệ thống</h3>
     @foreach (var logGroup in logGroups)
     {

@@ -7,5 +7,6 @@ namespace BIIC_Contest.Services.I
     {
         short createContactMessage(string fullname, string email, string phone, string message, string ip);
         List<ContactMessageDto> findAll();
+        ContactMessageDto getContactMessageById(int id);
     }
 }

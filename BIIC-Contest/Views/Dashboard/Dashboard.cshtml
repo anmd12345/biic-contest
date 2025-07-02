@@ -1,7 +1,9 @@
-﻿
+﻿@using BIIC_Contest.Dtos
 @{
-    ViewBag.Title = "SystemConfig";
+    ViewBag.Title = "Thông tin website";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    SystemDto system = ViewBag.systemInfo;
 }
 
 @section styles{
@@ -10,7 +12,7 @@
     <link href="~/vendors/flatpickr/flatpickr.min.css" rel="stylesheet">
 }
 
-<div class="mb-0">
+<div class="pb-5">
     <div class="row g-3 flex-between-end mb-3">
         <div class="col-auto">
             <h3 class="mb-2">Cài đặt thông tin website</h3>
@@ -19,20 +21,26 @@
     <div class="row g-5">
         <div class="col-12 col-xl-8">
             <h4 class="mb-3">Tên viết tắt</h4>
-            <input class="form-control mb-5" type="text" maxlength="50" placeholder="Tên viết tắt..." />
+            <input class="form-control mb-5" type="text" maxlength="50" value="@system.ShortTitle" placeholder="Tên viết tắt..." />
 
             <h4 class="mb-3">Logo tổ chức</h4>
-            <div class="dropzone dropzone-multiple p-0 mb-5" id="my-awesome-dropzone" data-dropzone="data-dropzone">
-                <div class="fallback"><input name="file" type="file" multiple="multiple" /></div>
+            <div class="dropzone dropzone-multiple p-0 mb-5" id="my-awesome-dropzone">
+                <div class="fallback">
+                    <input name="file" type="file" hidden id="logo-upload"/>
+                </div>
                 <div class="dz-preview d-flex flex-wrap">
                     <div class="border border-translucent bg-body-emphasis rounded-3 d-flex flex-center position-relative me-2 mb-2" style="height:80px;width:80px;">
-                        <img class="dz-image" src="~/assets/img/system/default_logo.jpg" alt="..." data-dz-thumbnail="data-dz-thumbnail" />
-                        <a class="dz-remove text-body-quaternary" href="#!" data-dz-remove="data-dz-remove">
+                        <img class="dz-image" src="~/assets/img/system/@system.LogoUrl" alt="..."/>
+                        <a class="dz-remove text-body-quaternary" href="#!">
                             <span data-feather="x"></span>
                         </a>
                     </div>
                 </div>
-                <div class="dz-message text-body-tertiary text-opacity-85" data-dz-message="data-dz-message">Drag your photo here<span class="text-body-secondary px-1">or</span><button class="btn btn-link p-0" type="button">Browse from device</button><br /><img class="mt-3 me-2" src="~/assets/img/icons/image-icon.png" width="40" alt="" /></div>
+                <label for="logo-upload" class="dz-message text-body-tertiary text-opacity-85 w-100">
+                    Tải lên Logo khác tại đây
+                    <br />
+                    <img class="mt-3 me-2" src="~/assets/img/icons/image-icon.png" width="40" alt="" />
+                </label>
             </div>
         </div>
         <div class="col-12 col-xl-4">
@@ -45,19 +53,19 @@
                                 <div class="col-12 col-sm-6 col-xl-12">
                                     <div class="mb-4">
                                         <h5 class="mb-2 text-body-highlight">Số điện thoại</h5>
-                                        <input class="form-control mb-xl-3" maxlength="10" type="text" placeholder="Số điện thoại" />
+                                        <input class="form-control mb-xl-3" maxlength="10" type="text" value="@system.Phone" placeholder="Số điện thoại" />
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-xl-12">
                                     <div class="mb-4">
                                         <h5 class="mb-2 text-body-highlight">Email</h5>
-                                        <input class="form-control mb-xl-3" type="email" placeholder="Email" />
+                                        <input class="form-control mb-xl-3" type="email" value="@system.Email" placeholder="Email" />
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-xl-12">
                                     <div class="mb-4">
                                         <h5 class="mb-2 text-body-highlight">Địa chỉ</h5>
-                                        <textarea class="form-control mb-xl-3" rows="3" placeholder="Địa chỉ"></textarea>
+                                        <textarea class="form-control mb-xl-3" rows="3" placeholder="Địa chỉ">@system.Address</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -72,11 +80,11 @@
                                 <div class="col-12 col-sm-6 col-xl-12">
                                     <div class="mb-4">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" id="allowShowNotification" type="checkbox" checked="checked" name="allowShowNotification" />
+                                            <input class="form-check-input" id="allowShowNotification" type="checkbox" @(system.IsShowNotification ? "checked=\"checked\"" : "") name="allowShowNotification" />
                                             <label class="form-check-label fs-8" for="allowShowNotification">Hiện thị thông báo đẩy</label>
                                         </div>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" id="allowAccess" type="checkbox" checked="checked" name="allowAccess" />
+                                            <input class="form-check-input" id="allowAccess" type="checkbox" @(system.IsAllow ? "checked=\"checked\"" : "") name="allowAccess" />
                                             <label class="form-check-label fs-8" for="allowAccess">Cho phép truy cập trang web</label>
                                         </div>
                                     </div>
@@ -102,5 +110,6 @@
     <script src="~/vendors/dropzone/dropzone-min.js"></script>
     <script src="~/vendors/choices/choices.min.js"></script>
     <script src="~/vendors/flatpickr/flatpickr.min.js"></script>
+ 
 }
 
