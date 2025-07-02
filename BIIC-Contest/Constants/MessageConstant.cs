@@ -40,6 +40,16 @@
             "Đăng xuất thành công!",
         };
 
+        public static string[] CategoryMessage = new string[]
+        {
+            "Tên danh mục đã tồn tại!",
+            "Tên danh mục không được để trống!",
+            "Tạo danh mục mới thành công!",
+            "Hệ thống đang gặp sự cố. Tạo danh mục không thành công!",
+            "Danh mục trống!",
+            "Lấy danh sách danh mục thành công!",
+        };
+
         //Tên quyền + mô tả
         public static string[][] RoleNames = new string[][]
         {
