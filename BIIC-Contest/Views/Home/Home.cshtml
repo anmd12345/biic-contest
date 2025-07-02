@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "CUỘC THI Ý TƯỞNG KHỞI NGHIỆP SÁNG TẠO TỈNH BÌNH DƯƠNG NĂM 2024";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section styles{
@@ -12,7 +13,6 @@
 }
 
 
-@*Ảnh bị mờ, tìm cách fix*@
 <div class="content pt-4 overflow-x-hidden">
     <div class="pb-3">
         <img class="rounded w-100 object-fit-fill mb-5 mb-md-6 mb-xl-8" style="max-height: 500px;min-height: 250px;" src="~/assets/img/generic/34.png" alt="" />
@@ -71,163 +71,285 @@
                         </div>
                     </div>
                 </div>
+
+                @*Giới thiệu về sự kiện ở đây*@
                 <h2 class="mb-3">Giới thiệu về sự kiện</h2>
-                <div>
-                    <p class="text-justify text-body-secondary">
-                        <b>🍀🍀🍀 CUỘC THI Ý TƯỞNG KHỞI NGHIỆP SÁNG TẠO TỈNH BÌNH DƯƠNG NĂM 2024 🍀🍀🍀</b>
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>Đơn vị tổ chức: </b>Sở Khoa học và Công nghệ, Sở Giáo dục và Đào tạo, Tỉnh Đoàn Bình Dương
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>🍁Mục tiêu: </b>Thúc đẩy tinh thần khởi nghiệp trong đoàn viên thanh niên, trang bị kiến thức, kỹ năng khởi nghiệp cho thanh niên.
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>🍁Đối tượng: </b>học sinh, sinh viên tại các trường phổ thông, trung cấp, cao đẳng, đại học tại Bình Dương
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>🍁Lĩnh vực ưu tiên:</b>
-                        <ol>
-                            <li>Khoa học, công nghệ.</li>
-                            <li>Công nghiệp, chế tạo sản phẩm.</li>
-                            <li>Nông, lâm, ngư nghiệp.</li>
-                            <li>Giáo dục, y tế, chăm sóc sức khỏe, công nghệ làm đẹp.</li>
-                            <li>Dịch vụ, du lịch, tài chính, ngân hàng.</li>
-                            <li>Kinh doanh tạo tác động xã hội.</li>
-                        </ol>
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>🍁Tiêu chí đánh giá:</b>
-                        <ol>
-                            <li>Tính cần thiết của sản phẩm, dịch vụ</li>
-                            <li>Tính độc đáo, sáng tạo, khác biệt</li>
-                            <li>Tiềm năng tạo tác động đối với kinh tế - xã hội – môi trường</li>
-                            <li>Giáo dục, y tế, chăm sóc sức khỏe, công nghệ làm đẹp.</li>
-                            <li>Tính khả thi.</li>
-                            <li>Kỹ năng trình bày.</li>
-                        </ol>
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>🍁Hình thức tham gia: </b>Thí sinh nộp bản thuyết minh ý tưởng khởi nghiệp sáng tạo theo mẫu kèm video giới thiệu (nếu có) về Hội đồng Giám khảo thông qua đại diện tại các Huyện, Thành đoàn
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>🍁Vòng thi:</b> Cuộc thi gồm 4 vòng
-                        <ol class="mb-6 ps-4">
-                            <li>Truyền cảm hứng (từ 02/9-04/10/2024)</li>
-                            <li>Sơ khảo (5/10-31/10)</li>
-                            <li>Lan toả (5/11-20/11)</li>
-                            <li>Chung kết 5/12/2024</li>
-                        </ol>
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>🍁🍁🍁Giải thưởng: </b> Tổng trị giá giải thưởng 150 triệu đồng và nhiều cơ hội hỗ trợ phát triển dự án
-                    </p>
-                    <p class="text-body-secondary">
-                        <b>👉🖋Đơn đăng ký: </b> <span>https://drive.google.com/.../1bEwQ2WcxyaVlag...</span>
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>👉⏰Thời hạn đăng ký: </b>Từ 05/10/2024 đến 31/10/2024.
-                    </p>
-                    <p class="text-justify text-body-secondary">
-                        <b>📔Thông tin chi tiết cuộc thi: </b>
-                        <ol>
-                            <li><b>🌍Website:</b> http://biic.vn/ytkn2024</li>
-                            <li>
-                                <b>💌 Hotline: </b>
-                                <ul>
-                                    <li>
-                                        Chị Thơ Mộng: 0933.502.567
-                                    </li>
-                                    <li>
-                                        Chị Thu Hà: 0908.898.818
-                                    </li>
+                <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
+                    <div class="col-12 col-xl-12 col-xxl-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div>
+                                    <p class="text-justify ">
+                                        <b>🍀🍀🍀 CUỘC THI Ý TƯỞNG KHỞI NGHIỆP SÁNG TẠO TỈNH BÌNH DƯƠNG NĂM 2024 🍀🍀🍀</b>
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>Đơn vị tổ chức: </b>Sở Khoa học và Công nghệ, Sở Giáo dục và Đào tạo, Tỉnh Đoàn Bình Dương
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>🍁Mục tiêu: </b>Thúc đẩy tinh thần khởi nghiệp trong đoàn viên thanh niên, trang bị kiến thức, kỹ năng khởi nghiệp cho thanh niên.
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>🍁Đối tượng: </b>học sinh, sinh viên tại các trường phổ thông, trung cấp, cao đẳng, đại học tại Bình Dương
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>🍁Lĩnh vực ưu tiên:</b>
+                                        <ol>
+                                            <li>Khoa học, công nghệ.</li>
+                                            <li>Công nghiệp, chế tạo sản phẩm.</li>
+                                            <li>Nông, lâm, ngư nghiệp.</li>
+                                            <li>Giáo dục, y tế, chăm sóc sức khỏe, công nghệ làm đẹp.</li>
+                                            <li>Dịch vụ, du lịch, tài chính, ngân hàng.</li>
+                                            <li>Kinh doanh tạo tác động xã hội.</li>
+                                        </ol>
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>🍁Tiêu chí đánh giá:</b>
+                                        <ol>
+                                            <li>Tính cần thiết của sản phẩm, dịch vụ</li>
+                                            <li>Tính độc đáo, sáng tạo, khác biệt</li>
+                                            <li>Tiềm năng tạo tác động đối với kinh tế - xã hội – môi trường</li>
+                                            <li>Giáo dục, y tế, chăm sóc sức khỏe, công nghệ làm đẹp.</li>
+                                            <li>Tính khả thi.</li>
+                                            <li>Kỹ năng trình bày.</li>
+                                        </ol>
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>🍁Hình thức tham gia: </b>Thí sinh nộp bản thuyết minh ý tưởng khởi nghiệp sáng tạo theo mẫu kèm video giới thiệu (nếu có) về Hội đồng Giám khảo thông qua đại diện tại các Huyện, Thành đoàn
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>🍁Vòng thi:</b> Cuộc thi gồm 4 vòng
+                                        <ol class="mb-6 ps-4">
+                                            <li>Truyền cảm hứng (từ 02/9-04/10/2024)</li>
+                                            <li>Sơ khảo (5/10-31/10)</li>
+                                            <li>Lan toả (5/11-20/11)</li>
+                                            <li>Chung kết 5/12/2024</li>
+                                        </ol>
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>🍁🍁🍁Giải thưởng: </b> Tổng trị giá giải thưởng 150 triệu đồng và nhiều cơ hội hỗ trợ phát triển dự án
+                                    </p>
+                                    <p class="">
+                                        <b>👉🖋Đơn đăng ký: </b> <span>https://drive.google.com/.../1bEwQ2WcxyaVlag...</span>
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>👉⏰Thời hạn đăng ký: </b>Từ 05/10/2024 đến 31/10/2024.
+                                    </p>
+                                    <p class="text-justify ">
+                                        <b>📔Thông tin chi tiết cuộc thi: </b>
+                                        <ol>
+                                            <li><b>🌍Website:</b> http://biic.vn/ytkn2024</li>
+                                            <li>
+                                                <b>💌 Hotline: </b>
+                                                <ul>
+                                                    <li>
+                                                        Chị Thơ Mộng: 0933.502.567
+                                                    </li>
+                                                    <li>
+                                                        Chị Thu Hà: 0908.898.818
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ol>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Đối tượng tham gia ở đây*@
+                <h3 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Đối tượng tham gia</h3>
+                <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
+                    <div class="col-12 col-xl-12 col-xxl-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                              <p>Đối tượng tham gia ở đây</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @*Thể lệ cuộc thi ở đây*@
+                <h3 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Thể lệ cuộc thi</h3>
+                <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
+                    <div class="col-12 col-xl-12 col-xxl-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <ul class="ps-4">
+                                    <li>Thể lệ 1</li>
+                                    <li>Thể lệ 2</li>
+                                    <li>Thể lệ 3</li>
+                                    <li>Thể lệ 4</li>
+                                    <li>Thể lệ 5</li>
+                                    <li>Thể lệ 6</li>
+                                    <li>Thể lệ 7</li>
+                                    <li>Thể lệ 8</li>
                                 </ul>
-                            </li>
-                        </ol>
-                    </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <h2 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Đối tượng tham gia</h2>
+                @*Sản phẩm dự thi ở đây*@
+                <h3 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Sản phẩm dự thi</h3>
                 <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
-                    <div class="col-12">
-                        <a href="~/assets/img/generic/34.png" data-gallery="gallery-posts-undefined">
-                            <img class="rounded h-100 w-100 object-fit-cover" src="~/assets/img/generic/34.png" alt="..." />
-                        </a>
+                    <div class="col-12 col-xl-12 col-xxl-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <ul class="ps-4">
+                                    <li>Latest Update With Bitcoin</li>
+                                    <li>Blockchain Vs Bitcoin</li>
+                                    <li>Why Do We Need CryptoCurrency?</li>
+                                    <li>Bitcoin History</li>
+                                    <li>Bitcoin Vs Ethereum</li>
+                                    <li>How Big Is Cryptocurrency Right Now?</li>
+                                    <li>Crypto Scams &amp; How To Identify Them</li>
+                                    <li>Is it Worth Buying To Keep?</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <h2 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Sản phẩm dự thi</h2>
+               @*Lịch trình sự kiện ở đây*@
+                <h3 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Lịch trình sự kiện</h3>
                 <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
-                    <div class="col-12">
-                        <ul class="ps-4">
-                            <li>Latest Update With Bitcoin</li>
-                            <li>Blockchain Vs Bitcoin</li>
-                            <li>Why Do We Need CryptoCurrency?</li>
-                            <li>Bitcoin History</li>
-                            <li>Bitcoin Vs Ethereum</li>
-                            <li>How Big Is Cryptocurrency Right Now?</li>
-                            <li>Crypto Scams &amp; How To Identify Them</li>
-                            <li>Is it Worth Buying To Keep?</li>
-                        </ul>
+                    <div class="col-12 col-xl-12 col-xxl-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="timeline-vertical timeline-with-details">
+                                    <div class="timeline-item position-relative">
+                                        <div class="row g-md-3">
+                                            <div class="col-12 col-md-auto d-flex">
+                                                <div class="timeline-item-date order-1 order-md-0 me-md-4">
+                                                    <p class="fw-semibold  text-end">01 DEC, 2023<br class="d-none d-md-block" /> 10:30 AM</p>
+                                                </div>
+                                                <div class="timeline-item-bar position-md-relative me-3 me-md-0">
+                                                    <div class="icon-item icon-item-sm rounded-7 shadow-none bg-primary-subtle"><span class="fa-solid fa-chess text-primary-dark fs-10"></span></div><span class="timeline-bar border-end border-dashed"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="timeline-item-content ps-6 ps-md-3">
+                                                    <h5 class="lh-sm">Phoenix Template: Unleashing Creative Possibilities</h5>
+                                                    <p class="">by <a class="fw-semibold" href="#!">Shantinon Mekalan</a></p>
+                                                    <p class="mb-5">Discover limitless creativity with the Phoenix template! Our latest update offers an array of innovative features and design options.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item position-relative">
+                                        <div class="row g-md-3">
+                                            <div class="col-12 col-md-auto d-flex">
+                                                <div class="timeline-item-date order-1 order-md-0 me-md-4">
+                                                    <p class="fw-semibold  text-end">05 DEC, 2023<br class="d-none d-md-block" /> 12:30 AM</p>
+                                                </div>
+                                                <div class="timeline-item-bar position-md-relative me-3 me-md-0">
+                                                    <div class="icon-item icon-item-sm rounded-7 shadow-none bg-primary-subtle"><span class="fa-solid fa-dove text-primary-dark fs-10"></span></div><span class="timeline-bar border-end border-dashed"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="timeline-item-content ps-6 ps-md-3">
+                                                    <h5 class="lh-sm">Empower Your Digital Presence: The Phoenix Template Unveiled</h5>
+                                                    <p class="">by <a class="fw-semibold" href="#!">Bookworm22</a></p>
+                                                    <p class=" mb-5">Unveiling the Phoenix template, a game-changer for your digital presence. With its powerful features and sleek design,</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item position-relative">
+                                        <div class="row g-md-3">
+                                            <div class="col-12 col-md-auto d-flex">
+                                                <div class="timeline-item-date order-1 order-md-0 me-md-4">
+                                                    <p class="fw-semibold  text-end">15 DEC, 2023<br class="d-none d-md-block" /> 2:30 AM</p>
+                                                </div>
+                                                <div class="timeline-item-bar position-md-relative me-3 me-md-0">
+                                                    <div class="icon-item icon-item-sm rounded-7 shadow-none bg-primary-subtle"><span class="fa-solid fa-dungeon text-primary-dark fs-10"></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="timeline-item-content ps-6 ps-md-3">
+                                                    <h5 class="lh-sm">Phoenix Template: Simplified Design, Maximum Impact</h5>
+                                                    <p class="">by <a class="fw-semibold" href="#!">Sharuka Nijibum</a></p>
+                                                    <p class="mb-0">Introducing the Phoenix template, where simplified design meets maximum impact. Elevate your digital presence with its sleek and intuitive features.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <h2 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Lịch trình sự kiện</h2>
-                <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
-                    <div class="col-12">
-                        <a href="~/assets/img/generic/34.png" data-gallery="gallery-posts-undefined">
-                            <img class="rounded h-100 w-100 object-fit-cover" src="~/assets/img/generic/34.png" alt="..." />
-                        </a>
+        @*Giải thưởng ở đây*@
+        <h3 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Giải thưởng</h3>
+        <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
+            <div class="col-12 col-xl-12 col-xxl-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p>Giải thưởng ở đây</p>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <h2 class="mb-3 fw-bold text-body-highlight fs-xxl-6">Giải thưởng</h2>
-                <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
-                    <div class="col-12">
-                        <a href="~/assets/img/generic/34.png" data-gallery="gallery-posts-undefined">
-                            <img class="rounded h-100 w-100 object-fit-cover" src="~/assets/img/generic/34.png" alt="..." />
-                        </a>
+        @*Đơn vị đồng hành ở đây*@
+        <h3 class="mb-3 fw-bold text-body-highlight">Các đơn vị đồng hành cùng chương trình</h3>
+        <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
+            <div class="col-12 col-xl-12 col-xxl-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="marquee-logo mb-5 px-3">
+                            <div class="marquee-track">
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor1.png" alt="UBND Tỉnh Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor2.png" alt="Đoàn TNCS Hồ Chí Minh Tỉnh Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor3.png" alt="Sở KH&CN Tỉnh Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor4.png" alt="Hội Kỹ Sư Trẻ Tỉnh Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor5.jpg" alt="Cty Becamex" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor6.png" alt="Đài Truyền Hình Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor7.png" alt="Báo Bình Dương" loading="lazy"></div>
+                                <!-- Lặp lại các logo để tạo hiệu ứng vô hạn-->
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor1.png" alt="UBND Tỉnh Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor2.png" alt="Đoàn TNCS Hồ Chí Minh Tỉnh Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor3.png" alt="Sở KH&CN Tỉnh Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor4.png" alt="Hội Kỹ Sư Trẻ Tỉnh Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor5.jpg" alt="Cty Becamex" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor6.png" alt="Đài Truyền Hình Bình Dương" loading="lazy"></div>
+                                <div class="marquee-item"><img src="/assets/img/sponsors/sponsor7.png" alt="Báo Bình Dương" loading="lazy"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <h3 class="mb-3 fw-bold text-body-highlight fs-7">Các đơn vị đồng hành cùng chương trình</h3>
-                <div class="marquee-logo mb-5 px-3">
-                    <div class="marquee-track">
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor1.png" alt="UBND Tỉnh Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor2.png" alt="Đoàn TNCS Hồ Chí Minh Tỉnh Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor3.png" alt="Sở KH&CN Tỉnh Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor4.png" alt="Hội Kỹ Sư Trẻ Tỉnh Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor5.jpg" alt="Cty Becamex" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor6.png" alt="Đài Truyền Hình Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor7.png" alt="Báo Bình Dương" loading="lazy"></div>
-                        <!-- Lặp lại các logo để tạo hiệu ứng vô hạn-->
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor1.png" alt="UBND Tỉnh Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor2.png" alt="Đoàn TNCS Hồ Chí Minh Tỉnh Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor3.png" alt="Sở KH&CN Tỉnh Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor4.png" alt="Hội Kỹ Sư Trẻ Tỉnh Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor5.jpg" alt="Cty Becamex" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor6.png" alt="Đài Truyền Hình Bình Dương" loading="lazy"></div>
-                        <div class="marquee-item"><img src="/assets/img/sponsors/sponsor7.png" alt="Báo Bình Dương" loading="lazy"></div>
+        @*Chia sẻ ở đây*@
+        <h3 class="mb-3 fw-bold text-body-highlight">Chia sẻ cuộc thi</h3>
+        <div class="row g-1 g-sm-2 mb-7 mb-xxl-8">
+            <div class="col-12 col-xl-12 col-xxl-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex mb-5">
+                            <button class="btn btn-phoenix-primary btn-icon me-2">
+                                <span class="fa-brands fa-facebook text-facebbok"></span>
+                            </button>
+                            <button class="btn btn-phoenix-primary btn-icon me-2">
+                                <span class="fa-brands fa-facebook-messenger"></span>
+                            </button>
+                            <button class="btn btn-phoenix-primary btn-icon me-2">
+                                <span class="fa-brands fa-twitter text-info"></span>
+                            </button>
+                            <button class="btn btn-phoenix-primary btn-icon me-2">
+                                <span class="fa-solid fa-envelope text-danger"></span>
+                            </button>
+                            <button class="btn btn-phoenix-primary btn-icon me-2">
+                                <span class="fa-brands fa-linkedin-in text-info"></span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-
-                <h3 class="mb-3 fw-bold text-body-highlight fs-7">Chia sẻ cuộc thi</h3>
-                <div class="d-flex mb-5">
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-brands fa-facebook text-facebbok"></span>
-                    </button>
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-brands fa-facebook-messenger"></span>
-                    </button>
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-brands fa-twitter text-info"></span>
-                    </button>
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-solid fa-envelope text-danger"></span>
-                    </button>
-                    <button class="btn btn-phoenix-primary btn-icon me-2">
-                        <span class="fa-brands fa-linkedin-in text-info"></span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -251,7 +373,7 @@
                         <div class="col-xxl-12 col-xl-12 col-12 pb-4 order-1 order-xl-0">
                             <div class="theme-wizard theme-wizard-progress" data-theme-wizard="data-theme-wizard" data-create-board="data-create-board" data-wizard-modal-disabled="data-wizard-modal-disabled">
                                 <div class="mt-6 border-bottom-0">
-                                    <p class="mb-0 text-body-secondary">Bước <span data-kanban-step="data-kanban-step">1 - Cung cấp thông tin người đăng ký</span></p>
+                                    <p class="mb-0 ">Bước <span data-kanban-step="data-kanban-step">1 - Cung cấp thông tin người đăng ký</span></p>
                                     <ul class="nav justify-content-between nav-wizard nav-wizard-progress">
                                         <li class="nav-item"><a class="nav-link active fw-semibold" href="#create-board-tab1" data-bs-toggle="tab" data-wizard-step="1 - Cung cấp thông tin người đăng ký"></a></li>
                                         <li class="nav-item"><a class="nav-link fw-semibold" href="#create-board-tab2" data-bs-toggle="tab" data-wizard-step="2 - Cung cấp thông tin bài dự thi"></a></li>
@@ -312,7 +434,7 @@
                                                         <input class="btn-check kanban-swatch-radio" type="radio" name="board-custom-image" id="boardCustomImage" />
                                                         <div class="dropzone dropzone-single p-0 w-100" id="dropzone" data-dropzone="data-dropzone" data-options='{"url":"valid/url","maxFiles":1,"maxFilesize":5,"acceptedFiles":"image/*","dictDefaultMessage":"Choose or Drop a file here"}'>
                                                             <div class="fallback"><input type="file" name="file" /></div>
-                                                            <div class="dz-message text-body-tertiary text-opacity-85 text-center py-0" data-dz-message="data-dz-message">
+                                                            <div class="dz-message  text-center py-0" data-dz-message="data-dz-message">
                                                                 <div class="dz-message-text py-3">allow: pdf, docx, jpg/png, mp4<br /><img class="mt-3" src="../../assets/img/icons/image-icon.png" width="30" alt="" /></div><button class="btn dz-upload-btn border-0 position-absolute z-5 bg-black bg-opacity-50 text-white mt-3 ms-3 px-3" data-dz-message="data-dz-message">Change Picture<span class="fa-solid fa-camera fs-10 ms-1"></span></button>
                                                             </div>
                                                             <div class="dz-preview m-0">

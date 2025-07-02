@@ -4,6 +4,7 @@
 @using BIIC_Contest.Helpers
 @{
     ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
     var googleMapApiKey = "https://maps.googleapis.com/maps/api/js?key=" + GoogleMapConfig.GOOGLE_MAP_API_KEY + "&callback=initMap";
     SystemDto currentSystem = Session[SessionConstant.CURRENT_SYSTEM] as SystemDto;
 }

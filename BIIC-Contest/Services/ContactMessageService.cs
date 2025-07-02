@@ -51,6 +51,11 @@ namespace BIIC_Contest.Services
         {
             tbl_contact_message contactMessage = model as tbl_contact_message;
 
+            if (contactMessage == null)
+            {
+                return null;
+            }
+
             return new ContactMessageDto
             {
                 ContactMessageId = contactMessage.contact_message_id,
@@ -87,6 +92,15 @@ namespace BIIC_Contest.Services
         public dynamic toModels(dynamic dtos)
         {
             throw new NotImplementedException();
+        }
+
+        public ContactMessageDto getContactMessageById(int id)
+        {
+            var contactMessage = repo.findById(id);
+
+            var data = toDto(contactMessage);
+
+            return data;
         }
     }
 }

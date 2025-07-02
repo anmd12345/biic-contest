@@ -6,10 +6,9 @@ namespace BIIC_Contest.Controllers
 {
     public class BaseController : Controller
     {
+        SystemService systemService = new SystemService();
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            SystemService systemService = new SystemService();
-
             Session[SessionConstant.CURRENT_SYSTEM] = systemService.getSystemInfo();
 
             base.OnActionExecuting(filterContext);

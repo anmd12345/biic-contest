@@ -2,7 +2,7 @@
 
 namespace BIIC_Contest.Controllers.Admin
 {
-    public class SubmissionManagementController : BaseController
+    public class SubmissionManagementController : BaseAdminController
     {
         [Route("danh-sach-bai-du-thi")]
         public ActionResult ListSubmission()
