@@ -130,6 +130,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apis\CategoryApiController.cs" />
     <Compile Include="Apis\ContactMessageApiController.cs" />
     <Compile Include="Apis\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Controllers\Admin\DashboardController.cs" />
     <Compile Include="Controllers\Admin\NewsManagementController.cs" />
     <Compile Include="Controllers\RegisterContestController.cs" />
+    <Compile Include="Dtos\CategoryDto.cs" />
     <Compile Include="Entitys\ActivityLogMessageEntity.cs" />
     <Compile Include="Constants\ActivityLogTypeConstant.cs" />
     <Compile Include="Constants\MessageConstant.cs" />
@@ -186,14 +188,17 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorys\ActivityLogRepo.cs" />
+    <Compile Include="Repositorys\CategoryRepository.cs" />
     <Compile Include="Repositorys\ContactMessageRepo.cs" />
     <Compile Include="Repositorys\RoleRepo.cs" />
     <Compile Include="Repositorys\SystemRepo.cs" />
     <Compile Include="Repositorys\UserRepo.cs" />
     <Compile Include="Services\ActivityLogService.cs" />
+    <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\ContactMessageService.cs" />
     <Compile Include="Services\I\IActivityLogService.cs" />
     <Compile Include="Services\I\IBaseService.cs" />
+    <Compile Include="Services\I\ICategoryService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
     <Compile Include="Services\I\ISystemService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
@@ -339,7 +344,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\BaseAdmin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\BIICConnectionDb.dbml">
