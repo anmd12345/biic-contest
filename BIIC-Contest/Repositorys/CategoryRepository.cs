@@ -2,6 +2,7 @@
 using BIIC_Contest.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Linq;
 using System.Linq;
 using System.Web;
 
@@ -40,6 +41,42 @@ namespace BIIC_Contest.Repositorys
                 db.tbl_categories.InsertOnSubmit(category);
                 db.SubmitChanges();
                 return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool update(short id, string newCategoryName, string newDescription)
+        {
+            tbl_category category = findById(id);
+            if (category != null)
+            {
+                category.description = newDescription;
+                category.category_name = newCategoryName;
+                db.SubmitChanges();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool delete(short id)
+        {
+            try
+            {
+                using (var db = BIICConnectionDbContext.refreshConnection)
+                {
+                    tbl_category category = findById(id);
+                    if (category != null)
+                    {
+                        db.tbl_categories.DeleteOnSubmit(category);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                }
+                return false;
             }
             catch
             {
