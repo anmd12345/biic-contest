@@ -7,6 +7,7 @@ using BIIC_Contest.Repositorys;
 using BIIC_Contest.Services.I;
 using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace BIIC_Contest.Services
 {
@@ -14,6 +15,28 @@ namespace BIIC_Contest.Services
     {
 
         private CategoryRepository repo = new CategoryRepository();
+
+        public BasicResponseEntity delete(short id)
+        {
+            bool response = repo.delete(id);
+            
+            if (!response)
+            {
+                return new BasicResponseEntity
+                {
+                    Success = false,
+                    Message = MessageConstant.CategoryMessage[8],
+                    Data = null
+                };
+            }
+
+            return new BasicResponseEntity
+            {
+                Success = true,
+                Message = MessageConstant.CategoryMessage[9],
+                Data = null
+            };
+        }
 
         public BasicResponseEntity getAll()
         {
@@ -57,7 +80,8 @@ namespace BIIC_Contest.Services
                 return new BasicResponseEntity
                 {
                     Success = false,
-                    Message = MessageConstant.CategoryMessage[0]
+                    Message = MessageConstant.CategoryMessage[0],
+                    Data = null
                 };
             }
 
@@ -68,14 +92,15 @@ namespace BIIC_Contest.Services
                 return new BasicResponseEntity
                 {
                     Success = false,
-                    Message = MessageConstant.CategoryMessage[4]
+                    Message = MessageConstant.CategoryMessage[3],
+                    Data = null
                 };
             }
 
             return new BasicResponseEntity
             {
                 Success = true,
-                Message = MessageConstant.CategoryMessage[3],
+                Message = MessageConstant.CategoryMessage[2],
                 Data = new CategoryDto
                 {
                     CategoryName = name,
@@ -125,6 +150,53 @@ namespace BIIC_Contest.Services
         public dynamic toModels(dynamic dtos)
         {
             throw new NotImplementedException();
+        }
+
+        public BasicResponseEntity update(short id, string name, string description)
+        {
+            if (ValidateDataHelper.isNullOrEmpty(name))
+            {
+                return new BasicResponseEntity
+                {
+                    Success = false,
+                    Message = MessageConstant.CategoryMessage[1],
+                    Data = null
+                };
+            }
+
+            if (repo.isExist(name))
+            {
+                return new BasicResponseEntity
+                {
+                    Success = false,
+                    Message = MessageConstant.CategoryMessage[0],
+                    Data = null
+                };
+            }
+
+
+            bool response = repo.update(id, name, description);
+
+            if (!response)
+            {
+                return new BasicResponseEntity
+                {
+                    Success = false,
+                    Message = MessageConstant.CategoryMessage[7],
+                    Data = null
+                };
+            }
+
+            return new BasicResponseEntity
+            {
+                Success = true,
+                Message = MessageConstant.CategoryMessage[6],
+                Data = new CategoryDto
+                {
+                    CategoryName = name,
+                    Description = description
+                }
+            };
         }
     }
 }

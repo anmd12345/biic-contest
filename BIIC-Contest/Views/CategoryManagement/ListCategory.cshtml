@@ -1,0 +1,324 @@
+﻿@using BIIC_Contest.Dtos
+@{
+    ViewBag.Title = "ListCategory";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    List<CategoryDto> categories = ViewBag.categories;
+
+}
+
+<div class="mx-n4 px-4 mx-lg-n6 px-lg-6 pb-9 bg-body-emphasis">
+    <div data-list='{"valueNames":["category-name","description"],"page":100}'>
+        <div class="row gx-0 gy-3 align-items-center py-4">
+            <div class="col-xl-auto">
+                <h3 class="mb-0">Danh mục bài viết </h3>
+            </div>
+            <div class="col-auto flex-1">
+                <div class="d-flex flex-between-center">
+                    <div class="d-flex align-items-center">
+                        <div class="search-box ms-xl-6 w-auto">
+                            <form class="position-relative">
+                                <input class="form-control search-input search" type="search" placeholder="Tìm kiếm" aria-label="Search" />
+                                <span class="fas fa-search search-box-icon"></span>
+                            </form>
+                        </div>
+                        <button class="btn btn-phoenix-success px-3 ms-2 me-3" type="button" href="#modal-add-new-category" data-bs-toggle="modal">
+                            <span class="fa-solid fa-plus text-body-success" data-fa-transform="down-2"></span>
+                        </button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="pagination d-none"></div>
+                        <p class="mb-0 d-none d-md-block me-3 fw-semibold text-body text-nowrap" data-list-info="data-list-info"></p>
+                        <a class="fw-semibold text-nowrap d-none d-sm-block" href="#!" data-list-view="*">
+                            View all
+                            <span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span>
+                        </a>
+                        <a class="fw-semibold d-none text-nowrap" href="#!" data-list-view="less">
+                            View Less
+                        </a>
+                        <button class="btn btn-phoenix-primary px-3 me-1 ms-sm-4" type="button" title="Previous" data-list-pagination="prev">
+                            <span class="fas fa-chevron-left" data-fa-transform="down-1"></span>
+                        </button>
+                        <button class="btn btn-phoenix-primary px-3" type="button" title="Next" data-list-pagination="next">
+                            <span class="fas fa-chevron-right" data-fa-transform="down-1"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-responsive scrollbar mx-n1 px-1 mb-4">
+                <table class="table fs-9 mb-0 border-top border-translucent">
+                    <thead>
+                        <tr>
+                            <th class="sort white-space-nowrap align-middle text-body-tertiary ps-0" scope="col" data-sort="category-name">Tên danh mục</th>
+                            <th class="sort align-middle text-body-tertiary" scope="col" data-sort="description" style="width:170px;">Mô tả</th>
+                            <th class="text-end pe-0" scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="list" id="table-category-body">
+
+                        @if (categories != null)
+                        {
+                            foreach (var category in categories)
+                            {
+                                <tr>
+                                    <td class="align-middle category-name ps-0">
+                                        <span class="fw-bold">@category.CategoryName</span>
+                                    </td>
+                                    <td class="align-middle description pe-5">
+                                        <h6 class="mb-0 fw-semibold text-nowrap">@(category.Description.Equals("") ? "Không có mô tả" : category.Description)</h6>
+                                    </td>
+                                    <td class="align-middle text-end">
+                                        <div class="btn-reveal-trigger">
+                                            <button class="btn btn-sm ms-auto dropdown-toggle dropdown-caret-none transition-none d-flex btn-reveal" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent">
+                                                <span class="fas fa-ellipsis-h"></span>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item" href="#modal-edit-category" data-bs-toggle="modal" onclick="setEditCategory('@category.Id','@category.CategoryName', '@category.Description')"><span class="me-2" data-feather="edit-3"></span>Chỉnh sửa</a>
+                                                <button class="dropdown-item text-danger" type="button" onclick="deleteCategory('@category.Id')"><span class="me-2" data-feather="trash"></span>Xóa</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="fs-9 align-middle px-0">
+                                    <div class="alert alert-subtle-danger" role="alert">Danh mục rỗng!</div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-add-new-category" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modal-add-new-category-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="modal-add-new-category-title">Thêm danh mục mới</h5>
+                <button class="btn btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-2">
+                    <label class="form-label" for="category-name">Tên danh mục</label>
+                    <input class="form-control" id="category-name" type="text" placeholder="Nhập tên danh mục mới" />
+                    <div class="text-danger fs-9 text-validate" hidden="hidden">Vui lòng nhập tên của bạn trước khi chat</div>
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="description">Mô tả</label>
+                    <textarea rows="4" class="form-control" id="description" placeholder="Mô tả danh mục (có thể bỏ trống)"></textarea>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <div class="alert  w-100 category-notification" hidden role="alert">A simple primary alert—check it out!</div>
+                <button class="btn btn-primary justify-content-end" onclick="addCategory(this)" type="button">Thêm danh mục</button>
+                <button class="btn btn-primary" id="btn-spinner" hidden type="button"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang thêm danh mục...</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal-edit-category" data-bs-backdrop="static" tabindex="-1" aria-labelledby="mmodal-edit-category-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="modal-edit-category-title">Chỉnh sửa danh mục</h5>
+                <button class="btn btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-2">
+                    <label class="form-label" for="update-category-name">Tên danh mục</label>
+                    <input class="form-control" id="update-category-name" type="text" placeholder="Nhập tên danh mục mới" />
+                </div>
+                <div class="mb-2">
+                    <label class="form-label" for="update-description">Mô tả</label>
+                    <textarea rows="4" class="form-control" id="update-description" placeholder="Mô tả danh mục (có thể bỏ trống)"></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="alert alert-subtle-success w-100 update-category-notification" hidden role="alert">A simple primary alert—check it out!</div>
+                <button class="btn btn-primary justify-content-end" onclick="updateCategory(this)" type="button">Cập nhật</button>
+                <button class="btn btn-primary" id="btn-spinner-update" hidden type="button">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span>Đang cập nhật thông tin...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            new List('category-list-wrapper', {
+                valueNames: ['category-name', 'description'],
+                page: 4,
+                pagination: true
+            });
+        });
+    </script>
+
+    <script>
+        let onIdEdit = -1
+
+        function setEditCategory(id, categoryName, description) {
+            const categoryNameEl = document.getElementById('update-category-name')
+            const descriptionEl = document.getElementById('update-description')
+
+            categoryNameEl.value = categoryName
+            descriptionEl.value = description
+            onIdEdit = id
+        }
+
+        async function updateCategory(btn) {
+            const btnSpinnerUpdate = document.getElementById('btn-spinner-update')
+            const categoryNameEl = document.getElementById('update-category-name')
+            const descriptionEl = document.getElementById('update-description')
+            const notification = document.querySelector('.update-category-notification')
+
+            btn.hidden = true
+            btn.disabled = true
+            btnSpinnerUpdate.hidden = false
+            categoryNameEl.disabled = true
+            descriptionEl.disabled = true
+
+            console.log(onIdEdit)
+
+            const categoryName = categoryNameEl.value
+            const des = descriptionEl.value
+            const url = '/apis/v1/category/update'
+            const postData = {
+                id: onIdEdit,
+                categoryName: categoryName,
+                description: des
+            };
+
+            const response = await postApi(url, postData)
+
+            if (response.Success) {
+                notification.classList.add('alert-subtle-success');
+                notification.classList.remove('alert-subtle-danger');
+            } else {
+                notification.classList.add('alert-subtle-danger');
+                notification.classList.remove('alert-subtle-success');
+            }
+
+            notification.textContent = response.Message
+            notification.hidden = false
+
+            setTimeout(() => {
+                categoryNameEl.disabled = false
+                descriptionEl.disabled = false
+                btn.disabled = false
+                btn.hidden = false
+                btnSpinnerUpdate.hidden = true
+            }, 1000);
+
+            if (response.Success) {
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
+            }
+        }
+
+        async function addCategory(btn) {
+            const btnSpinner = document.getElementById('btn-spinner')
+            const categoryNameEl = document.getElementById('category-name')
+            const descriptionEl = document.getElementById('description')
+            const notification = document.querySelector('.category-notification')
+
+            categoryNameEl.disabled = true
+            descriptionEl.disabled = true
+            btn.disabled = true
+            btn.hidden = true
+            btnSpinner.hidden = false
+            
+
+            const categoryName = categoryNameEl.value
+            const des = descriptionEl.value
+            const url = '/apis/v1/category/create'
+            const postData = {
+                categoryName: categoryName,
+                description: des
+            };
+
+            const response = await postApi(url, postData)
+
+            if (response.Success) {
+                notification.classList.add('alert-subtle-success');
+                notification.classList.remove('alert-subtle-danger');
+                categoryNameEl.value = ""
+                descriptionEl.value = ""
+            } else {
+                notification.classList.add('alert-subtle-danger');
+                notification.classList.remove('alert-subtle-success');
+            }
+            notification.textContent = response.Message
+
+            setTimeout(() => {       
+                notification.hidden = false
+                categoryNameEl.disabled = false
+                descriptionEl.disabled = false
+                btn.disabled = false
+                btn.hidden = false
+                btnSpinner.hidden = true
+            }, 1000);
+
+            if (response.Success) {
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
+            }
+        }
+
+        function deleteCategory(id) {
+            Swal.fire({
+                title: "Bạn có chắc chắn muốn xóa?",
+                showDenyButton: true,
+                confirmButtonText: "Đồng ý",
+                denyButtonText: `Thoát`,
+                allowOutsideClick: false,
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const url = '/apis/v1/category/delete'
+                    const postData = {
+                        id: id
+                    };
+
+                    try {
+                        const response = await postApi(url, postData)
+
+                        Swal.fire({
+                            title: response.Success ? "Thành công!" : "Đã xảy ra lỗi!",
+                            text: response.Message,
+                            icon: response.Success ? "success" : "error",
+                            confirmButtonText: "Đóng",
+                            allowOutsideClick: false,
+                        }).then((res) => {
+                            if (res.isConfirmed && response.Success) {
+                                window.location.reload();
+                            }
+                        });
+                    } catch(ex) {
+                        Swal.fire("Đã xảy ra lỗi!", "", "error");
+                        console.log(ex)
+                    }
+                }
+            });
+        }
+
+    </script>
+
+}
+
+

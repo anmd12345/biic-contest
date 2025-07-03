@@ -30,9 +30,11 @@
         public const string DASHBOARD_PAGE = "/bang-dieu-khien";
         public const string LIST_NEWS_PAGE = "/danh-sach-bai-viet";
         public const string LIST_CONTEST_PAGE = "/danh-sach-cuoc-thi";
+        public const string LIST_CATEGORY_PAGE = "/danh-sach-danh-muc";
         public const string USER_MANAGEMENT_PAGE = "/quan-ly-nguoi-dung";
         public const string LIST_ASSIGNMENT_PAGE = "/danh-sach-cong-viec";
         public const string VIEW_ASSIGNMENT_WItH_EXAMINER = "/chi-tiet-bai-du-thi-v1";
         public const string VIEW_ASSIGNMENT_WItH_EMPLOYEE = "/chi-tiet-bai-du-thi-v2";
+        
     }
 }

@@ -32,5 +32,14 @@ namespace BIIC_Contest.Databases
                 }
             }
         }
+
+        public static BIICConnectionDbContext refreshConnection
+        {
+            get
+            {
+                return new BIICConnectionDbContext(connectionString);
+            }
+        }
     }
+
 }

@@ -48,6 +48,10 @@
             "Hệ thống đang gặp sự cố. Tạo danh mục không thành công!",
             "Danh mục trống!",
             "Lấy danh sách danh mục thành công!",
+            "Cập nhật danh mục thành công!",
+            "Cập nhật danh mục không thành công!",
+            "Xóa danh mục không thành công!",
+            "Xóa danh mục thành công!",
         };
 
         //Tên quyền + mô tả

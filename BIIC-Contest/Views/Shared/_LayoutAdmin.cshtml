@@ -180,8 +180,15 @@
                             </div>
 
                             <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="../apps/calendar.html" role="button" data-bs-toggle="" aria-expanded="false">
-                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span data-feather="calendar"></span></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Danh mục</span></span></div>
+                                <a class="nav-link label-1" href="@RouteConstant.LIST_CATEGORY_PAGE" role="button" data-bs-toggle="" aria-expanded="false">
+                                    <div class="d-flex align-items-center">
+                                        <span class="nav-link-icon">
+                                            <span data-feather="calendar"></span>
+                                        </span>
+                                        <span class="nav-link-text-wrapper">
+                                            <span class="nav-link-text">Danh mục</span>
+                                        </span>
+                                    </div>
                                 </a>
                             </div>
                         </li>
@@ -537,6 +544,9 @@
             navbarVertical.setAttribute('data-navbar-appearance', 'darker');
         }
     </script>
+    <script src="~/scripts/fetch-api.js"></script>
+    <script src="~/scripts/show-notification.js"></script>
+    <script src="~/vendors/sweet-alert/sweetalert2@11.js"></script>
     <script src="~/vendors/popper/popper.min.js"></script>
     <script src="~/vendors/bootstrap/bootstrap.min.js"></script>
     <script src="~/vendors/anchorjs/anchor.min.js"></script>
@@ -548,9 +558,6 @@
     <script src="~/vendors/dayjs/dayjs.min.js"></script>
     <script src="~/assets/js/phoenix.js"></script>
     @RenderSection("scripts", required: false)
-    <script src="~/scripts/fetch-api.js"></script>
-    <script src="~/scripts/show-notification.js"></script>
-    <script src="~/vendors/sweet-alert/sweetalert2@11.js"></script>
     <script>
         async function logout() {
             const url = '/apis/v1/user/logout'
