@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "Danh sách hồ sơ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Lấy danh sách lọc
+    var fields = ViewBag.Fields as List<string>;
+    var statuses = ViewBag.Statuses as List<short?>;
+
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    string selectedField = Request["field"];
+    string selectedStatus = Request["status"];
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+
+<p>
+    <a href="@Url.Action("CreateSubminssionManagement")" class="btn btn-primary">+ Thêm bài dự thị</a>
+</p>
+
+<h2>Danh sách hồ sơ</h2>
+
+<!-- Bộ lọc -->
+<form method="get">
+    <label>Lĩnh vực:</label>
+    <select name="field">
+        <option value="">-- Tất cả --</option>
+        @if (fields != null)
+        {
+            foreach (var f in fields)
+            {
+                <option value="@f" @(selectedField == f ? "selected" : "")>@f</option>
+            }
+        }
+    </select>
+
+    <label>Trạng thái:</label>
+    <select name="status">
+        <option value="">-- Tất cả --</option>
+        @if (statuses != null)
+        {
+            foreach (var s in statuses)
+            {
+                string text = s == 1 ? "Đã tiếp nhận"
+                            : s == 2 ? "Đang đánh giá"
+                            : s == 3 ? "Đã đánh giá"
+                            : s == 4 ? "Kết quả"
+                            : "Không xác định";
+
+                <option value="@s" @(selectedStatus == s.ToString() ? "selected" : "")>@text</option>
+            }
+        }
+    </select>
+
+    <button type="submit">Lọc</button>
+</form>
+
+<!-- Bảng dữ liệu -->
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Họ tên</th>
+            <th>Lĩnh vực</th>
+            <th>Trạng thái</th>
+            <th>Chi tiết</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            string statusText = item.status == 1 ? "Đã tiếp nhận"
+                              : item.status == 2 ? "Đang đánh giá"
+                              : item.status == 3 ? "Đã đánh giá"
+                              : item.status == 4 ? "Kết quả"
+                              : "Không xác định";
+
+            <tr>
+                <td>@item.submission_code</td>
+                <td>@item.fullname</td>
+                <td>@item.field</td>
+                <td>@statusText</td>
+                <td>
+                    <a href="@Url.Action("DetailsSubminssionManagement", "SubminssionManagementAdmin", new { id = item.submission_id })"
+                       class="btn btn-sm btn-primary">Xem và cập nhật trạng thái</a>
+
+                    @using (Html.BeginForm("DeleteSubminssionManagement", "SubminssionManagementAdmin", FormMethod.Post, new { onsubmit = "return confirm('Bạn có chắc chắn muốn xóa hồ sơ này?');" }))
+                    {
+                        @Html.Hidden("id", (object)item.submission_id)
+                        <button type="submit" class="btn btn-sm btn-danger ml-2">Xóa</button>
+                    }
+                </td>
+
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Phân trang -->
+<div>
+    Trang:
+    @for (int i = 1; i <= totalPages; i++)
+    {
+        if (i == currentPage)
+        {
+            <strong>@i</strong>
+        }
+        else
+        {
+            <a href="@Url.Action("IndexSubminssionManagement", new { page = i, field = selectedField, status = selectedStatus })">@i</a>
+        }
+        @:
+    }
+</div>

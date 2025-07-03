@@ -1,0 +1,74 @@
+﻿@model BIIC_Contest.Models.tbl_submission
+
+@{
+    ViewBag.Title = "Thêm mới hồ sơ dự thi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">Thêm mới hồ sơ dự thi</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("CreateSubminssionManagement", "SubminssionManagementAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <!-- Ẩn mã vì được tạo tự động trong Controller -->
+            @Html.HiddenFor(m => m.submission_code)
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Họ tên</label>
+                    @Html.TextBoxFor(m => m.fullname, new { @class = "form-control", placeholder = "Nguyễn Văn A" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Ngày sinh</label>
+                    @Html.TextBoxFor(m => m.birth_day, new { @class = "form-control", type = "date" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Điện thoại</label>
+                    @Html.TextBoxFor(m => m.phone, new { @class = "form-control", placeholder = "0989xxxxxx" })
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Email</label>
+                    @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder = "example@gmail.com" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Địa chỉ</label>
+                @Html.TextBoxFor(m => m.address, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>Lĩnh vực</label>
+                @Html.TextBoxFor(m => m.field, new { @class = "form-control", placeholder = "Công nghệ, Giáo dục..." })
+            </div>
+
+            <div class="form-group">
+                <label>Mô tả bài dự thi</label>
+                @Html.TextAreaFor(m => m.description, new { @class = "form-control", rows = 4, placeholder = "Mô tả sáng kiến, nội dung dự thi..." })
+            </div>
+
+            <div class="form-group">
+                <label>File đính kèm</label>
+                <input type="file" name="file" class="form-control-file" />
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success">Lưu hồ sơ</button>
+                <a href="@Url.Action("IndexSubminssionManagement", "SubminssionManagementAdmin")" class="btn btn-secondary ml-2">Hủy</a>
+            </div>
+        }
+    </div>
+</div>
