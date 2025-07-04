@@ -40,6 +40,7 @@
             "Đăng xuất thành công!",
         };
 
+        //Category
         public static string[] CategoryMessage = new string[]
         {
             "Tên danh mục đã tồn tại!",
@@ -52,6 +53,12 @@
             "Cập nhật danh mục không thành công!",
             "Xóa danh mục không thành công!",
             "Xóa danh mục thành công!",
+        };
+
+        public static string[] SystemMessage = new string[]
+        {
+            "Cập nhật thông tin website thành công!",
+            "Lỗi hệ thống! Vui lòng quay lại sau!"
         };
 
         //Tên quyền + mô tả

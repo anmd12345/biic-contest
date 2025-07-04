@@ -21,10 +21,10 @@
     <div class="row g-5">
         <div class="col-12 col-xl-8">
             <h4 class="mb-3">Tên viết tắt</h4>
-            <input class="form-control mb-5" type="text" maxlength="50" value="@system.ShortTitle" placeholder="Tên viết tắt..." />
+            <input class="form-control mb-5" type="text" id="short-title" maxlength="50" value="@system.ShortTitle" placeholder="Tên viết tắt..." />
 
             <h4 class="mb-3">Logo tổ chức</h4>
-            <div class="dropzone dropzone-multiple p-0 mb-5" id="my-awesome-dropzone">
+            <div class="dropzone dropzone-multiple p-0 mb-5">
                 <div class="fallback">
                     <input name="file" type="file" hidden id="logo-upload"/>
                 </div>
@@ -53,19 +53,19 @@
                                 <div class="col-12 col-sm-6 col-xl-12">
                                     <div class="mb-4">
                                         <h5 class="mb-2 text-body-highlight">Số điện thoại</h5>
-                                        <input class="form-control mb-xl-3" maxlength="10" type="text" value="@system.Phone" placeholder="Số điện thoại" />
+                                        <input class="form-control mb-xl-3" id="phone" maxlength="10" type="text" value="@system.Phone" placeholder="Số điện thoại" />
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-xl-12">
                                     <div class="mb-4">
                                         <h5 class="mb-2 text-body-highlight">Email</h5>
-                                        <input class="form-control mb-xl-3" type="email" value="@system.Email" placeholder="Email" />
+                                        <input class="form-control mb-xl-3" id="email" type="email" value="@system.Email" placeholder="Email" />
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-xl-12">
                                     <div class="mb-4">
                                         <h5 class="mb-2 text-body-highlight">Địa chỉ</h5>
-                                        <textarea class="form-control mb-xl-3" rows="3" placeholder="Địa chỉ">@system.Address</textarea>
+                                        <textarea class="form-control mb-xl-3" id="address" rows="3" placeholder="Địa chỉ">@system.Address</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -80,12 +80,12 @@
                                 <div class="col-12 col-sm-6 col-xl-12">
                                     <div class="mb-4">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" id="allowShowNotification" type="checkbox" @(system.IsShowNotification ? "checked=\"checked\"" : "") name="allowShowNotification" />
-                                            <label class="form-check-label fs-8" for="allowShowNotification">Hiện thị thông báo đẩy</label>
+                                            <input class="form-check-input" id="allow-show-notification" type="checkbox" @(system.IsShowNotification ? "checked=\"checked\"" : "") name="allow-show-notification" />
+                                            <label class="form-check-label fs-8" for="allow-show-notification">Hiện thị thông báo đẩy</label>
                                         </div>
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" id="allowAccess" type="checkbox" @(system.IsAllow ? "checked=\"checked\"" : "") name="allowAccess" />
-                                            <label class="form-check-label fs-8" for="allowAccess">Cho phép truy cập trang web</label>
+                                            <input class="form-check-input" id="allow-access" type="checkbox" @(system.IsAllow ? "checked=\"checked\"" : "") name="allow-access" />
+                                            <label class="form-check-label fs-8" for="allow-access">Cho phép truy cập trang web</label>
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                     <div class="d-flex col-xl-12 pt-3">
-                        <button class="btn btn-primary mb-2 mb-sm-0 w-auto ms-auto" type="button">
+                        <button class="btn btn-primary mb-2 mb-sm-0 w-auto ms-auto" type="button" onclick="update(this)">
                             <span data-feather="refresh-ccw" class="me-2"></span>
                             Cập nhật
                         </button>
@@ -110,6 +110,58 @@
     <script src="~/vendors/dropzone/dropzone-min.js"></script>
     <script src="~/vendors/choices/choices.min.js"></script>
     <script src="~/vendors/flatpickr/flatpickr.min.js"></script>
- 
+    <script>
+        async function update(btn) {
+            
+            const uploadResponse = await uploadLogo();
+            console.log(uploadResponse)
+
+            const shortTitleEl = document.getElementById('short-title')
+            const phoneEl = document.getElementById('phone')
+            const emailEl = document.getElementById('email')
+            const addressEl = document.getElementById('address')
+            const allowNotificationEl = document.getElementById('allow-show-notification')
+            const allowAccessEl = document.getElementById('allow-access')
+
+            const shortTitle = shortTitleEl.value.trim();
+            const logoUrl = uploadResponse.Data;
+            const phone = phoneEl.value.trim();
+            const email = emailEl.value.trim();
+            const address = addressEl.value.trim();
+            const allowNotification = allowNotificationEl.checked;
+            const allowAccess = allowAccessEl.checked;
+
+
+            const url = '/apis/v1/system/update'
+            const postData = {
+                'shortTitle': shortTitle,
+                'logoUrl': logoUrl,
+                'phone': phone,
+                'email': email,
+                'address': address,
+                'allowNotification': allowNotification,
+                'allowAccess': allowAccess
+            }
+
+            const response = await postApi(url, postData)
+
+            console.log(postData)
+
+            console.log(response)
+        }
+
+
+        async function uploadLogo() {
+            const logoEl = document.getElementById('logo-upload')
+            const logo = logoEl.files[0];
+
+            var formData = new FormData();
+            formData.append('file', logo);
+
+            const response = await postFileApi('apis/v1/upload/upload-logo', formData);
+
+            return response
+        }
+    </script>
 }
 

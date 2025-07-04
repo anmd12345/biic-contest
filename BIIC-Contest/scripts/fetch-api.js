@@ -52,3 +52,22 @@ async function postApi(apiURL, postData) {
         throw new Error(`Fectch post api error: ${ex}`);
     }
 }
+
+async function postFileApi(apiURL, formData) {
+    try {
+        const response = await fetch(apiURL, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (!response.ok) {
+            console.log(response);
+            return;
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (ex) {
+        throw new Error(`Fetch post file api error: ${ex}`);
+    }
+}
