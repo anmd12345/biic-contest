@@ -1,10 +1,11 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "RegisterContest";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @section styles{
-   
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 }
 
 <div class="content pt-4 overflow-x-hidden">
@@ -14,51 +15,80 @@
             <div class="col-xl-12">
                 <div class="card mb-9">
                     <div class="card-body">
-                        <div>
+                        <form class="needs-validation" novalidate>
                             <div class="mb-3">
-                                <label class="form-label" for="basic-form-name">Họ và tên</label>
-                                <input class="form-control" id="basic-form-name" type="text" placeholder="Họ và tên" />
+                                <label class="form-label" for="fullName">Họ và tên</label>
+                                <input class="form-control" id="fullName" type="text" placeholder="Họ và tên" required />
+                                <div class="invalid-feedback">Vui lòng nhập họ và tên.</div>
                             </div>
+
                             <div class="row g-3 mb-3">
                                 <div class="col-md-4">
-                                    <label class="form-label" for="basic-form-dob">Ngày sinh</label>
-                                    <input class="form-control" id="basic-form-dob" type="date" />
+                                    <label class="form-label" for="dob">Ngày sinh</label>
+                                    <input class="form-control" id="dob" type="date" required />
+                                    <div class="invalid-feedback">Vui lòng chọn ngày sinh.</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label" for="basic-form-password">Số điện thoại</label>
-                                    <input class="form-control" id="basic-form-password" type="password" placeholder="Số điện thoại" />
+                                    <label class="form-label" for="phone">Số điện thoại</label>
+                                    <input class="form-control" id="phone" type="tel" placeholder="Số điện thoại" required pattern="0[0-9]{9}" />
+                                    <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ (gồm 10 chữ số, bắt đầu bằng 0).</div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="form-label" for="basic-form-password">Địa chỉ email</label>
-                                    <input class="form-control" id="basic-form-password" type="password" placeholder="Địa chỉ email" />
+                                    <label class="form-label" for="email">Địa chỉ email</label>
+                                    <input class="form-control" id="email" type="email" placeholder="Địa chỉ email" required />
+                                    <div class="invalid-feedback">Vui lòng nhập địa chỉ email hợp lệ.</div>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label" for="basic-form-password">Địa chỉ</label>
-                                <textarea class="form-control" id="basic-form-textarea" rows="3" placeholder="Địa chỉ"></textarea>
-
+                            <h5 class="mt-4">Địa chỉ</h5>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="provinces-select">Tỉnh/Thành phố *</label>
+                                    <select class="form-select" id="provinces-select" required>
+                                        <option selected disabled value="">-- Chọn tỉnh/thành phố --</option>
+                                    </select>
+                                    <div class="invalid-feedback">Vui lòng chọn tỉnh/thành phố.</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="wards-select">Phường/Xã *</label>
+                                    <select class="form-select" id="wards-select" required disabled>
+                                        <option selected disabled value="">-- Chọn phường/xã --</option>
+                                    </select>
+                                    <div class="invalid-feedback">Vui lòng chọn phường/xã.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label" for="streetAddress">Địa chỉ chi tiết (số nhà, đường)</label>
+                                    <input class="form-control" type="text" id="streetAddress" placeholder="Nhập số nhà, tên đường..." required>
+                                    <div class="invalid-feedback">Vui lòng nhập địa chỉ chi tiết.</div>
+                                </div>
                             </div>
 
+                            <h5 class="mt-4">Thông tin sáng kiến</h5>
                             <div class="mb-3">
-                                <label class="form-label" for="basic-form-gender">Lĩnh vực sáng kiến</label>
-                                <select class="form-select" id="basic-form-gender" aria-label="Default select example">
-                                    <option selected="selected">Chọn lĩnh vực sáng kiến</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
+                                <label class="form-label" for="initiativeField">Lĩnh vực sáng kiến</label>
+                                <select class="form-select" id="initiativeField" required>
+                                    <option selected disabled value="">Chọn lĩnh vực sáng kiến</option>
+                                    <option value="CongNghe">Công nghệ</option>
+                                    <option value="GiaoDuc">Giáo dục</option>
+                                    <option value="YTe">Y tế</option>
+                                    <option value="MoiTruong">Môi trường</option>
+                                    <option value="Khac">Lĩnh vực khác</option>
                                 </select>
+                                <div class="invalid-feedback">Vui lòng chọn một lĩnh vực.</div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="basic-form-textarea">Mô tả sáng kiến</label>
-                                <textarea class="form-control" id="basic-form-textarea" rows="3" placeholder="Mô tả sáng kiến"></textarea>
+                                <label class="form-label" for="initiativeDescription">Mô tả sáng kiến</label>
+                                <textarea class="form-control" id="initiativeDescription" rows="3" placeholder="Mô tả sáng kiến" required></textarea>
+                                <div class="invalid-feedback">Vui lòng nhập mô tả cho sáng kiến.</div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Upload Image <span class="text-danger">(Chỉ cho phép file .doc, .docx, .pdf, .zip, .rar. Nếu bạn có nhiều file thì hãy zip hoặc rar lại để gửi)</span></label>
-                                <input class="form-control" type="file" />
+                                <label class="form-label" for="fileUpload">Tải tệp đính kèm <span class="text-danger">(Chỉ cho phép file .doc, .docx, .pdf, .zip, .rar)</span></label>
+                                <input class="form-control" id="fileUpload" type="file" required accept=".doc,.docx,.pdf,.zip,.rar" />
+                                <div class="invalid-feedback">Vui lòng tải lên tệp đính kèm.</div>
                             </div>
-                            <button class="btn btn-primary" type="submit">Submit</button>
-                        </div>
+
+                            <button class="btn btn-primary" type="submit">Gửi đăng ký</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -68,5 +98,27 @@
 
 
 @section scripts{
-}
+    <script>
+        var addressDataUrl = '@Url.Content("~/vendors/address/data.json")';
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+    <script src="@Url.Content("~/vendors/address/address.js")"></script>
+
+    <script>
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+}

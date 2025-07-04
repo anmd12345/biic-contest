@@ -289,6 +289,7 @@
     <Content Include="scripts\fetch-api.js" />
     <Content Include="scripts\get-ip.js" />
     <Content Include="scripts\show-notification.js" />
+    <Content Include="vendors\address\address.js" />
     <Content Include="vendors\anchorjs\anchor.min.js" />
     <Content Include="vendors\bigpicture\BigPicture.js" />
     <Content Include="vendors\bootstrap\bootstrap.min.js" />
@@ -390,6 +391,7 @@
     <Content Include="Views\ContestManagement\CreateContest.cshtml" />
     <Content Include="Views\AssignmentManagement\ListAssignment.cshtml" />
     <Content Include="Views\CategoryManagement\ListCategory.cshtml" />
+    <Content Include="vendors\address\data.json" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
