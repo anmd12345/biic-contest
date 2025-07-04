@@ -19,11 +19,14 @@
     <nav class="navbar navbar-expand-lg container-small px-3 px-lg-7 px-xxl-3">
         <a class="navbar-brand flex-1 flex-lg-grow-0" href="@RouteConstant.HOME_PAGE">
             <div class="d-flex align-items-center">
-                <img class="d-dark-none" src="~/assets/img/system/@(currentSystem.LogoUrl)" alt="biic_logo" width="60" />
+                @if (currentSystem.LogoUrl != "")
+                {
+                    <img class="d-dark-none" src="~/assets/img/system/@(currentSystem.LogoUrl)" alt="biic_logo" width="60" />
+                }
                 <h5 class="logo-text ms-2">@currentSystem.ShortTitle</h5>
             </div>
         </a>
-        
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="border-bottom border-translucent border-bottom-lg-0 mb-2">
