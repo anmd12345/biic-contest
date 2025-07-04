@@ -66,16 +66,14 @@ namespace BIIC_Contest.Repositorys
         {
             try
             {
-                using (var db = BIICConnectionDbContext.refreshConnection)
+                tbl_category category = findById(id);
+                if (category != null)
                 {
-                    tbl_category category = findById(id);
-                    if (category != null)
-                    {
-                        db.tbl_categories.DeleteOnSubmit(category);
-                        db.SubmitChanges();
-                        return true;
-                    }
+                    db.tbl_categories.DeleteOnSubmit(category);
+                    db.SubmitChanges();
+                    return true;
                 }
+
                 return false;
             }
             catch
