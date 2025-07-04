@@ -58,7 +58,9 @@
         public static string[] SystemMessage = new string[]
         {
             "Cập nhật thông tin website thành công!",
-            "Lỗi hệ thống! Vui lòng quay lại sau!"
+            "Lỗi hệ thống! Vui lòng quay lại sau!",
+            "Xóa logo thành công!",
+            "Xóa logo không thành công!",
         };
 
         //Tên quyền + mô tả

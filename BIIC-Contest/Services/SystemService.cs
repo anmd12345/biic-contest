@@ -11,6 +11,29 @@ namespace BIIC_Contest.Services
     {
         private SystemRepo repo = new SystemRepo();
 
+        public BasicResponseEntity deleteLogo()
+        {
+            bool deleteResponse = repo.update();
+
+
+            if (deleteResponse)
+            {
+                return new BasicResponseEntity
+                {
+                    Success = true,
+                    Message = MessageConstant.SystemMessage[2],
+                    Data = null
+                };
+            }
+
+            return new BasicResponseEntity
+            {
+                Success = false,
+                Message = MessageConstant.SystemMessage[3],
+                Data = null
+            };
+        }
+
         public SystemDto getSystemInfo()
         {
             tbl_system system = repo.getSystemInfo();

@@ -31,5 +31,19 @@ namespace BIIC_Contest.Repositorys
             }
             return false;
         }
+
+
+        public bool update()
+        {
+            tbl_system system = getSystemInfo();
+
+            if (system != null)
+            {
+                system.logo_url = "";
+                db.SubmitChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

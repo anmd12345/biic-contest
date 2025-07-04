@@ -26,12 +26,12 @@
             <h4 class="mb-3">Logo tổ chức</h4>
             <div class="dropzone dropzone-multiple p-0 mb-5">
                 <div class="fallback">
-                    <input name="file" type="file" hidden id="logo-upload"/>
+                    <input name="file" type="file" hidden id="logo-upload" onchange="reviewImage()" />
                 </div>
-                <div class="dz-preview d-flex flex-wrap">
+                <div id="logo-preview"  class="dz-preview d-flex flex-wrap @(system.LogoUrl == "" ? "d-none" : "")">
                     <div class="border border-translucent bg-body-emphasis rounded-3 d-flex flex-center position-relative me-2 mb-2" style="height:80px;width:80px;">
-                        <img class="dz-image" src="~/assets/img/system/@system.LogoUrl" alt="..."/>
-                        <a class="dz-remove text-body-quaternary" href="#!">
+                        <img class="dz-image" src="~/assets/img/system/@system.LogoUrl" alt="..." />
+                        <a onclick="removeLogo()" style="z-index: 999" class="dz-remove text-body-quaternary">
                             <span data-feather="x"></span>
                         </a>
                     </div>
@@ -112,9 +112,8 @@
     <script src="~/vendors/flatpickr/flatpickr.min.js"></script>
     <script>
         async function update(btn) {
-            
+            btn.disabled = true;
             const uploadResponse = await uploadLogo();
-            console.log(uploadResponse)
 
             const shortTitleEl = document.getElementById('short-title')
             const phoneEl = document.getElementById('phone')
@@ -145,9 +144,12 @@
 
             const response = await postApi(url, postData)
 
-            console.log(postData)
-
-            console.log(response)
+            if (response.Success) {
+                showSuccessContactNotification(response.Message);
+            } else {
+                showErrorNotification(response.Message)
+            }
+            btn.disabled = false;
         }
 
 
@@ -161,6 +163,54 @@
             const response = await postFileApi('apis/v1/upload/upload-logo', formData);
 
             return response
+        }
+
+        function reviewImage() {
+            const input = document.getElementById('logo-upload');
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.querySelector('.dz-image');
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            const boxPreview = document.getElementById('logo-preview');
+            boxPreview.classList.remove('d-none');
+        }
+
+        function removeLogo() {
+            Swal.fire({
+                title: "Xác nhận xóa Logo?",
+                showCancelButton: true,
+                confirmButtonText: "Đồng ý",
+                cancelButtonText: "Đóng",
+                denyButtonText: `Thoát`
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    const url = '/apis/v1/system/delete-logo'
+                    const response = await postApi(url, {})
+
+                    if (response.Success) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Thành công!",
+                            text: `${response.Message}`,
+                            allowOutsideClick: false,
+                            showConfirmButton: true,
+                            confirmButtonText: 'Đóng',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                document.getElementById('logo-preview').classList.add('d-none');
+                            }
+                        });
+                    } else {
+                        showErrorNotification(response.Message)
+                    }
+                } 
+            });
         }
     </script>
 }

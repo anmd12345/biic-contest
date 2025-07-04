@@ -8,5 +8,7 @@ namespace BIIC_Contest.Services.I
         SystemDto getSystemInfo();
 
         BasicResponseEntity update(string shortTitle, string logoUrl, string phone, string email, string address, bool allowNotification, bool allowAccess);
+
+        BasicResponseEntity deleteLogo();
     }
 }

@@ -24,5 +24,15 @@ namespace BIIC_Contest.Apis
 
             return Json(response);
         }
+
+
+        [Route("delete-logo")]
+        [HttpPost]
+        public JsonResult DeleteLogo()
+        {
+            BasicResponseEntity response = systemService.deleteLogo();
+
+            return Json(response);
+        }
     }
 }
