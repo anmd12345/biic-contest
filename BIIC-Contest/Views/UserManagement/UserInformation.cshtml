@@ -1,16 +1,11 @@
 ﻿
 @{
     ViewBag.Title = "UserInformation";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<section class="pt-5 pb-9">
+<div class="pb-5">
     <div class="container-small">
-        <nav class="mb-3" aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="@BIIC_Contest.Constants.RouteConstant.USER_MANAGEMENT_PAGE">Danh sách người dùng</a></li>
-                <li class="breadcrumb-item">Thông tin người dùng</li>
-            </ol>
-        </nav>
         <div class="row align-items-center justify-content-between g-3 mb-4">
             <div class="col-auto">
                 <h3 class="mb-0"></h3>
@@ -190,7 +185,7 @@
             <div class="text-end"><button class="btn btn-primary px-7">Lưu thay đổi</button></div>
         </div>
     </div>
-</section>
+</div>
 
 @section scripts{
 
