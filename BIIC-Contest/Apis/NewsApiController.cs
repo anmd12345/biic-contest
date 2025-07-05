@@ -23,7 +23,7 @@ namespace BIIC_Contest.Apis
         // Tạo bài viết mới
         [HttpPost]
         [Route("create")]
-        public JsonResult CreateNews(string title, string content, short categoryId, string bannerUrl, bool isPriority)
+        public JsonResult CreateNews(string title, string content, short categoryId, string bannerUrl, bool isPriority, short status)
         {
 
             // Lấy thông tin người dùng từ session
@@ -46,6 +46,7 @@ namespace BIIC_Contest.Apis
                 CategoryId = categoryId,
                 BannerUrl = bannerUrl,
                 UserId = user.UserId,
+                Status = status,
                 IsPriority = isPriority
 
             });

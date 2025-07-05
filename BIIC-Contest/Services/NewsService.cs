@@ -35,7 +35,7 @@ namespace BIIC_Contest.Services
                     banner_url = newsDto.BannerUrl,
                     user_id = newsDto.UserId,
                     created_at = DateTime.Now.ToString("yyyy-MM-dd"),
-                    status = 0, // Trạng thái mặc định là chưa công bố
+                    status = newsDto.Status, 
                     is_priority = newsDto.IsPriority,
 
                     like = 0,

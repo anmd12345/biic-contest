@@ -10,6 +10,7 @@
 @section styles{
     <link href="~/vendors/flatpickr/flatpickr.min.css" rel="stylesheet">
     <link href="~/vendors/choices/choices.min.css" rel="stylesheet">
+
 }
 
 <form id="createNewsForm">
@@ -39,6 +40,20 @@
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" id="isPrioritySwitch">
                         <label class="form-check-label" for="isPrioritySwitch">Ưu tiên hiển thị bài viết</label>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-4">
+                    <label class="form-label fw-bold text-primary mb-2">Trạng thái bài viết</label>
+                    <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusHidden" value="0" autocomplete="off">
+                        <label class="btn btn-outline-danger" for="statusHidden">Ẩn</label>
+
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusVisible" value="1" autocomplete="off" checked>
+                        <label class="btn btn-outline-success" for="statusVisible">Hiển thị</label>
+
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusDraft" value="2" autocomplete="off">
+                        <label class="btn btn-outline-secondary" for="statusDraft">Lưu nháp</label>
                     </div>
                 </div>
 
@@ -106,6 +121,11 @@
                     </div>
                 </div>
 
+
+
+
+
+
             </div>
         </div>
     </div>
@@ -145,6 +165,9 @@
             const isPriority = document.getElementById("isPrioritySwitch").checked;
             const bannerInput = document.getElementById("bannerInput");
             let bannerFileName = "";
+            const statusValue = document.querySelector('input[name="statusOptions"]:checked').value;
+
+
 
             if (bannerInput && bannerInput.files.length > 0) {
                 bannerFileName = bannerInput.files[0].name;  // chỉ lấy tên
@@ -160,7 +183,9 @@
                 content: contentEl.getContent(),
                 categoryId: categoryIdEl.value,
                 bannerUrl: bannerFileName,
-                isPriority: isPriority
+                isPriority: isPriority,
+                status: parseInt(statusValue),
+
             };
 
             const url = "/apis/v1/news/create";
