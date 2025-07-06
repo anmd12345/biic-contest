@@ -4,6 +4,7 @@ using BIIC_Contest.Models;
 using BIIC_Contest.Repositorys;
 using BIIC_Contest.Services.I;
 using System;
+using System.Collections.Generic;
 
 namespace BIIC_Contest.Services
 {
@@ -34,7 +35,7 @@ namespace BIIC_Contest.Services
                     category_id = (short?)newsDto.CategoryId,
                     banner_url = newsDto.BannerUrl,
                     user_id = newsDto.UserId,
-                    created_at = DateTime.Now.ToString("yyyy-MM-dd"),
+                    created_at = DateTime.Now.ToString("dd/MM/yyyy - HH:mm"),
                     status = newsDto.Status, 
                     is_priority = newsDto.IsPriority,
 
@@ -89,6 +90,12 @@ namespace BIIC_Contest.Services
                 };
             }
         }
+
+        public List<tbl_new> getAll()
+        {
+            return newsRepo.findAll();
+        }
+
 
         // Phương thức lấy bài viết theo ID
         public NewsDto getNewsById(int id)
