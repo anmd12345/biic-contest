@@ -1,5 +1,6 @@
 ﻿using BIIC_Contest.Constants;
 using BIIC_Contest.Entitys;
+using BIIC_Contest.Helpers;
 using BIIC_Contest.Services;
 using System;
 using System.Web.Mvc;
@@ -79,12 +80,32 @@ namespace BIIC_Contest.Apis
         {
             try
             {
-                var response = userService.signup(fullname, email, phone, password, "", rePass, (short)RoleConstant.USER);
+                var response = userService.signup(fullname, email, phone, password, "", rePass, (short)RoleConstant.USER, ResourceConstant.DEFAULT_AVATAR);
 
                 if (response != null)
                 {
                     Session[SessionConstant.CURRENT_USER] = response.Data;
                 }
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                return Json(new BasicResponseEntity(
+                    false,
+                    MessageConstant.ErrorNotifications[2] + $"${ex.Message}"
+                ));
+            }
+        }
+
+
+        [Route("ex-signup")]
+        [HttpPost]
+        public JsonResult ExaminerSignup(string fullname, string email, string phone, string password, string specialtyField, string avatarUrl)
+        {
+            try
+            {
+                GmailHelper.sendEmail(email, "BIIC Gửi thông tin tài khoản giám khảo", fullname, phone, password);
+                BasicResponseEntity response = userService.signup(fullname, email, phone, password, specialtyField, password, (short)RoleConstant.EXAMINER, avatarUrl);
                 return Json(response);
             }
             catch (Exception ex)

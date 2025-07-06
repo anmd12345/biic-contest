@@ -1,7 +1,11 @@
-﻿
+﻿@using BIIC_Contest.Dtos
+@using BIIC_Contest.Constants
 @{
     ViewBag.Title = "UserManagement";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+
+    List<UserDto> users = ViewBag.users;
 }
 
 <div class="pb-5">
@@ -49,45 +53,54 @@
                         </tr>
                     </thead>
                     <tbody class="list" id="members-table-body">
-                        <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                            <td class="fs-9 align-middle ps-0 py-3">
-                                <div class="form-check mb-0 fs-8"><input class="form-check-input" type="checkbox" data-bulk-select-row='{"customer":{"avatar":"/team/32.webp","name":"Carry Anna"},"email":"annac34@gmail.com","mobile":"+912346578","city":"Budapest","lastActive":"34 min ago","joined":"Dec 12, 12:56 PM"}' /></div>
-                            </td>
-                            <td class="customer align-middle white-space-nowrap">
-                                <a class="d-flex align-items-center text-body text-hover-1000" href="/quan-ly-nguoi-dung/thong-tin-nguoi-dung">
-                                    <div class="avatar avatar-m"><img class="rounded-circle" src="~/assets/img/system/default_logo.jpg" alt="" /></div>
-                                    <h6 class="mb-0 ms-3 fw-semibold">Carry Anna</h6>
-                                </a>
-                            </td>
-                            <td class="email align-middle white-space-nowrap">
-                                <a class="fw-semibold" href="mailto:annac34@gmail.com">annac34@gmail.com</a>
-                            </td>
-                            <td class="mobile_number align-middle white-space-nowrap">
-                                <a class="fw-bold text-body-emphasis" href="tel:+912346578">+912346578</a>
-                            </td>
-                            <td class="city align-middle text-body">Khoa học tự nhiên, khoa học ứng dụng,...</td>
-                            <td class="last_active align-middle white-space-nowrap text-body-tertiary">Giám khảo</td>
-                            <td class="joined align-middle white-space-nowrap text-body-tertiary">09/06/2025-15:32</td>
-                            <td class="align-middle white-space-nowrap text-end pe-0">
-                                <div class="position-relative">
-                                    <div class="hover-actions">
-                                        <button class="btn btn-sm btn-phoenix-secondary me-1 fs-10">
-                                            <span class="fas fa-check"></span>
-                                        </button>
-                                        <button class="btn btn-sm btn-phoenix-secondary fs-10">
-                                            <span class="fas fa-trash"></span>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="btn-reveal-trigger position-static">
-                                    <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs-10"></span></button>
-                                    <div class="dropdown-menu dropdown-menu-end py-2">
-                                        <a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
-                                        <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
+                        @if (users.Count > 0)
+                        {
+                            foreach (var user in users)
+                            {
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs-9 align-middle ps-0 py-3">
+                                        <div class="form-check mb-0 fs-8">
+                                            <input class="form-check-input" type="checkbox" data-bulk-select-row='{"customer":{"avatar":"/team/32.webp","name":"Carry Anna"},"email":"annac34@gmail.com","mobile":"+912346578","city":"Budapest","lastActive":"34 min ago","joined":"Dec 12, 12:56 PM"}' />
+                                        </div>
+                                    </td>
+                                    <td class="customer align-middle white-space-nowrap">
+                                        <a class="d-flex align-items-center text-body text-hover-1000" href="/quan-ly-nguoi-dung/thong-tin-nguoi-dung/@user.UserId">
+                                            <div class="avatar avatar-m"><img class="rounded-circle" src="~/assets/img/user/@user.AvatarUrl" alt="" /></div>
+                                            <h6 class="mb-0 ms-3 fw-semibold">@user.Fullname</h6>
+                                        </a>
+                                    </td>
+                                    <td class="email align-middle white-space-nowrap">
+                                        <a class="fw-semibold" href="mailto:@user.Email">@user.Email</a>
+                                    </td>
+                                    <td class="mobile_number align-middle white-space-nowrap">
+                                        <a class="fw-bold text-body-emphasis" href="tel:@user.Phone">@user.Phone</a>
+                                    </td>
+                                    <td class="city align-middle text-body">@user.SpecialtyField</td>
+                                    <td class="last_active align-middle white-space-nowrap text-body-tertiary">@MessageConstant.RoleNames[user.Role.RoleName]</td>
+                                    <td class="joined align-middle white-space-nowrap text-body-tertiary">@user.CreatedAt</td>
+                                    <td class="align-middle white-space-nowrap text-end pe-0">
+                                        <div class="position-relative">
+                                            <div class="hover-actions">
+                                                <button class="btn btn-sm btn-phoenix-secondary me-1 fs-10">
+                                                    <span class="fas fa-check"></span>
+                                                </button>
+                                                <button class="btn btn-sm btn-phoenix-secondary fs-10">
+                                                    <span class="fas fa-trash"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="btn-reveal-trigger position-static">
+                                            <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10" type="button" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-h fs-10"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                                <a class="dropdown-item" href="#!">View</a><a class="dropdown-item" href="#!">Export</a>
+                                                <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -117,17 +130,17 @@
                             <div class="card-body">
                                 <div class="row align-items-center g-3 g-sm-5 text-center text-sm-start">
                                     <div class="col-12 col-sm-auto">
-                                        <input class="d-none" id="avatarFile" type="file" />
-                                        <label class="cursor-pointer avatar avatar-5xl" for="avatarFile">
-                                            <img class="rounded-circle" src="~/assets/img/system/default_logo.jpg" alt="" />
+                                        <input class="d-none" id="avatar-file" type="file" accept="image/*" />
+                                        <label class="cursor-pointer avatar avatar-5xl" for="avatar-file">
+                                            <img id="avatar-preview" class="rounded-circle" src="~/assets/img/system/default_logo.jpg" alt="" />
                                         </label>
                                     </div>
                                     <div class="col-12 col-sm-auto flex-1">
                                         <h3>Chọn ảnh đại diện</h3>
                                         <div class="col-auto">
                                             <div class="form-check mb-0">
-                                                <input class="form-check-input" id="basic-checkbox" type="checkbox" />
-                                                <label class="form-check-label mb-0" for="basic-checkbox">Sử dụng ảnh mặc định</label>
+                                                <input class="form-check-input" id="check-default-avatar" type="checkbox" />
+                                                <label class="form-check-label mb-0" for="check-default-avatar">Sử dụng ảnh mặc định</label>
                                             </div>
                                         </div>
                                     </div>
@@ -146,7 +159,7 @@
                             <div class="row g-3">
                                 <div class="col-6">
                                     <label class="text-body-highlight fw-bold mb-2" for="phone">Số điện thoại</label>
-                                    <input class="form-control" type="text" id="phone" placeholder="Nhập số điện thoại" />
+                                    <input class="form-control" maxlength="10" type="text" id="phone" placeholder="Nhập số điện thoại" />
                                 </div>
                                 <div class="col-6">
                                     <label class="text-body-highlight fw-bold mb-2" for="email">Địa chỉ email</label>
@@ -168,7 +181,7 @@
                     <div class="col-lg-12">
                         <div class="mb-4">
                             <label class="text-body-highlight fw-bold mb-2">Phân quyền</label>
-                            <select class="form-select" onchange="selectedRole(this)">
+                            <select class="form-select" onchange="selectedRole(this)" id="role">
                                 <option value="0">Chưa chọn quyền</option>
                                 <option value="2">Ban giám khảo</option>
                                 <option value="3">Nhân viên</option>
@@ -184,11 +197,12 @@
             </div>
             <div class="modal-footer border-0 pt-6 px-0 pb-0">
                 <button class="btn btn-link text-danger px-3 my-0" data-bs-dismiss="modal" aria-label="Close">Đóng</button>
-                <button class="btn btn-primary my-0">Tạo tài khoản</button>
+                <button class="btn btn-primary my-0" type="button" onclick="signup(this)">Tạo tài khoản</button>
             </div>
         </div>
     </div>
 </div>
+
 
 @section scripts{
     <script>
@@ -200,6 +214,107 @@
                 specialtyFieldBox.style.display = "none";
             }
         }
+
+        async function signup(btnSignup) {
+
+            showLoader();
+
+            const fullnameEl = document.getElementById('fullname');
+            const emailEl = document.getElementById('email');
+            const phoneEl = document.getElementById('phone');
+            const passwordEl = document.getElementById('password');
+            const specialtyFieldEl = document.getElementById('specialty-field');
+            const roleEl = document.getElementById('role');
+
+            const role = roleEl.value;
+            const fullname = fullnameEl.value.trim();
+            const email = emailEl.value.trim();
+            const phone = phoneEl.value.trim();
+            const password = passwordEl.value.trim();
+            const specialtyField = specialtyFieldEl.value.trim();
+            let url = ''
+
+            if (role == 0) {
+                showErrorNotification("Vui lòng chọn phân quyền cho người dùng!");
+                return
+            }
+
+            if (role == 2) {
+                url = `/apis/v1/user/ex-signup`
+            }
+
+            if (role == 3) {
+                //
+            }
+
+            if (role == 4) {
+                url = `/apis/v1/user/us-signup`
+            }
+
+            const avatarUrl = await uploadAvatar();
+
+            const postData = {
+                fullname: fullname,
+                email: email,
+                phone: phone,
+                password: password,
+                specialtyField: specialtyField,
+                avatarUrl: avatarUrl
+            }
+
+            const response = await postApi(url, postData);
+
+            hideLoader();
+
+            if (response.Success) {
+                showSuccessRegisterNotification(response.Message);
+            }
+
+            if (!response.Success) {
+                showErrorNotification(response.Message);
+            }
+        }
+
+        async function uploadAvatar() {
+            const avatarFile = document.getElementById('avatar-file').files[0];
+            if (avatarFile) {
+                var formData = new FormData();
+                formData.append('file', avatarFile);
+
+                const response = await postFileApi('/apis/v1/upload/upload-avatar', formData);
+
+                return response.Data
+            }
+
+            return 'default_logo.jpg'
+        }
+    </script>
+
+    <script>
+        const fileInput = document.getElementById('avatar-file');
+        const avatarPreview = document.getElementById('avatar-preview');
+        const defaultCheckbox = document.getElementById('check-default-avatar');
+        const defaultImagePath = '/assets/img/user/default_logo.jpg';
+
+        fileInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    avatarPreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                defaultCheckbox.checked = false;
+            }
+        });
+
+        defaultCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                avatarPreview.src = defaultImagePath;
+                fileInput.value = '';
+            }
+        });
     </script>
 }
 

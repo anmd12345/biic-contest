@@ -160,7 +160,7 @@
             var formData = new FormData();
             formData.append('file', logo);
 
-            const response = await postFileApi('apis/v1/upload/upload-logo', formData);
+            const response = await postFileApi('/apis/v1/upload/upload-logo', formData);
 
             return response
         }
