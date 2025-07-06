@@ -5,8 +5,7 @@ using BIIC_Contest.Helpers;
 using BIIC_Contest.Models;
 using BIIC_Contest.Repositorys;
 using BIIC_Contest.Services.I;
-using System.Security.Policy;
-using System.Web.Helpers;
+using System.Collections.Generic;
 
 namespace BIIC_Contest.Services
 {
@@ -14,11 +13,21 @@ namespace BIIC_Contest.Services
     {
         private UserRepo repo = new UserRepo();
 
+        public BasicResponseEntity getUsers()
+        {
+            List<tbl_user> users = repo.findAll();
+
+            return new BasicResponseEntity
+            (
+               true,
+               "",
+               toDtos(users)
+            );
+        }
+
         //Hàm này sử dụng tên đăng nhập có thể là email hoặc số điện thoại và hash password để đăng nhập.
         //Vì vậy cần kiểm tra email và mật khẩu (hash trước khi truyền) hoặc số điện thoại và mật khẩu (hash trước khi truyền).
         //Chỉ cần 1 trong 2 trường hợp trên là đúng thì sẽ đăng nhập thành công.
-        //Vì repo trả về là một đối tượng user nhưng ta chỉ cần kết quả là UserDto,
-        //nên cần chuyển đổi từ đối tượng user -> UserDto.
         public UserDto login(string username, string password)
         {
             tbl_user userResponse = repo.findByEmailAndPassword(username, HashHelper.hashPassword(password));
@@ -31,7 +40,7 @@ namespace BIIC_Contest.Services
             return toDto(userResponse);
         }
 
-        public BasicResponseEntity signup(string fullname, string email, string phone, string password, string specialtyField, string rePass, short role)
+        public BasicResponseEntity signup(string fullname, string email, string phone, string password, string specialtyField, string rePass, short role, string avatarUrl)
         {
             switch (role)
             {
@@ -40,7 +49,123 @@ namespace BIIC_Contest.Services
                 case (short)RoleConstant.EMPLOYEE:
                     break;
                 case (short)RoleConstant.EXAMINER:
-                    break;
+                    {
+                        if (ValidateDataHelper.isNullOrEmpty(fullname))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[5]
+                            );
+                        }
+
+                        if (ValidateDataHelper.isNullOrEmpty(phone))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[4]
+                            );
+                        }
+
+                        if (ValidateDataHelper.isNullOrEmpty(email))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[3]
+                            );
+                        }
+
+                        if (ValidateDataHelper.isNullOrEmpty(password))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[6]
+                            );
+                        }
+
+                        if (ValidateDataHelper.isNullOrEmpty(role.ToString()))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[14]
+                            );
+                        }
+
+                        if (ValidateDataHelper.isNullOrEmpty(specialtyField))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[15]
+                            );
+                        }
+
+                        if (!ValidateDataHelper.isValidPhoneNumber(phone))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[9]
+                            );
+                        }
+
+                        if (!ValidateDataHelper.isValidEmail(email))
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[10]
+                            );
+                        }
+
+                        bool checkExistEmail = repo.checkExistByEmail(email);
+
+                        if (checkExistEmail)
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[0]
+                            );
+                        }
+
+                        bool checkExistPhone = repo.checkExistByPhone(phone);
+
+                        if (checkExistPhone)
+                        {
+                            return new BasicResponseEntity
+                            (
+                                false,
+                                MessageConstant.ErrorNotifications[1]
+                            );
+                        }
+
+                        string createdAt = DateTimeHelper.getFormattedDateNow();
+                        string passwordHashed = HashHelper.hashPassword(password);
+
+                        tbl_user user = repo.examinerSignup(fullname, email, phone, passwordHashed, specialtyField, createdAt, avatarUrl);
+
+                        if (user != null)
+                        {
+                            UserDto data = toDto(user);
+                            return new BasicResponseEntity
+                            (
+                                true,
+                                MessageConstant.SuccessNotifications[0],
+                                data
+                            );
+                        }
+
+                        return new BasicResponseEntity
+                        (
+                            false,
+                            MessageConstant.ErrorNotifications[2]
+                        );
+                    }
                 case (short)RoleConstant.USER:
                     {
                         if (ValidateDataHelper.isNullOrEmpty(fullname))
@@ -139,7 +264,7 @@ namespace BIIC_Contest.Services
                         string createdAt = DateTimeHelper.getFormattedDateNow();
                         string passwordHashed = HashHelper.hashPassword(password);
 
-                        tbl_user user = repo.userSignup(fullname, email, phone, passwordHashed, createdAt);
+                        tbl_user user = repo.userSignup(fullname, email, phone, passwordHashed, createdAt, avatarUrl);
 
                         if (user != null)
                         {
@@ -159,7 +284,7 @@ namespace BIIC_Contest.Services
                         );
                     }
             }
-
+            
             return new BasicResponseEntity
             (
                 false,
@@ -200,7 +325,16 @@ namespace BIIC_Contest.Services
 
         public dynamic toDtos(dynamic models)
         {
-            throw new System.NotImplementedException();
+            List<tbl_user> users = models as List<tbl_user>;
+            List<UserDto> dtos = new List<UserDto>();
+
+
+            foreach (var user in users)
+            {
+                dtos.Add(toDto(user));
+            }
+
+            return dtos;
         }
 
         public dynamic toModel(dynamic dto)

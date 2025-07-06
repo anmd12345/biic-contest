@@ -35,3 +35,18 @@ function showSuccessLoginNotification(message, callback, timeout) {
         willClose: callback
     });
 }
+
+function showSuccessRegisterNotification(message) {
+    Swal.fire({
+        icon: 'success',
+        title: 'Thành công',
+        text: message,
+        confirmButtonText: 'Đóng',
+        allowOutsideClick: false,
+        showConfirmButton: true
+    }).then((rs) => {
+        if (rs.isConfirmed) {
+            window.location.reload()
+        }
+    });
+}

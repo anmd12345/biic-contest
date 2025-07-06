@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Đăng ký thành công</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background-color: #0077cc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+            .header h1 {
+                margin: 0;
+                font-size: 24px;
+            }
+
+        .content {
+            padding: 30px;
+            color: #333;
+        }
+
+            .content h2 {
+                color: #0077cc;
+            }
+
+        .footer {
+            background-color: #f0f0f0;
+            color: #888;
+            font-size: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #0077cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+            .button:hover {
+                background-color: #005fa3;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>BIIC CONTEST</h1>
+        </div>
+        <div class="content">
+            <h2>Chào @Model.Fullname,</h2>
+            <p>Cảm ơn bạn đã làm giám khảo cho cuộc thi <strong>BIIC Contest</strong>.</p>
+            <p>Thông tin tài khoản sử dụng để truy cập hệ thống của bạn là: </p>
+            <p><strong>Tài khoản:</strong> @Model.Email hoặc @Model.Phone</p>
+            <p><strong>Mật khẩu:</strong> @Model.Password</p>
+            <p>Nếu bạn có bất kỳ câu hỏi nào, vui lòng liên hệ đội ngũ tổ chức qua email:</p>
+            <p><strong>support@biic-contest.vn</strong></p>
+            <a class="button" style="color: white" href="https://localhost:44327/dang-nhap">Đăng nhập tại đây!</a>
+        </div>
+        <div class="footer">
+            © 2025 BIIC Contest. Mọi quyền được bảo lưu.
+        </div>
+    </div>
+</body>
+</html>

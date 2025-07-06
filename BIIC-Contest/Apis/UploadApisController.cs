@@ -27,5 +27,25 @@ namespace BIIC_Contest.Apis
 
             return Json(new BasicResponseEntity { Success = true, Message = "Upload thành công!", Data = fileName });
         }
+
+
+        [HttpPost]
+        [Route("upload-avatar")]
+        public JsonResult UploadAvatar(HttpPostedFileBase file)
+        {
+            if (file == null || file.ContentLength == 0)
+                return Json(new BasicResponseEntity { Success = false, Message = "Không có file nào được tải lên!", Data = "" });
+
+            var uploadsFolder = Server.MapPath("~/assets/img/user/");
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
+
+            var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            var filePath = Path.Combine(uploadsFolder, fileName);
+
+            file.SaveAs(filePath);
+
+            return Json(new BasicResponseEntity { Success = true, Message = "Upload thành công!", Data = fileName });
+        }
     }
 }

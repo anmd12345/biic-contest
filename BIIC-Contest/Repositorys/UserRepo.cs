@@ -2,13 +2,21 @@
 using BIIC_Contest.Databases;
 using BIIC_Contest.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
+using System.Web.Helpers;
 
 namespace BIIC_Contest.Repositorys
 {
     public class UserRepo
     {
         private BIICConnectionDbContext db = BIICConnectionDbContext.getInstance;
+
+        public List<tbl_user> findAll()
+        {
+            return db.tbl_users.Where(e => e.role_id != (short)RoleConstant.ADMIN).ToList();
+        }
 
         public bool checkExistByPhone(string phone)
         {
@@ -45,13 +53,13 @@ namespace BIIC_Contest.Repositorys
             return db.tbl_users.FirstOrDefault(u => u.email.Equals(phone) && u.password.Equals(password));
         }
 
-        public tbl_user userSignup(string fullname, string email, string phone, string password, string createdAt)
+        public tbl_user userSignup(string fullname, string email, string phone, string password, string createdAt, string avatarUrl)
         {
             try
             {
                 tbl_user user = new tbl_user
                 {
-                    avatar = ResourceConstant.DEFAULT_AVATAR,
+                    avatar = avatarUrl,
                     fullname = fullname,
                     email = email,
                     phone = phone,
@@ -71,9 +79,31 @@ namespace BIIC_Contest.Repositorys
             }
         }
 
-        private tbl_user examinerSignup()
+        public tbl_user examinerSignup(string fullname, string email, string phone, string password, string specialtyField, string createdAt, string avatarUrl)
         {
-            return null;
+            try
+            {
+                tbl_user user = new tbl_user
+                {
+                    fullname = fullname,
+                    email = email,
+                    phone = phone,
+                    password = password,
+                    avatar = avatarUrl,
+                    role_id = (short)RoleConstant.EXAMINER,
+                    created_at = createdAt,
+                    allow_view_activity_log = false,
+                    specialty_field = specialtyField
+                };
+
+                db.tbl_users.InsertOnSubmit(user);
+                db.SubmitChanges();
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Không thể đăng ký. Error: ${ex.Message}");
+            }
         }
 
         private tbl_user employeeSignup()

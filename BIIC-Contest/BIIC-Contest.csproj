@@ -179,6 +179,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\GmailHelper.cs" />
     <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Helpers\IPHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
@@ -285,6 +286,7 @@
     <Content Include="assets\img\user\default_logo.jpg" />
     <Content Include="assets\js\config.js" />
     <Content Include="assets\js\phoenix.js" />
+    <Content Include="assets\template\email-template.html" />
     <Content Include="assets\upload\videos\85YpIkbEsTTFc.mp4" />
     <Content Include="Global.asax" />
     <Content Include="scripts\cache-js.js" />
@@ -348,7 +350,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\UploadApis\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\BIICConnectionDb.dbml">
