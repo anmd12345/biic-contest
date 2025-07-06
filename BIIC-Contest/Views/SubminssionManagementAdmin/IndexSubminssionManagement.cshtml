@@ -1,10 +1,11 @@
-﻿@{
-    ViewBag.Title = "Danh sách hồ sơ";
+﻿@model IEnumerable<BIIC_Contest.Models.tbl_submission>
+
+@{
+    ViewBag.Title = "Danh sách bài dự thi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    // Lấy danh sách lọc
-    var fields = ViewBag.Fields as List<string>;
-    var statuses = ViewBag.Statuses as List<short?>;
+    var fields = ViewBag.Fields as List<string> ?? new List<string>();
+    var statuses = ViewBag.Statuses as List<short?> ?? new List<short?>();
 
     int currentPage = ViewBag.CurrentPage ?? 1;
     int totalPages = ViewBag.TotalPages ?? 1;
@@ -12,109 +13,124 @@
     string selectedStatus = Request["status"];
 }
 
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success">@TempData["Message"]</div>
+@section styles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 }
 
+<div class="pb-5">
+    <div class="row gx-6 gy-3 mb-4 align-items-center">
+        <div class="col-auto">
+            <h2 class="mb-0">
+                Danh sách bài dự thi
+                <span class="fw-normal text-body-tertiary ms-3">(@(Model?.Count() ?? 0))</span>
+            </h2>
+        </div>
+        <div class="col text-end">
+            <a href="@Url.Action("CreateSubminssionManagement")" class="btn btn-primary">+ Thêm bài dự thi</a>
+        </div>
+    </div>
 
-<p>
-    <a href="@Url.Action("CreateSubminssionManagement")" class="btn btn-primary">+ Thêm bài dự thị</a>
-</p>
+    <!-- Bộ lọc -->
+    <div class="row justify-content-between align-items-end mb-4 g-3">
+        <div class="col-12 col-sm-auto">
+            <form class="d-flex flex-wrap gap-2" method="get">
+                <select name="field" class="form-select">
+                    <option value="">-- Lĩnh vực --</option>
+                    @foreach (var f in fields)
+                    {
+                        <option value="@f" @(selectedField == f ? "selected" : "")>@f</option>
+                    }
+                </select>
 
-<h2>Danh sách hồ sơ</h2>
+                <select name="status" class="form-select">
+                    <option value="">-- Trạng thái --</option>
+                    @foreach (var s in statuses)
+                    {
+                        string text = s == 1 ? "Đã tiếp nhận"
+                                    : s == 2 ? "Đang đánh giá"
+                                    : s == 3 ? "Đã đánh giá"
+                                    : s == 4 ? "Kết quả"
+                                    : "Đã hủy";
+                        <option value="@s" @(selectedStatus == s.ToString() ? "selected" : "")>@text</option>
+                    }
+                </select>
 
-<!-- Bộ lọc -->
-<form method="get">
-    <label>Lĩnh vực:</label>
-    <select name="field">
-        <option value="">-- Tất cả --</option>
-        @if (fields != null)
-        {
-            foreach (var f in fields)
-            {
-                <option value="@f" @(selectedField == f ? "selected" : "")>@f</option>
-            }
-        }
-    </select>
+                <button type="submit" class="btn btn-outline-primary">
+                    <i class="fa fa-filter me-1"></i> Lọc
+                </button>
+            </form>
+        </div>
+    </div>
 
-    <label>Trạng thái:</label>
-    <select name="status">
-        <option value="">-- Tất cả --</option>
-        @if (statuses != null)
-        {
-            foreach (var s in statuses)
-            {
-                string text = s == 1 ? "Đã tiếp nhận"
-                            : s == 2 ? "Đang đánh giá"
-                            : s == 3 ? "Đã đánh giá"
-                            : s == 4 ? "Kết quả"
-                            : "Không xác định";
-
-                <option value="@s" @(selectedStatus == s.ToString() ? "selected" : "")>@text</option>
-            }
-        }
-    </select>
-
-    <button type="submit">Lọc</button>
-</form>
-
-<!-- Bảng dữ liệu -->
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Mã</th>
-            <th>Họ tên</th>
-            <th>Lĩnh vực</th>
-            <th>Trạng thái</th>
-            <th>Chi tiết</th>
-        </tr>
-    </thead>
-    <tbody>
+    <!-- Danh sách bài dự thi -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
         @foreach (var item in Model)
         {
             string statusText = item.status == 1 ? "Đã tiếp nhận"
                               : item.status == 2 ? "Đang đánh giá"
                               : item.status == 3 ? "Đã đánh giá"
                               : item.status == 4 ? "Kết quả"
-                              : "Không xác định";
+                              : "Đã hủy";
 
-            <tr>
-                <td>@item.submission_code</td>
-                <td>@item.fullname</td>
-                <td>@item.field</td>
-                <td>@statusText</td>
-                <td>
-                    <a href="@Url.Action("DetailsSubminssionManagement", "SubminssionManagementAdmin", new { id = item.submission_id })"
-                       class="btn btn-sm btn-primary">Xem và cập nhật trạng thái</a>
+            string badgeClass;
+            switch (item.status)
+            {
+                case 1: badgeClass = "badge bg-info-subtle text-info"; break;
+                case 2: badgeClass = "badge bg-warning-subtle text-warning"; break;
+                case 3: badgeClass = "badge bg-success-subtle text-success"; break;
+                case 4: badgeClass = "badge bg-primary-subtle text-primary"; break;
+                default: badgeClass = "badge bg-secondary"; break;
+            }
 
-                    @using (Html.BeginForm("DeleteSubminssionManagement", "SubminssionManagementAdmin", FormMethod.Post, new { onsubmit = "return confirm('Bạn có chắc chắn muốn xóa hồ sơ này?');" }))
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body position-relative">
+                        <h5 class="card-title">@item.fullname</h5>
+                        <span class="@badgeClass">@statusText</span>
+                        <p class="mt-3 text-muted">Lĩnh vực: <strong>@item.field</strong></p>
+                        <p class="text-muted">Mã hồ sơ: <code>@item.submission_code</code></p>
+                        <p class="text-muted text-truncate" title="@item.description">
+                            Mô tả: @item.description
+                        </p>
+                        <div class="mt-3 d-flex gap-2">
+                            <a href="@Url.Action("DetailsSubminssionManagement", new { id = item.submission_id })" class="btn btn-sm btn-primary">
+                                <i class="fa fa-eye me-1"></i> Chi tiết
+                            </a>
+
+                            @using (Html.BeginForm("DeleteSubminssionManagement", "SubminssionManagementAdmin", FormMethod.Post, new { onsubmit = "return confirm('Bạn có chắc chắn muốn xóa hồ sơ này?');" }))
+                            {
+                                @Html.Hidden("id", item.submission_id)
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash me-1"></i> Xóa
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Phân trang -->
+    <div class="mt-5 text-center">
+        <nav>
+            <ul class="pagination justify-content-center">
+                @for (int i = 1; i <= totalPages; i++)
+                {
+                    if (i == currentPage)
                     {
-                        @Html.Hidden("id", (object)item.submission_id)
-                        <button type="submit" class="btn btn-sm btn-danger ml-2">Xóa</button>
+                        <li class="page-item active">
+                            <span class="page-link">@i</span>
+                        </li>
                     }
-                </td>
-
-
-
-            </tr>
-        }
-    </tbody>
-</table>
-
-<!-- Phân trang -->
-<div>
-    Trang:
-    @for (int i = 1; i <= totalPages; i++)
-    {
-        if (i == currentPage)
-        {
-            <strong>@i</strong>
-        }
-        else
-        {
-            <a href="@Url.Action("IndexSubminssionManagement", new { page = i, field = selectedField, status = selectedStatus })">@i</a>
-        }
-        @:
-    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("IndexSubminssionManagement", new { page = i, field = selectedField, status = selectedStatus })">@i</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </nav>
+    </div>
 </div>

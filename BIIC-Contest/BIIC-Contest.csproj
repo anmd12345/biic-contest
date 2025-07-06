@@ -137,6 +137,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Configs\GoogleMapConfig.cs" />
+    <Compile Include="Controllers\Admin\SubminssionManagementAdminController.cs" />
     <Compile Include="Entitys\ActivityLogMessageEntity.cs" />
     <Compile Include="Constants\ActivityLogTypeConstant.cs" />
     <Compile Include="Constants\MessageConstant.cs" />
@@ -181,7 +182,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorys\ActivityLogRepo.cs" />
     <Compile Include="Repositorys\ContactMessageRepo.cs" />
+    <Compile Include="Repositorys\I\ISubmissionRepository.cs" />
     <Compile Include="Repositorys\RoleRepo.cs" />
+    <Compile Include="Repositorys\SubmissionRepository.cs" />
     <Compile Include="Repositorys\SystemRepo.cs" />
     <Compile Include="Repositorys\UserRepo.cs" />
     <Compile Include="Services\ActivityLogService.cs" />
@@ -189,8 +192,10 @@
     <Compile Include="Services\I\IActivityLogService.cs" />
     <Compile Include="Services\I\IBaseService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
+    <Compile Include="Services\I\ISubmissionService.cs" />
     <Compile Include="Services\I\ISystemService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
+    <Compile Include="Services\SubmissionService.cs" />
     <Compile Include="Services\SystemService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
@@ -368,6 +373,9 @@
     <Content Include="Views\Submission\SubmissionDetail.cshtml" />
     <Content Include="Views\SubmissionManagement\SubmissionDetail.cshtml" />
     <Content Include="Views\SubmissionManagement\ListSubmission.cshtml" />
+    <Content Include="Views\SubminssionManagementAdmin\CreateSubminssionManagement.cshtml" />
+    <Content Include="Views\SubminssionManagementAdmin\DetailsSubminssionManagement.cshtml" />
+    <Content Include="Views\SubminssionManagementAdmin\IndexSubminssionManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

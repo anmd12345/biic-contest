@@ -1,74 +1,122 @@
 ﻿@model BIIC_Contest.Models.tbl_submission
 
 @{
-    ViewBag.Title = "Thêm mới hồ sơ dự thi";
+    ViewBag.Title = "Đăng ký tham gia cuộc thi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="mb-4">Thêm mới hồ sơ dự thi</h2>
-
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-info">@TempData["Message"]</div>
+@section styles {
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 }
 
-<div class="card">
-    <div class="card-body">
-        @using (Html.BeginForm("CreateSubminssionManagement", "SubminssionManagementAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
+<div class="content pt-4 overflow-x-hidden">
+    <h2 class="mb-2 lh-sm text-center mb-5">Đăng ký tham gia cuộc thi</h2>
 
-            <!-- Ẩn mã vì được tạo tự động trong Controller -->
-            @Html.HiddenFor(m => m.submission_code)
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-info">@TempData["Message"]</div>
+    }
 
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label>Họ tên</label>
-                    @Html.TextBoxFor(m => m.fullname, new { @class = "form-control", placeholder = "Nguyễn Văn A" })
+    <div class="pb-3">
+        <div class="row gx-lg-12">
+            <div class="col-xl-12">
+                <div class="card mb-9">
+                    <div class="card-body">
+                        @using (Html.BeginForm("CreateSubminssionManagement", "SubminssionManagementAdmin", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation", novalidate = "novalidate" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(m => m.submission_code)
+
+                            <div class="mb-3">
+                                <label class="form-label" for="fullname">Họ và tên</label>
+                                @Html.TextBoxFor(m => m.fullname, new { @class = "form-control", placeholder = "Họ và tên", required = "required" })
+                                <div class="invalid-feedback">Vui lòng nhập họ và tên.</div>
+                            </div>
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-4">
+                                    <label class="form-label" for="birth_day">Ngày sinh</label>
+                                    @Html.TextBoxFor(m => m.birth_day, new { @class = "form-control", type = "date", required = "required" })
+                                    <div class="invalid-feedback">Vui lòng chọn ngày sinh.</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="phone">Số điện thoại</label>
+                                    @Html.TextBoxFor(m => m.phone, new { @class = "form-control", type = "tel", pattern = "0[0-9]{9}", placeholder = "0989xxxxxx", required = "required" })
+                                    <div class="invalid-feedback">Vui lòng nhập số điện thoại hợp lệ.</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="email">Địa chỉ email</label>
+                                    @Html.TextBoxFor(m => m.email, new { @class = "form-control", type = "email", placeholder = "example@gmail.com", required = "required" })
+                                    <div class="invalid-feedback">Vui lòng nhập địa chỉ email hợp lệ.</div>
+                                </div>
+                            </div>
+
+                            <h5 class="mt-4">Địa chỉ</h5>
+                            <div class="mb-3">
+                                <label class="form-label" for="address">Địa chỉ chi tiết</label>
+                                @Html.TextBoxFor(m => m.address, new { @class = "form-control", placeholder = "Số nhà, tên đường, xã/phường, quận/huyện, tỉnh/thành phố", required = "required" })
+                                <div class="invalid-feedback">Vui lòng nhập địa chỉ.</div>
+                            </div>
+
+                            <h5 class="mt-4">Thông tin sáng kiến</h5>
+                            <div class="mb-3">
+                                <label class="form-label" for="field">Lĩnh vực sáng kiến</label>
+                                @Html.DropDownListFor(m => m.field,
+                                    new SelectList(new[] {
+                                        new { Text = "-- Chọn lĩnh vực --", Value = "" },
+                                        new { Text = "Công nghệ", Value = "CongNghe" },
+                                        new { Text = "Giáo dục", Value = "GiaoDuc" },
+                                        new { Text = "Y tế", Value = "YTe" },
+                                        new { Text = "Môi trường", Value = "MoiTruong" },
+                                        new { Text = "Lĩnh vực khác", Value = "Khac" }
+                                    }, "Value", "Text"),
+                                    new { @class = "form-select", required = "required" })
+                                <div class="invalid-feedback">Vui lòng chọn lĩnh vực.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="description">Mô tả sáng kiến</label>
+                                @Html.TextAreaFor(m => m.description, new { @class = "form-control", rows = "3", placeholder = "Mô tả sáng kiến", required = "required" })
+                                <div class="invalid-feedback">Vui lòng nhập mô tả sáng kiến.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="file">Tải tệp đính kèm <span class="text-danger">(chỉ .doc, .docx, .pdf, .zip, .rar)</span></label>
+                                <input type="file" name="file" id="file" class="form-control" required accept=".doc,.docx,.pdf,.zip,.rar" />
+                                <div class="invalid-feedback">Vui lòng tải tệp đính kèm.</div>
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Gửi đăng ký</button>
+                            <a href="@Url.Action("IndexSubminssionManagement", "SubminssionManagementAdmin")" class="btn btn-secondary ml-2">Hủy</a>
+                        }
+                    </div>
                 </div>
-
-                <div class="form-group col-md-6">
-                    <label>Ngày sinh</label>
-                    @Html.TextBoxFor(m => m.birth_day, new { @class = "form-control", type = "date" })
-                </div>
             </div>
-
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label>Điện thoại</label>
-                    @Html.TextBoxFor(m => m.phone, new { @class = "form-control", placeholder = "0989xxxxxx" })
-                </div>
-
-                <div class="form-group col-md-6">
-                    <label>Email</label>
-                    @Html.TextBoxFor(m => m.email, new { @class = "form-control", placeholder = "example@gmail.com" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Địa chỉ</label>
-                @Html.TextBoxFor(m => m.address, new { @class = "form-control" })
-            </div>
-
-            <div class="form-group">
-                <label>Lĩnh vực</label>
-                @Html.TextBoxFor(m => m.field, new { @class = "form-control", placeholder = "Công nghệ, Giáo dục..." })
-            </div>
-
-            <div class="form-group">
-                <label>Mô tả bài dự thi</label>
-                @Html.TextAreaFor(m => m.description, new { @class = "form-control", rows = 4, placeholder = "Mô tả sáng kiến, nội dung dự thi..." })
-            </div>
-
-            <div class="form-group">
-                <label>File đính kèm</label>
-                <input type="file" name="file" class="form-control-file" />
-            </div>
-
-            <div class="mt-4">
-                <button type="submit" class="btn btn-success">Lưu hồ sơ</button>
-                <a href="@Url.Action("IndexSubminssionManagement", "SubminssionManagementAdmin")" class="btn btn-secondary ml-2">Hủy</a>
-            </div>
-        }
+        </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        var addressDataUrl = '@Url.Content("~/vendors/address/data.json")';
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="@Url.Content("~/vendors/address/address.js")"></script>
+    <script>
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+}
