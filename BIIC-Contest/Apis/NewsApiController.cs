@@ -15,18 +15,57 @@ namespace BIIC_Contest.Apis
     {
         private NewsService newsService = new NewsService();
 
-        // Lấy tất cả bài viết
         //[HttpGet]
         //[Route("list")]
-        //public JsonResult ListNews()
+        //public JsonResult ListNews(int page = 1, int pageSize = 5)
         //{
-        //    var response = newsService.getAllNews();
-        //    return Json(response, JsonRequestBehavior.AllowGet);  // Sử dụng JsonRequestBehavior.AllowGet để cho phép GET
+        //    var response = newsService.getAllNews(); // Trả về BasicResponseEntity
+
+        //    if (!response.Success)
+        //    {
+        //        return Json(new
+        //        {
+        //            Success = false,
+        //            Message = response.Message
+        //        }, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    var allNews = response.Data as List<tbl_new>;
+
+        //    var pagedNews = allNews
+        //        .OrderByDescending(n => n.created_at)
+        //        .Skip((page - 1) * pageSize)
+        //        .Take(pageSize)
+        //        .Select(n => new
+        //        {
+        //            n.news_id,
+        //            n.title,
+        //            n.created_at,
+        //            n.status,
+        //            n.view,
+        //            n.like,
+        //            n.share,
+        //            n.is_priority
+        //        })
+        //        .ToList();
+
+        //    return Json(new
+        //    {
+        //        Success = true,
+        //        Message = "Lấy danh sách thành công!",
+        //        TotalRecords = allNews.Count,
+        //        Data = pagedNews
+        //    }, JsonRequestBehavior.AllowGet);
         //}
+
+
+
+
+        // Tạo bài viết mới
 
         [HttpGet]
         [Route("list")]
-        public JsonResult ListNews(int page = 1, int pageSize = 5)
+        public JsonResult ListNews(int page = 1, int pageSize = 5, string sortBy = "created_at", string sortDir = "desc")
         {
             var response = newsService.getAllNews(); // Trả về BasicResponseEntity
 
@@ -41,8 +80,34 @@ namespace BIIC_Contest.Apis
 
             var allNews = response.Data as List<tbl_new>;
 
+            // Sắp xếp động theo sortBy & sortDir
+            if (sortBy == "title")
+            {
+                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.title).ToList() : allNews.OrderByDescending(n => n.title).ToList();
+            }
+            else if (sortBy == "status")
+            {
+                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.status).ToList() : allNews.OrderByDescending(n => n.status).ToList();
+            }
+            else if (sortBy == "view")
+            {
+                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.view).ToList() : allNews.OrderByDescending(n => n.view).ToList();
+            }
+            else if (sortBy == "like")
+            {
+                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.like).ToList() : allNews.OrderByDescending(n => n.like).ToList();
+            }
+            else if (sortBy == "share")
+            {
+                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.share).ToList() : allNews.OrderByDescending(n => n.share).ToList();
+            }
+            else // mặc định sort theo created_at
+            {
+                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.created_at).ToList() : allNews.OrderByDescending(n => n.created_at).ToList();
+            }
+
+
             var pagedNews = allNews
-                .OrderByDescending(n => n.created_at)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Select(n => new
@@ -69,8 +134,6 @@ namespace BIIC_Contest.Apis
 
 
 
-
-        // Tạo bài viết mới
         [HttpPost]
         [Route("create")]
         public JsonResult CreateNews(string title, string content, short categoryId, string bannerUrl, bool isPriority, short status)

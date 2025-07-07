@@ -19,14 +19,20 @@
                     <table class="table fs-9 mb-0 border-top border-translucent">
                         <thead>
                             <tr>
-                                <th style="width: 25%;">Tiêu đề</th>
-                                <th>Ngày tạo</th>
-                                <th>Trạng thái</th>
-                                <th>Lượt xem</th>
-                                <th>Thích</th>
-                                <th>Chia sẻ</th>
+                                <th data-sort="title" data-label="Tiêu đề" style="cursor:pointer; width: 25%;">Tiêu đề</th>
+                                <th data-sort="created_at" data-label="Ngày tạo" style="cursor:pointer">Ngày tạo</th>
+                                <th data-sort="status" data-label="Trạng thái" style="cursor:pointer">Trạng thái</th>
+                                <th data-sort="view" data-label="Lượt xem" style="cursor:pointer">Lượt xem</th>
+                                <th data-sort="like" data-label="Thích" style="cursor:pointer">Thích</th>
+                                <th data-sort="share" data-label="Chia sẻ" style="cursor:pointer">Chia sẻ</th>
                                 <th>Đang ưu tiên</th>
                                 <th class="text-end">Thao tác</th>
+
+
+                                @*<th style="width: 25%;">Tiêu đề</th>
+
+        <th>Đang ưu tiên</th>
+        <th class="text-end">Thao tác</th>*@
                             </tr>
                         </thead>
                         <tbody class="list" id="project-summary-table-body">
@@ -73,9 +79,13 @@
         let currentPage = 1;
         let pageSize = 5;
         let totalRecords = 0;
+        let sortBy = "created_at";
+        let sortDir = "desc";
+
 
         function loadNews(page, size) {
-            fetch(`/apis/v1/news/list?page=${page}&pageSize=${size}`)
+            //fetch(`/apis/v1/news/list?page=${page}&pageSize=${size}`)
+            fetch(`/apis/v1/news/list?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`)
                 .then(response => response.json())
                 .then(result => {
                     if (!result.Success) {
@@ -166,82 +176,37 @@
         document.addEventListener("DOMContentLoaded", function () {
             loadNews(1, 5);
         });
+
+        document.querySelectorAll("th[data-sort]").forEach(th => {
+            th.addEventListener("click", function () {
+                const field = th.getAttribute("data-sort");
+                if (sortBy === field) {
+                    sortDir = sortDir === "asc" ? "desc" : "asc";
+                } else {
+                    sortBy = field;
+                    sortDir = "asc"; // khi đổi cột thì reset về asc
+                }
+                loadNews(1, pageSize); // gọi lại API
+                updateSortIcons();     // cập nhật icon ▲▼
+            });
+        });
+
+        function updateSortIcons() {
+            document.querySelectorAll("th[data-sort]").forEach(th => {
+                const field = th.getAttribute("data-sort");
+                const label = th.dataset.label || th.textContent.trim(); // fallback nếu quên gắn
+
+                if (field === sortBy) {
+                    th.innerHTML = `${label} ${sortDir === 'asc' ? '▲' : '▼'}`;
+                } else {
+                    th.innerHTML = label;
+                }
+            });
+        }
+
+
+
     </script>
 
-    @*<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            loadNews(1, 5); // mặc định page 1, 5 item
-
-            function loadNews(page, pageSize) {
-                fetch(`/apis/v1/news/list?page=${page}&pageSize=${pageSize}`)
-                    .then(response => response.json())
-                    .then(result => {
-                        if (!result.Success) {
-                            alert(result.Message);
-                            return;
-                        }
-
-                        const tbody = document.getElementById("project-summary-table-body");
-                        tbody.innerHTML = "";
-
-                        result.Data.forEach((item, index) => {
-                            const row = document.createElement("tr");
-                            row.classList.add("position-static");
-
-                            row.innerHTML = `
-                                <td class="align-middle project text-truncate" style="max-width: 250px;">
-                                    <a class="fw-bold fs-8 text-decoration-none d-inline-block"
-                                       title="${item.title}">
-                                       ${item.title}
-                                    </a>
-                                </td>
-                                <td class="align-middle start">
-                                    <p class="mb-0 fs-9 text-body">${formatDate(item.created_at)}</p>
-                                </td>
-                                <td class="align-middle deadline">
-                                    ${renderStatus(item.status)}
-                                </td>
-                                <td class="align-middle"><span class="text-muted">${item.view_count} 👁</span></td>
-                                <td class="align-middle"><span class="text-muted">${item.like_count} ❤️</span></td>
-                                <td class="align-middle"><span class="text-muted">${item.share_count} 🔁</span></td>
-                                <td class="align-middle">${item.is_priority ? '<span class="text-danger fw-bold">🔥</span>' : ''}</td>
-                                <td class="align-middle text-end action pe-0">
-                                    <div class="btn-reveal-trigger position-static">
-                                        <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10"
-                                                type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="fas fa-ellipsis-h fs-10"></span>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2">
-                                            <a class="dropdown-item" href="#">Xem</a>
-                                            <a class="dropdown-item" href="#">Sửa</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="#">Xoá</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            `;
-                            tbody.appendChild(row);
-                        });
-                    });
-            }
-
-            function formatDate(input) {
-                const date = new Date(input);
-                return date.toLocaleDateString("vi-VN");
-            }
-
-            function renderStatus(status) {
-                switch (status) {
-                    case 0:
-                        return '<span class="badge bg-secondary">Ẩn</span>';
-                    case 1:
-                        return '<span class="badge bg-success">Hiển thị</span>';
-                    case 2:
-                        return '<span class="badge bg-warning text-dark">Lưu nháp</span>';
-                    default:
-                        return '<span class="badge bg-dark">Không rõ</span>';
-                }
-            }
-        });
-        </script>*@
+   
 }
