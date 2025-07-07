@@ -14,7 +14,18 @@
                         <h3>Danh sách bài viết</h3>
                         <p class="text-body-tertiary lh-sm mb-0">Tóm tắt tất cả bài viết</p>
                     </div>
+
+                    <div class="col-auto">
+                        <label for="categoryFilter" class="form-label fw-bold">Danh mục:</label>
+                        <select id="categoryFilter" class="form-select form-select-sm">
+                            <option value="">Tất cả</option> <!-- Mặc định: không lọc -->
+                            <!-- JS sẽ render các option còn lại -->
+                        </select>
+                    </div>
                 </div>
+                
+
+
                 <div class="table-responsive ms-n1 ps-1 scrollbar">
                     <table class="table fs-9 mb-0 border-top border-translucent">
                         <thead>
@@ -29,10 +40,9 @@
                                 <th class="text-end">Thao tác</th>
 
 
-                                @*<th style="width: 25%;">Tiêu đề</th>
 
-        <th>Đang ưu tiên</th>
-        <th class="text-end">Thao tác</th>*@
+
+
                             </tr>
                         </thead>
                         <tbody class="list" id="project-summary-table-body">
@@ -52,7 +62,7 @@
                     </div>
                 </div>
 
-            
+
             </div>
         </div>
     </div>
@@ -62,6 +72,37 @@
 @section Scripts {
 
     <script>
+        function loadCategories() {
+            fetch("/apis/v1/category/list")
+                .then(res => res.json())
+                .then(result => {
+                    if (!result.Success) {
+                        alert("Không thể tải danh mục");
+                        return;
+                    }
+
+                    const select = document.getElementById("categoryFilter");
+                    select.innerHTML = `<option value="">Tất cả</option>`;
+
+                    console.log(result.Data);
+
+                    result.Data.forEach(cat => {
+                        const option = document.createElement("option");
+                        option.value = cat.Id;
+                        option.textContent = cat.CategoryName;
+                        document.getElementById("categoryFilter").appendChild(option);
+                    });
+
+                });
+        }
+
+        document.getElementById("categoryFilter").addEventListener("change", function () {
+            categoryId = this.value;
+            loadNews(1, pageSize); // load lại từ trang đầu
+        });
+
+
+
         function formatDate(input) {
             const date = new Date(input);
             return date.toLocaleDateString("vi-VN");
@@ -78,6 +119,7 @@
 
         let currentPage = 1;
         let pageSize = 5;
+        let categoryId = "";
         let totalRecords = 0;
         let sortBy = "created_at";
         let sortDir = "desc";
@@ -85,7 +127,8 @@
 
         function loadNews(page, size) {
             //fetch(`/apis/v1/news/list?page=${page}&pageSize=${size}`)
-            fetch(`/apis/v1/news/list?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`)
+            //fetch(`/apis/v1/news/list?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`)
+            fetch(`/apis/v1/news/list?page=${page}&pageSize=${size}&sortBy=${sortBy}&sortDir=${sortDir}&categoryId=${categoryId}`)
                 .then(response => response.json())
                 .then(result => {
                     if (!result.Success) {
@@ -174,6 +217,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
+            loadCategories();
             loadNews(1, 5);
         });
 

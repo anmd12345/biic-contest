@@ -65,9 +65,9 @@ namespace BIIC_Contest.Apis
 
         [HttpGet]
         [Route("list")]
-        public JsonResult ListNews(int page = 1, int pageSize = 5, string sortBy = "created_at", string sortDir = "desc")
+        public JsonResult ListNews(int page = 1, int pageSize = 5, string sortBy = "created_at", string sortDir = "desc", int? categoryId = null)
         {
-            var response = newsService.getAllNews(); // Trả về BasicResponseEntity
+            var response = newsService.getAllNews();
 
             if (!response.Success)
             {
@@ -80,32 +80,34 @@ namespace BIIC_Contest.Apis
 
             var allNews = response.Data as List<tbl_new>;
 
-            // Sắp xếp động theo sortBy & sortDir
-            if (sortBy == "title")
+            // ⚠️ Lọc theo category nếu có
+            if (categoryId.HasValue)
             {
-                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.title).ToList() : allNews.OrderByDescending(n => n.title).ToList();
-            }
-            else if (sortBy == "status")
-            {
-                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.status).ToList() : allNews.OrderByDescending(n => n.status).ToList();
-            }
-            else if (sortBy == "view")
-            {
-                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.view).ToList() : allNews.OrderByDescending(n => n.view).ToList();
-            }
-            else if (sortBy == "like")
-            {
-                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.like).ToList() : allNews.OrderByDescending(n => n.like).ToList();
-            }
-            else if (sortBy == "share")
-            {
-                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.share).ToList() : allNews.OrderByDescending(n => n.share).ToList();
-            }
-            else // mặc định sort theo created_at
-            {
-                allNews = sortDir == "asc" ? allNews.OrderBy(n => n.created_at).ToList() : allNews.OrderByDescending(n => n.created_at).ToList();
+                allNews = allNews.Where(n => n.category_id == categoryId.Value).ToList();
             }
 
+            // Sắp xếp động
+            switch (sortBy)
+            {
+                case "title":
+                    allNews = sortDir == "asc" ? allNews.OrderBy(n => n.title).ToList() : allNews.OrderByDescending(n => n.title).ToList();
+                    break;
+                case "status":
+                    allNews = sortDir == "asc" ? allNews.OrderBy(n => n.status).ToList() : allNews.OrderByDescending(n => n.status).ToList();
+                    break;
+                case "view":
+                    allNews = sortDir == "asc" ? allNews.OrderBy(n => n.view).ToList() : allNews.OrderByDescending(n => n.view).ToList();
+                    break;
+                case "like":
+                    allNews = sortDir == "asc" ? allNews.OrderBy(n => n.like).ToList() : allNews.OrderByDescending(n => n.like).ToList();
+                    break;
+                case "share":
+                    allNews = sortDir == "asc" ? allNews.OrderBy(n => n.share).ToList() : allNews.OrderByDescending(n => n.share).ToList();
+                    break;
+                default:
+                    allNews = sortDir == "asc" ? allNews.OrderBy(n => n.created_at).ToList() : allNews.OrderByDescending(n => n.created_at).ToList();
+                    break;
+            }
 
             var pagedNews = allNews
                 .Skip((page - 1) * pageSize)
@@ -131,6 +133,7 @@ namespace BIIC_Contest.Apis
                 Data = pagedNews
             }, JsonRequestBehavior.AllowGet);
         }
+
 
 
 
