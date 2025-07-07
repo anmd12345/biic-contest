@@ -3,9 +3,11 @@ using BIIC_Contest.Dtos;
 using BIIC_Contest.Entitys;
 using BIIC_Contest.Models;
 using BIIC_Contest.Services;
+using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using System.IO;
 using System.Linq;
+using System.Web.Mvc;
 
 
 namespace BIIC_Contest.Apis
@@ -135,13 +137,11 @@ namespace BIIC_Contest.Apis
         }
 
 
-
-
         [HttpPost]
         [Route("create")]
-        public JsonResult CreateNews(string title, string content, short categoryId, string bannerUrl, bool isPriority, short status)
+        [ValidateInput(false)]
+        public JsonResult CreateNews()
         {
-
             // Lấy thông tin người dùng từ session
             var user = Session[SessionConstant.CURRENT_USER] as UserDto;
 
@@ -155,19 +155,94 @@ namespace BIIC_Contest.Apis
                 });
             }
 
-            var response = newsService.createNews(new NewsDto
+            try
             {
-                Title = title,
-                Content = content,
-                CategoryId = categoryId,
-                BannerUrl = bannerUrl,
-                UserId = user.UserId,
-                Status = status,
-                IsPriority = isPriority
+                var request = this.HttpContext.Request;
 
-            });
-            return Json(response);
+
+                string title = request.Form["Title"];
+                string content = request.Form["Content"];
+                short categoryId = short.Parse(request.Form["CategoryId"]);
+                bool isPriority = bool.Parse(request.Form["IsPriority"]);
+                short status = short.Parse(request.Form["Status"]);
+
+                string bannerPath = "";
+
+                var file = request.Files["Banner"];
+                if (file != null && file.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(file.FileName);
+                    string relativePath = "/assets/img/event/" + fileName;
+                    string physicalPath = Server.MapPath("~" + relativePath);
+
+                    // Đảm bảo thư mục tồn tại
+                    string directory = Path.GetDirectoryName(physicalPath);
+                    if (!Directory.Exists(directory))
+                    {
+                        Directory.CreateDirectory(directory);
+                    }
+
+                    file.SaveAs(physicalPath);
+                    bannerPath = relativePath;
+                }
+
+                var newsDto = new NewsDto
+                {
+                    Title = title,
+                    Content = content,
+                    CategoryId = categoryId,
+                    BannerUrl = bannerPath,
+                    UserId = user.UserId,
+                    Status = status,
+                    IsPriority = isPriority
+                };
+
+                var response = newsService.createNews(newsDto);
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                return Json(new BasicResponseEntity
+                {
+                    Success = false,
+                    Message = "Đã xảy ra lỗi khi tạo bài viết: " + ex.Message,
+                    Data = null
+                });
+            }
         }
+
+
+        //[HttpPost]
+        //[Route("create")]
+        //public JsonResult CreateNews(string title, string content, short categoryId, string bannerUrl, bool isPriority, short status)
+        //{
+
+        //    // Lấy thông tin người dùng từ session
+        //    var user = Session[SessionConstant.CURRENT_USER] as UserDto;
+
+        //    if (user == null)
+        //    {
+        //        return Json(new BasicResponseEntity
+        //        {
+        //            Success = false,
+        //            Message = "Bạn chưa đăng nhập",
+        //            Data = null
+        //        });
+        //    }
+
+        //    var response = newsService.createNews(new NewsDto
+        //    {
+        //        Title = title,
+        //        Content = content,
+        //        CategoryId = categoryId,
+        //        BannerUrl = bannerUrl,
+        //        UserId = user.UserId,
+        //        Status = status,
+        //        IsPriority = isPriority
+
+        //    });
+        //    return Json(response);
+        //}
 
         // Cập nhật bài viết
         [HttpPost]

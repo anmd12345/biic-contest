@@ -91,40 +91,20 @@
                 </div>
 
                 <div class="col-12 gy-6">
+                    <h4 class="fs-7">Banner bài viết</h4>
+                    <div class="form-group">
+                        <label for="bannerInput">Chọn ảnh banner</label>
+                        <input name="Banner" type="file" id="bannerInput" class="form-control" accept="image/*" />
+                        <img id="bannerPreview" src="#" alt="Preview banner" style="display:none; max-height: 200px; margin-top: 10px;" />
+                    </div>
+                </div>
+
+                <div class="col-12 gy-6">
                     <h4 class="fs-7">Nội dung bài viết</h4>
                     <div class="form-floating">
                         <textarea id="content" style="height: 500px" class="form-control tinymce" name="Content" required></textarea>
                     </div>
                 </div>
-
-                <div class="col-12 gy-6">
-                    <h4 class="fs-7">Banner bài viết</h4>
-                    <div class="dropzone dropzone-multiple p-0 mb-5" id="my-awesome-dropzone" data-dropzone="data-dropzone">
-                        @*<div class="fallback"><input name="file" type="file" multiple="multiple" /></div>*@
-                        <div class="fallback">
-                            <input name="file" type="file" id="bannerInput" />
-                        </div>
-
-                        <div class="dz-preview d-flex flex-wrap">
-                            <div class="border border-translucent bg-body-emphasis rounded-3 d-flex flex-center position-relative me-2 mb-2" style="height:80px;width:80px;">
-                                <img class="dz-image" src="../../assets/img/products/23.png" alt="..." data-dz-thumbnail="data-dz-thumbnail" />
-                                <a class="dz-remove text-body-quaternary" href="#" data-dz-remove="data-dz-remove">
-                                    <span data-feather="x"></span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="dz-message text-body-tertiary text-center" data-dz-message="data-dz-message">
-                            Drag your photo here <span class="text-body-secondary">or </span>
-                            <button class="btn btn-link p-0" type="button">Browse from device </button><br />
-                            <img class="mt-3 me-2" src="../../assets/img/icons/image-icon.png" width="40" alt="" />
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
 
             </div>
         </div>
@@ -155,6 +135,7 @@
         const btnLoading = document.getElementById("btn-loading");
         const btnSend = document.getElementById("btn-send");
 
+
         async function sendNews(button) {
             btnLoading.hidden = false;
             btnSend.hidden = true;
@@ -164,45 +145,62 @@
             const categoryIdEl = document.querySelector('#floatingSelectPrivacy');
             const isPriority = document.getElementById("isPrioritySwitch").checked;
             const bannerInput = document.getElementById("bannerInput");
-            let bannerFileName = "";
             const statusValue = document.querySelector('input[name="statusOptions"]:checked').value;
 
-
+            const formData = new FormData();
+            formData.append("Title", titleEl.value);
+            formData.append("Content", contentEl.getContent());
+            formData.append("CategoryId", categoryIdEl.value);
+            formData.append("IsPriority", isPriority);
+            formData.append("Status", parseInt(statusValue));
 
             if (bannerInput && bannerInput.files.length > 0) {
-                bannerFileName = bannerInput.files[0].name;  // chỉ lấy tên
+                formData.append("Banner", bannerInput.files[0]);
             }
 
+            try {
+                const response = await fetch("/apis/v1/news/create", {
+                    method: "POST",
+                    body: formData
+                });
 
-
-            titleEl.disabled = true;
-            categoryIdEl.disabled = true;
-
-            const postData = {
-                title: titleEl.value,
-                content: contentEl.getContent(),
-                categoryId: categoryIdEl.value,
-                bannerUrl: bannerFileName,
-                isPriority: isPriority,
-                status: parseInt(statusValue),
-
-            };
-
-            const url = "/apis/v1/news/create";
-            const data = await postApi(url, postData);
-
-            if (data.Success) {
-                showSuccessContactNotification(data.Message);
-                document.getElementById("createNewsForm").reset();
-                contentEl.setContent("");
-            } else {
-                showErrorNotification(data.Message);
-                titleEl.disabled = false;
-                categoryIdEl.disabled = false;
+                const data = await response.json();
+                if (data.Success) {
+                    showSuccessContactNotification(data.Message);
+                    document.getElementById("createNewsForm").reset();
+                    contentEl.setContent("");
+                } else {
+                    showErrorNotification(data.Message);
+                    titleEl.disabled = false;
+                    categoryIdEl.disabled = false;
+                }
+            } catch (err) {
+                console.error("Lỗi khi gửi bài viết:", err);
+                showErrorNotification("Gửi bài viết thất bại.");
             }
 
             btnLoading.hidden = true;
             btnSend.hidden = false;
         }
+
+
+        document.getElementById("bannerInput").addEventListener("change", function (event) {
+            const preview = document.getElementById("bannerPreview");
+            const file = event.target.files[0];
+
+            if (file && file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "#";
+                preview.style.display = "none";
+            }
+        });
+
+
     </script>
 }
