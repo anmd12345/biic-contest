@@ -147,6 +147,54 @@
             const bannerInput = document.getElementById("bannerInput");
             const statusValue = document.querySelector('input[name="statusOptions"]:checked').value;
 
+            // Kiểm tra tiêu đề
+            if (!titleEl.value.trim()) {
+                showErrorNotification("Vui lòng nhập tiêu đề bài viết");
+                titleEl.focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            // Kiểm tra nội dung
+            if (!contentEl.getContent().trim()) {
+                showErrorNotification("Vui lòng nhập nội dung bài viết");
+                tinymce.get('content').focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            // Kiểm tra danh mục
+            if (!categoryIdEl.value) {
+                showErrorNotification("Vui lòng chọn danh mục");
+                categoryIdEl.focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            // Kiểm tra banner (tuỳ chọn)
+            if (bannerInput.files.length > 0) {
+                const file = bannerInput.files[0];
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                if (!file.type.startsWith("image/")) {
+                    showErrorNotification("Chỉ được chọn file ảnh làm banner");
+                    bannerInput.focus();
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+                if (file.size > maxSize) {
+                    showErrorNotification("Kích thước ảnh tối đa 5MB");
+                    bannerInput.focus();
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+            }
+
+
             const formData = new FormData();
             formData.append("Title", titleEl.value);
             formData.append("Content", contentEl.getContent());
