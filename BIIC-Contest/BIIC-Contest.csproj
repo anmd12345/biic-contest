@@ -132,8 +132,12 @@
   <ItemGroup>
     <Compile Include="Apis\CategoryApiController.cs" />
     <Compile Include="Apis\ContactMessageApiController.cs" />
+
+    <Compile Include="Apis\NewsApiController.cs" />
+
     <Compile Include="Apis\SystemApisController.cs" />
     <Compile Include="Apis\UploadApisController.cs" />
+
     <Compile Include="Apis\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Controllers\Admin\NewsManagementController.cs" />
     <Compile Include="Controllers\RegisterContestController.cs" />
     <Compile Include="Dtos\CategoryDto.cs" />
+    <Compile Include="Dtos\NewsDto.cs" />
     <Compile Include="Entitys\ActivityLogMessageEntity.cs" />
     <Compile Include="Constants\ActivityLogTypeConstant.cs" />
     <Compile Include="Constants\MessageConstant.cs" />
@@ -194,6 +199,7 @@
     <Compile Include="Repositorys\ActivityLogRepo.cs" />
     <Compile Include="Repositorys\CategoryRepository.cs" />
     <Compile Include="Repositorys\ContactMessageRepo.cs" />
+    <Compile Include="Repositorys\NewsRepository.cs" />
     <Compile Include="Repositorys\RoleRepo.cs" />
     <Compile Include="Repositorys\SystemRepo.cs" />
     <Compile Include="Repositorys\UserRepo.cs" />
@@ -204,8 +210,10 @@
     <Compile Include="Services\I\IBaseService.cs" />
     <Compile Include="Services\I\ICategoryService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
+    <Compile Include="Services\I\INewsService.cs" />
     <Compile Include="Services\I\ISystemService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
+    <Compile Include="Services\NewsService.cs" />
     <Compile Include="Services\SystemService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
