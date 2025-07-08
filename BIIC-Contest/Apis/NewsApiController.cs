@@ -212,69 +212,63 @@ namespace BIIC_Contest.Apis
         }
 
 
-        //[HttpPost]
-        //[Route("create")]
-        //public JsonResult CreateNews(string title, string content, short categoryId, string bannerUrl, bool isPriority, short status)
-        //{
-
-        //    // Lấy thông tin người dùng từ session
-        //    var user = Session[SessionConstant.CURRENT_USER] as UserDto;
-
-        //    if (user == null)
-        //    {
-        //        return Json(new BasicResponseEntity
-        //        {
-        //            Success = false,
-        //            Message = "Bạn chưa đăng nhập",
-        //            Data = null
-        //        });
-        //    }
-
-        //    var response = newsService.createNews(new NewsDto
-        //    {
-        //        Title = title,
-        //        Content = content,
-        //        CategoryId = categoryId,
-        //        BannerUrl = bannerUrl,
-        //        UserId = user.UserId,
-        //        Status = status,
-        //        IsPriority = isPriority
-
-        //    });
-        //    return Json(response);
-        //}
-
-        // Cập nhật bài viết
         [HttpPost]
         [Route("update")]
-        public JsonResult UpdateNews(int id, string title, string content, short categoryId, string bannerUrl, short status)
+        [ValidateInput(false)]
+        public JsonResult UpdateNews()
         {
-
-            // Lấy thông tin người dùng từ session
             var user = Session[SessionConstant.CURRENT_USER] as UserDto;
-
             if (user == null)
             {
-                return Json(new BasicResponseEntity
-                {
-                    Success = false,
-                    Message = "Bạn chưa đăng nhập",
-                    Data = null
-                });
+                return Json(new BasicResponseEntity(false, "Bạn chưa đăng nhập"));
             }
 
-            var response = newsService.updateNews(new NewsDto
+            var request = this.HttpContext.Request;
+
+            try
             {
-                NewsId = id,
-                Title = title,
-                Content = content,
-                CategoryId = categoryId,
-                BannerUrl = bannerUrl,
-                Status = status,
-                
-            });
-            return Json(response);
+                int newsId = int.Parse(request.Form["NewsId"]);
+                string title = request.Form["Title"];
+                string content = request.Form["Content"];
+                short categoryId = short.Parse(request.Form["CategoryId"]);
+                bool isPriority = bool.Parse(request.Form["IsPriority"]);
+                short status = short.Parse(request.Form["Status"]);
+
+                string bannerPath = null;
+                var file = request.Files["Banner"];
+                if (file != null && file.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(file.FileName);
+                    string relativePath = "/assets/img/event/" + fileName;
+                    string physicalPath = Server.MapPath("~" + relativePath);
+
+                    if (!Directory.Exists(Path.GetDirectoryName(physicalPath)))
+                        Directory.CreateDirectory(Path.GetDirectoryName(physicalPath));
+
+                    file.SaveAs(physicalPath);
+                    bannerPath = relativePath;
+                }
+
+                var dto = new NewsDto
+                {
+                    NewsId = newsId,
+                    Title = title,
+                    Content = content,
+                    CategoryId = categoryId,
+                    BannerUrl = bannerPath, // có thể null nếu không chọn lại ảnh
+                    Status = status,
+                    IsPriority = isPriority
+                };
+
+                var response = newsService.updateNews(dto);
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                return Json(new BasicResponseEntity(false, "Lỗi khi cập nhật bài viết: " + ex.Message));
+            }
         }
+
 
         // Xóa bài viết
         [HttpPost]

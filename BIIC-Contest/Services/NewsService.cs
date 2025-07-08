@@ -96,12 +96,20 @@ namespace BIIC_Contest.Services
             return newsRepo.findAll();
         }
 
-
         // Phương thức lấy bài viết theo ID
-        public NewsDto getNewsById(int id)
+        public BasicResponseEntity getNewsById(int id)
         {
             var news = newsRepo.findById(id);
-            return news != null ? new NewsDto
+            if (news == null)
+            {
+                return new BasicResponseEntity
+                (
+                    false,
+                    "Không tìm thấy bài viết"
+                );
+            }
+
+            var dto = new NewsDto
             {
                 NewsId = news.news_id,
                 Title = news.title,
@@ -110,8 +118,16 @@ namespace BIIC_Contest.Services
                 BannerUrl = news.banner_url,
                 CreatedAt = news.created_at,
                 Status = (short)news.status
-            } : null;
+            };
+
+            return new BasicResponseEntity
+            (
+                true,
+                "Lấy bài viết thành công",
+                dto
+            );
         }
+
 
         public BasicResponseEntity updateNews(NewsDto newsDto)
         {

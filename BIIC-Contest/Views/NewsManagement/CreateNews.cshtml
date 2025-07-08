@@ -3,8 +3,10 @@
 @{
     ViewBag.Title = "CreateNews";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-
     List<CategoryDto> categories = ViewBag.categories;
+    var isEdit = ViewBag.isEdit != null && (bool)ViewBag.isEdit;
+    var news = ViewBag.news as BIIC_Contest.Dtos.NewsDto;
+
 }
 
 @section styles{
@@ -14,6 +16,10 @@
 }
 
 <form id="createNewsForm">
+    @if (isEdit)
+    {
+        <input type="hidden" id="newsIdHidden" value="@news.NewsId" />
+    }
     @Html.AntiForgeryToken()
 
     <div class="row justify-content-between align-items-end g-3 mb-5">
@@ -22,7 +28,12 @@
         </div>
         <div class="col-12 col-sm-auto col-xl-4">
             <div class="d-flex">
-                <button class="btn btn-primary px-5 w-100 text-nowrap" type="button" onclick="sendNews(this)" id="btn-send">Đăng bài viết</button>
+                @*<button class="btn btn-primary px-5 w-100 text-nowrap" type="button" onclick="sendNews(this)" id="btn-send">Đăng bài viết</button>*@
+                <button class="btn btn-primary px-5 w-100 text-nowrap" type="button"
+                        onclick="@(isEdit ? "updateNews()" : "sendNews(this)")" id="btn-send">
+                    @(isEdit ? "Cập nhật bài viết" : "Đăng bài viết")
+                </button>
+
                 <button class="btn btn-primary px-5 w-100 text-nowrap" type="button" hidden id="btn-loading">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     Đang gửi...
@@ -38,7 +49,9 @@
 
                 <div class="col-sm-6 col-md-12">
                     <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="isPrioritySwitch">
+                        @*<input class="form-check-input" type="checkbox" id="isPrioritySwitch">*@
+                        <input class="form-check-input" type="checkbox" id="isPrioritySwitch"
+                               @(isEdit && news.IsPriority ? "checked" : "")>
                         <label class="form-check-label" for="isPrioritySwitch">Ưu tiên hiển thị bài viết</label>
                     </div>
                 </div>
@@ -46,13 +59,19 @@
                 <div class="col-sm-6 col-md-4">
                     <label class="form-label fw-bold text-primary mb-2">Trạng thái bài viết</label>
                     <div class="btn-group w-100" role="group">
-                        <input type="radio" class="btn-check" name="statusOptions" id="statusHidden" value="0" autocomplete="off">
+                        @*<input type="radio" class="btn-check" name="statusOptions" id="statusHidden" value="0" autocomplete="off">*@
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusHidden" value="0"
+                               @(isEdit && news.Status == 0 ? "checked" : "") />
                         <label class="btn btn-outline-danger" for="statusHidden">Ẩn</label>
 
-                        <input type="radio" class="btn-check" name="statusOptions" id="statusVisible" value="1" autocomplete="off" checked>
+                        @*<input type="radio" class="btn-check" name="statusOptions" id="statusVisible" value="1" autocomplete="off" checked>*@
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusVisible" value="1"
+                               @(isEdit && news.Status == 1 ? "checked" : "") />
                         <label class="btn btn-outline-success" for="statusVisible">Hiển thị</label>
 
-                        <input type="radio" class="btn-check" name="statusOptions" id="statusDraft" value="2" autocomplete="off">
+                        @*<input type="radio" class="btn-check" name="statusOptions" id="statusDraft" value="2" autocomplete="off">*@
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusDraft" value="2"
+                               @(isEdit && news.Status == 2 ? "checked" : "") />
                         <label class="btn btn-outline-secondary" for="statusDraft">Lưu nháp</label>
                     </div>
                 </div>
@@ -74,7 +93,11 @@
                                 {
                                     if (category.CategoryName != "Cuộc thi")
                                     {
-                                        <option value="@category.Id">@category.CategoryName</option>
+                                        @*<option value="@category.Id">@category.CategoryName</option>*@
+                                        <option value="@category.Id" @(isEdit && news.CategoryId == category.Id ? "selected" : "")>
+                                            @category.CategoryName
+                                        </option>
+
                                     }
                                 }
                             }
@@ -85,16 +108,26 @@
 
                 <div class="col-sm-6 col-md-12">
                     <div class="form-floating">
-                        <input class="form-control" id="floatingEventInput" type="text" name="Title" placeholder="Tiêu đề bài viết" required />
+                        @*<input class="form-control" id="floatingEventInput" type="text" name="Title" placeholder="Tiêu đề bài viết" required />*@
+                        <input class="form-control" id="floatingEventInput" type="text" name="Title"
+                               placeholder="Tiêu đề bài viết" required
+                               value="@(isEdit ? news?.Title : "")" />
+
                         <label for="floatingEventInput">Tiêu đề bài viết</label>
                     </div>
                 </div>
+
 
                 <div class="col-12 gy-6">
                     <h4 class="fs-7">Banner bài viết</h4>
                     <div class="form-group">
                         <label for="bannerInput">Chọn ảnh banner</label>
                         <input name="Banner" type="file" id="bannerInput" class="form-control" accept="image/*" />
+                        <img id="bannerPreview"
+                             src="@(isEdit && !string.IsNullOrEmpty(news.BannerUrl) ? Url.Content(news.BannerUrl) : "#")"
+                             alt="Preview banner"
+                             style="@(isEdit && !string.IsNullOrEmpty(news.BannerUrl) ? "max-height: 200px; margin-top: 10px; display: block;" : "display: none;")" />
+
                         <img id="bannerPreview" src="#" alt="Preview banner" style="display:none; max-height: 200px; margin-top: 10px;" />
                     </div>
                 </div>
@@ -102,7 +135,11 @@
                 <div class="col-12 gy-6">
                     <h4 class="fs-7">Nội dung bài viết</h4>
                     <div class="form-floating">
-                        <textarea id="content" style="height: 500px" class="form-control tinymce" name="Content" required></textarea>
+                        @*<textarea id="content" style="height: 500px" class="form-control tinymce" name="Content" required></textarea>*@
+                        <textarea id="content" style="height: 500px" class="form-control tinymce" name="Content" required>
+                            @(isEdit ? news?.Content : "")
+                        </textarea>
+
                     </div>
                 </div>
 
@@ -230,6 +267,84 @@
             btnLoading.hidden = true;
             btnSend.hidden = false;
         }
+
+        async function updateNews() {
+            btnLoading.hidden = false;
+            btnSend.hidden = true;
+
+            const titleEl = document.querySelector('#floatingEventInput');
+            const contentEl = tinymce.get('content');
+            const categoryIdEl = document.querySelector('#floatingSelectPrivacy');
+            const isPriority = document.getElementById("isPrioritySwitch").checked;
+            const bannerInput = document.getElementById("bannerInput");
+            const statusValue = document.querySelector('input[name="statusOptions"]:checked').value;
+
+            const newsId = document.getElementById("newsIdHidden")?.value;
+
+            if (!newsId) {
+                showErrorNotification("Không tìm thấy bài viết cần sửa.");
+                return;
+            }
+
+            // Kiểm tra các trường bắt buộc (giống sendNews)
+            if (!titleEl.value.trim()) {
+                showErrorNotification("Vui lòng nhập tiêu đề bài viết");
+                titleEl.focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            if (!contentEl.getContent().trim()) {
+                showErrorNotification("Vui lòng nhập nội dung bài viết");
+                tinymce.get('content').focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            if (!categoryIdEl.value) {
+                showErrorNotification("Vui lòng chọn danh mục");
+                categoryIdEl.focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("NewsId", newsId);
+            formData.append("Title", titleEl.value);
+            formData.append("Content", contentEl.getContent());
+            formData.append("CategoryId", categoryIdEl.value);
+            formData.append("IsPriority", isPriority);
+            formData.append("Status", parseInt(statusValue));
+
+            if (bannerInput && bannerInput.files.length > 0) {
+                formData.append("Banner", bannerInput.files[0]);
+            }
+
+            try {
+                const response = await fetch("/apis/v1/news/update", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.Success) {
+                    showSuccessContactNotification(data.Message);
+                    window.location.href = "/danh-sach-bai-viet";
+                } else {
+                    showErrorNotification(data.Message);
+                }
+            } catch (err) {
+                console.error("Lỗi khi cập nhật bài viết:", err);
+                showErrorNotification("Cập nhật bài viết thất bại.");
+            }
+
+            btnLoading.hidden = true;
+            btnSend.hidden = false;
+        }
+
 
 
         document.getElementById("bannerInput").addEventListener("change", function (event) {

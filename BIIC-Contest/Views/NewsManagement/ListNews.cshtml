@@ -126,8 +126,7 @@
 
 
         function loadNews(page, size) {
-            //fetch(`/apis/v1/news/list?page=${page}&pageSize=${size}`)
-            //fetch(`/apis/v1/news/list?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}`)
+            
             fetch(`/apis/v1/news/list?page=${page}&pageSize=${size}&sortBy=${sortBy}&sortDir=${sortDir}&categoryId=${categoryId}`)
                 .then(response => response.json())
                 .then(result => {
@@ -147,35 +146,38 @@
                         row.classList.add("position-static");
 
                         row.innerHTML = `
-                                <td class="align-middle project text-truncate" style="max-width: 250px;">
-                                    <a class="fw-bold fs-8 text-decoration-none d-inline-block"
-                                       title="${item.title}">
-                                       ${item.title}
-                                    </a>
-                                </td>
-                                <td class="align-middle start">
-                                    <p class="mb-0 fs-9 text-body">${item.created_at}</p>
-                                </td>
-                                <td class="align-middle deadline">${renderStatus(item.status)}</td>
-                                <td class="align-middle"><span class="text-muted">${item.view ?? 0} </span></td>
-                                <td class="align-middle"><span class="text-muted">${item.like ?? 0} </span></td>
-                                <td class="align-middle"><span class="text-muted">${item.share ?? 0} </span></td>
-                                <td class="align-middle">${item.is_priority ? '<span class="text-danger fw-bold">Đang ưu tiên</span>' : '<span class="text-muted">Không</span>'}</td>
-                                <td class="align-middle text-end action pe-0">
-                                    <div class="btn-reveal-trigger position-static">
-                                        <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10"
-                                                type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span class="fas fa-ellipsis-h fs-10"></span>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2">
-                                            <a class="dropdown-item" href="#">Xem</a>
-                                            <a class="dropdown-item" href="#">Sửa</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="#">Xoá</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            `;
+                                        <td class="align-middle project text-truncate" style="max-width: 250px;">
+                                            <a class="fw-bold fs-8 text-decoration-none d-inline-block"
+                                               title="${item.title}">
+                                               ${item.title}
+                                            </a>
+                                        </td>
+                                        <td class="align-middle start">
+                                            <p class="mb-0 fs-9 text-body">${item.created_at}</p>
+                                        </td>
+                                        <td class="align-middle deadline">${renderStatus(item.status)}</td>
+                                        <td class="align-middle"><span class="text-muted">${item.view ?? 0}</span></td>
+                                        <td class="align-middle"><span class="text-muted">${item.like ?? 0}</span></td>
+                                        <td class="align-middle"><span class="text-muted">${item.share ?? 0}</span></td>
+                                        <td class="align-middle">
+                                            ${item.is_priority ? '<span class="text-danger fw-bold">Đang ưu tiên</span>' : '<span class="text-muted">Không</span>'}
+                                        </td>
+                                        <td class="align-middle text-end action pe-0">
+                                            <div class="btn-reveal-trigger position-static">
+                                                <button class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs-10"
+                                                        type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <span class="fas fa-ellipsis-h fs-10"></span>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                    <a class="dropdown-item" href="#">Xem</a>
+                                                    <a class="dropdown-item text-warning" href="/chinh-sua-bai-viet/${item.news_id}">Sửa</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item text-danger" href="#">Xoá</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    `;
+
                         tbody.appendChild(row);
                     });
 

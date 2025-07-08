@@ -8,7 +8,7 @@ namespace BIIC_Contest.Services.I
     {
         BasicResponseEntity createNews(NewsDto newsDto);
         BasicResponseEntity getAllNews();
-        NewsDto getNewsById(int id);
+        BasicResponseEntity getNewsById(int id);
         BasicResponseEntity updateNews(NewsDto newsDto);
         BasicResponseEntity deleteNews(int id);
     }
