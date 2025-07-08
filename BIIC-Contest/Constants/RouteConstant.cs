@@ -23,6 +23,7 @@
         //Admin Routes
         public const string ACTIVITY_LOG_PAGE = "/nhat-ky-hoat-dong";
         public const string BASE_CONTACT_MESSAGE_DETAIL_ROUTE = "/tin-nhan/chi-tiet-tin-nhan";
+        public const string BASE_USER_INFO_ROUTE = "/quan-ly-nguoi-dung/thong-tin-nguoi-dung";
         public const string BASE_LIST_SUBMISSION_ROUTE = "/danh-sach-bai-du-thi";
         public const string CONTACT_MESSAGE_MANAGEMENT_PAGE = "/tin-nhan/danh-sach-tin-nhan";
         public const string CREATE_NEWS_PAGE = "/tao-bai-viet-moi";

@@ -132,7 +132,12 @@
   <ItemGroup>
     <Compile Include="Apis\CategoryApiController.cs" />
     <Compile Include="Apis\ContactMessageApiController.cs" />
+
     <Compile Include="Apis\NewsApiController.cs" />
+
+    <Compile Include="Apis\SystemApisController.cs" />
+    <Compile Include="Apis\UploadApisController.cs" />
+
     <Compile Include="Apis\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -179,6 +184,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DateTimeHelper.cs" />
+    <Compile Include="Helpers\GmailHelper.cs" />
     <Compile Include="Helpers\HashHelper.cs" />
     <Compile Include="Helpers\IPHelper.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
@@ -288,12 +294,14 @@
     <Content Include="assets\img\user\default_logo.jpg" />
     <Content Include="assets\js\config.js" />
     <Content Include="assets\js\phoenix.js" />
+    <Content Include="assets\template\email-template.html" />
     <Content Include="assets\upload\videos\85YpIkbEsTTFc.mp4" />
     <Content Include="Global.asax" />
     <Content Include="scripts\cache-js.js" />
     <Content Include="scripts\fetch-api.js" />
     <Content Include="scripts\get-ip.js" />
     <Content Include="scripts\show-notification.js" />
+    <Content Include="vendors\address\address.js" />
     <Content Include="vendors\anchorjs\anchor.min.js" />
     <Content Include="vendors\bigpicture\BigPicture.js" />
     <Content Include="vendors\bootstrap\bootstrap.min.js" />
@@ -395,6 +403,7 @@
     <Content Include="Views\ContestManagement\CreateContest.cshtml" />
     <Content Include="Views\AssignmentManagement\ListAssignment.cshtml" />
     <Content Include="Views\CategoryManagement\ListCategory.cshtml" />
+    <Content Include="vendors\address\data.json" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

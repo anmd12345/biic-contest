@@ -32,6 +32,45 @@
     </script>
 
     @RenderSection("styles", required: false)
+    <style>
+        #loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader-container {
+            text-align: center;
+            color: #333;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 6px solid #ccc;
+            border-top: 6px solid #007bff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet">
@@ -176,11 +215,10 @@
                                         </li>
                                     </ul>
                                 </div>
-
                             </div>
 
                             <div class="nav-item-wrapper">
-                                <a class="nav-link label-1" href="@RouteConstant.LIST_CATEGORY_PAGE" role="button" data-bs-toggle="" aria-expanded="false">
+                                <a class="nav-link label-1 @(currentPath.Equals(RouteConstant.LIST_CATEGORY_PAGE) ? "active" : "")" href="@RouteConstant.LIST_CATEGORY_PAGE" role="button" data-bs-toggle="" aria-expanded="false">
                                     <div class="d-flex align-items-center">
                                         <span class="nav-link-icon">
                                             <span data-feather="calendar"></span>
@@ -190,6 +228,34 @@
                                         </span>
                                     </div>
                                 </a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <p class="navbar-vertical-label">Người dùng</p>
+                            <hr class="navbar-vertical-line" />
+                            <div class="nav-item-wrapper">
+                                <a class="nav-link dropdown-indicator label-1" href="#nv-users" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-users">
+                                    <div class="d-flex align-items-center">
+                                        <div class="dropdown-indicator-icon-wrapper">
+                                            <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                        </div>
+                                        <span class="nav-link-icon">
+                                            <span data-feather="user"></span>
+                                        </span>
+                                        <span class="nav-link-text">Người dùng</span>
+                                    </div>
+                                </a>
+                                <div class="parent-wrapper label-1">
+                                    <ul class="nav collapse parent @((currentPath.Equals(RouteConstant.USER_MANAGEMENT_PAGE) || currentPath.Contains(RouteConstant.BASE_USER_INFO_ROUTE)) ? "show" : "")" data-bs-parent="#navbarVerticalCollapse" id="nv-users">
+                                        <li class="collapsed-nav-item-title d-none">Hộp thư</li>
+                                        <li class="nav-item">
+                                            <a class="nav-link @((currentPath.Equals(RouteConstant.USER_MANAGEMENT_PAGE) || currentPath.Contains(RouteConstant.BASE_USER_INFO_ROUTE)) ? "active" : "")" href="@RouteConstant.USER_MANAGEMENT_PAGE">
+                                                <div class="d-flex align-items-center"><span class="nav-link-text">Danh sách người dùng</span></div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </li>
 
@@ -440,6 +506,13 @@
         </div>
     </main>
 
+    <div id="loader-overlay" style="display:none;">
+        <div class="loader-container">
+            <div class="spinner"></div>
+            <p>Đang xử lý, vui lòng chờ...</p>
+        </div>
+    </div>
+
 
     <script>
         var navbarVertical = document.querySelector('.navbar-vertical');
@@ -565,6 +638,15 @@
             const res = await postApi(url, {})
 
             window.location.reload()
+        }
+    </script>
+    <script>
+        function showLoader() {
+            document.getElementById("loader-overlay").style.display = "flex";
+        }
+
+        function hideLoader() {
+            document.getElementById("loader-overlay").style.display = "none";
         }
     </script>
 </body>

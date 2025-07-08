@@ -1,4 +1,6 @@
-﻿namespace BIIC_Contest.Constants
+﻿using System.Collections.Generic;
+
+namespace BIIC_Contest.Constants
 {
     public class MessageConstant
     {
@@ -30,7 +32,9 @@
             "Email không hợp lệ, vui lòng nhập lại!",
             "Thông tin đăng nhập không chính xác!",
             "Lỗi hệ thống! Không thể đăng nhập bây giờ",
-             "Lỗi hệ thống! Không thể đăng xuất bây giờ"
+             "Lỗi hệ thống! Không thể đăng xuất bây giờ",
+             "Bạn chưa phân quyền cho người dùng này!",
+             "Bạn chưa nhập chuyên môn cho ban giám khảo!"
         };
 
         public static string[] SuccessNotifications = new string[]
@@ -40,6 +44,7 @@
             "Đăng xuất thành công!",
         };
 
+        //Category
         public static string[] CategoryMessage = new string[]
         {
             "Tên danh mục đã tồn tại!",
@@ -54,16 +59,21 @@
             "Xóa danh mục thành công!",
         };
 
-        //Tên quyền + mô tả
-        public static string[][] RoleNames = new string[][]
+        public static string[] SystemMessage = new string[]
         {
-            new string[] { "unknown", "Unknown role" },
-            new string[] { "admin", "Quản trị trang" },
-            new string[] { "examiner", "Giám khảo" },
-            new string[] { "employee", "Nhân viên" },
-            new string[] { "user", "Người dùng" },
+            "Cập nhật thông tin website thành công!",
+            "Lỗi hệ thống! Vui lòng quay lại sau!",
+            "Xóa logo thành công!",
+            "Xóa logo không thành công!",
         };
 
-
+        public static Dictionary<string, string> RoleNames = new Dictionary<string, string>
+        {
+            { "unknown", "Unknown role" },
+            { "admin", "Quản trị trang" },
+            { "examiner", "Giám khảo" },
+            { "employee", "Nhân viên" },
+            { "user", "Người dùng" }
+        };
     }
 }
