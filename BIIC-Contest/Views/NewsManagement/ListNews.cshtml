@@ -172,7 +172,8 @@
                                                     <a class="dropdown-item" href="#">Xem</a>
                                                     <a class="dropdown-item text-warning" href="/chinh-sua-bai-viet/${item.news_id}">Sửa</a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item text-danger" href="#">Xoá</a>
+                                                    <a class="dropdown-item text-danger btn-delete-news" href="#" data-id="${item.news_id}">Xoá</a>
+
                                                 </div>
                                             </div>
                                         </td>
@@ -250,6 +251,42 @@
             });
         }
 
+        // Xử lý sự kiện nhấn nút "Xoá"
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("btn-delete-news")) {
+                e.preventDefault();
+
+                const newsId = e.target.dataset.id;
+
+                if (!newsId) {
+                    alert("Không tìm thấy ID bài viết.");
+                    return;
+                }
+
+                if (confirm("Bạn có chắc chắn muốn xoá bài viết này?")) {
+                    fetch("/apis/v1/news/delete", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: `id=${newsId}`
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            if (result.Success) {
+                                alert("Đã xoá bài viết thành công.");
+                                loadNews(currentPage, pageSize); // Tải lại trang hiện tại
+                            } else {
+                                alert("Xóa thất bại: " + result.Message);
+                            }
+                        })
+                        .catch(err => {
+                            alert("Lỗi khi xoá bài viết.");
+                            console.error(err);
+                        });
+                }
+            }
+        });
 
 
     </script>
