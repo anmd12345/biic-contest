@@ -1,6 +1,5 @@
 ﻿using BIIC_Contest.Models;
 using BIIC_Contest.Repositorys;
-using BIIC_Contest.Repositorys.I;
 using BIIC_Contest.Services.I;
 using System;
 using System.Collections.Generic;
@@ -12,11 +11,11 @@ namespace BIIC_Contest.Services
 {
     public class SubmissionService : ISubmissionService
     {
-        private readonly ISubmissionRepository _repo;
+        private readonly ISubmissionRepo _repo;
 
         public SubmissionService()
         {
-            _repo = new SubmissionRepository(); // hoặc dùng DI
+            _repo = new SubmissionRepo(); // hoặc dùng DI
         }
 
         public IEnumerable<tbl_submission> GetPaged(string field, string status, int page, int pageSize, out int totalRecords)
@@ -93,23 +92,31 @@ namespace BIIC_Contest.Services
 
         public void Create(tbl_submission model, HttpPostedFileBase file, string uploadPath, out string message)
         {
-            model.submission_code = GenerateRandomCode(6);
-            if (file != null && file.ContentLength > 0)
+            try
             {
-                var fileName = Path.GetFileName(file.FileName);
-                if (!Directory.Exists(uploadPath))
-                    Directory.CreateDirectory(uploadPath);
+                model.submission_code = GenerateRandomCode(6);
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    if (!Directory.Exists(uploadPath))
+                        Directory.CreateDirectory(uploadPath);
 
-                var path = Path.Combine(uploadPath, fileName);
-                file.SaveAs(path);
-                model.submisstion_files = fileName;
+                    var path = Path.Combine(uploadPath, fileName);
+                    file.SaveAs(path);
+                    model.submisstion_files = fileName;
+                }
+
+                model.status = 1;
+                _repo.Insert(model);
+                _repo.Save();
+                message = "BẠN ĐÃ ĐĂNG KÝ CUỘC THI THÀNH CÔNG.";
             }
-
-            model.status = 1;
-            _repo.Insert(model);
-            _repo.Save();
-            message = "Thêm hồ sơ thành công.";
+            catch (Exception ex)
+            {
+                message = "Lỗi khi thêm hồ sơ: " + ex.Message;
+            }
         }
+
 
         public void Delete(int id, string uploadPath, out string message)
         {
@@ -142,5 +149,11 @@ namespace BIIC_Contest.Services
             var random = new Random();
             return new string(Enumerable.Repeat(chars, length).Select(s => s[random.Next(s.Length)]).ToArray());
         }
+
+        public bool IsEmailExists(string email)
+        {
+            return _repo.GetAll().Any(x => x.email == email);
+        }
+
     }
 }

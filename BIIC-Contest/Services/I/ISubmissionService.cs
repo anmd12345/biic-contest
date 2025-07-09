@@ -14,5 +14,6 @@ namespace BIIC_Contest.Services.I
         void UploadFile(int id, HttpPostedFileBase file, string uploadPath, out string message);
         void Create(tbl_submission model, HttpPostedFileBase file, string uploadPath, out string message);
         void Delete(int id, string uploadPath, out string message);
+        bool IsEmailExists(string email);
     }
 }
