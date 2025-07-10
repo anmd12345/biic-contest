@@ -148,6 +148,8 @@
     <Compile Include="Controllers\Admin\ContestManagementController.cs" />
     <Compile Include="Controllers\Admin\DashboardController.cs" />
     <Compile Include="Controllers\Admin\NewsManagementController.cs" />
+    <Compile Include="Controllers\Examniner\BaseExaminerController.cs" />
+    <Compile Include="Controllers\Examniner\ExaminerController.cs" />
     <Compile Include="Controllers\RegisterContestController.cs" />
     <Compile Include="Dtos\CategoryDto.cs" />
     <Compile Include="Dtos\NewsDto.cs" />
@@ -360,6 +362,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\BaseExaminer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\BIICConnectionDb.dbml">
@@ -409,6 +412,8 @@
     <Content Include="Views\SubmissionManagement\CreateSubmissionManagement.cshtml" />
     <Content Include="Views\SubmissionManagement\DetailsSubmissionManagement.cshtml" />
     <Content Include="Views\SubmissionManagement\IndexSubmissionManagement.cshtml" />
+    <Content Include="Views\Shared\_LayoutExaminer.cshtml" />
+    <Content Include="Views\Examiner\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
