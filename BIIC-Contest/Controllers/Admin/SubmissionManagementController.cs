@@ -111,8 +111,5 @@ namespace BIIC_Contest.Controllers.Admin
             TempData["Message"] = message;
             return RedirectToAction("IndexSubmissionManagement");
         }
-
-
-
     }
 }
