@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Chi tiết bài dự thi";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 
     var fileList = (Model.submisstion_files ?? "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 

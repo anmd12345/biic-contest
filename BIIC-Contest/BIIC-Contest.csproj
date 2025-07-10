@@ -132,12 +132,9 @@
   <ItemGroup>
     <Compile Include="Apis\CategoryApiController.cs" />
     <Compile Include="Apis\ContactMessageApiController.cs" />
-
     <Compile Include="Apis\NewsApiController.cs" />
-
     <Compile Include="Apis\SystemApisController.cs" />
     <Compile Include="Apis\UploadApisController.cs" />
-
     <Compile Include="Apis\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -165,7 +162,6 @@
     <Compile Include="Constants\SessionConstant.cs" />
     <Compile Include="Controllers\Admin\ContactMessageManagementController.cs" />
     <Compile Include="Controllers\Admin\SubmissionManagementController.cs" />
-    <Compile Include="Controllers\Admin\ManagementController.cs" />
     <Compile Include="Controllers\Admin\UserManagementController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
