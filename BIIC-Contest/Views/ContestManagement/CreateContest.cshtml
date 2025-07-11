@@ -1,214 +1,696 @@
-﻿
+﻿@using BIIC_Contest.Dtos
+
 @{
     ViewBag.Title = "CreateContest";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var isEdit = ViewBag.isEdit != null && (bool)ViewBag.isEdit;
+    var news = ViewBag.news as NewsDto;
+    var contestCategoryId = ViewBag.contestCategoryId ?? 0; // ID danh mục “Cuộc thi” truyền từ controller
 }
 
 @section styles{
-    <link href="~/vendors/flatpickr/flatpickr.min.css" rel="stylesheet">
-    <link href="~/vendors/choices/choices.min.css" rel="stylesheet">
+    <link href="~/vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
+    <style>
+        .preview-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+            .preview-wrapper img {
+                height: 80px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                padding: 4px;
+                background: #fff;
+            }
+
+        .remove-logo {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            line-height: 20px;
+            text-align: center;
+            padding: 0;
+        }
+    </style>
+
 }
 
-<nav class="mb-3" aria-label="breadcrumb">
-    <ol class="breadcrumb mb-0">
-        <li class="breadcrumb-item"><a href="#!">Page 1</a></li>
-        <li class="breadcrumb-item"><a href="#!">Page 2</a></li>
-        <li class="breadcrumb-item active">Default</li>
-    </ol>
-</nav>
-<form class="mb-9">
+<form id="createContestForm" enctype="multipart/form-data">
+    @if (isEdit)
+    {
+        <input type="hidden" id="newsIdHidden" value="@news.NewsId" />
+    }
+    <input type="hidden" name="CategoryId" value="3" />
+    @Html.AntiForgeryToken()
+
     <div class="row justify-content-between align-items-end g-3 mb-5">
         <div class="col-12 col-sm-auto col-xl-8">
-            <h2 class="mb-0">Create an Event</h2>
+            <h2 class="mb-0">@(isEdit ? "Chỉnh sửa cuộc thi" : "Tạo cuộc thi mới")</h2>
         </div>
         <div class="col-12 col-sm-auto col-xl-4">
-            <div class="d-flex"><button class="btn btn-phoenix-primary px-5 me-2">Save</button><a class="btn btn-primary px-5 w-100 text-nowrap" href="../../apps/events/event-detail.html">Publish event</a></div>
+            <div class="d-flex">
+                <button class="btn btn-primary px-5 w-100 text-nowrap" type="button"
+                        id="btn-send"
+                        onclick="@(isEdit ? "updateContest()" : "sendContest(this)")">
+                    @(isEdit ? "Cập nhật cuộc thi" : "Tạo cuộc thi")
+                </button>
+
+
+                <button class="btn btn-primary px-5 w-100 text-nowrap" type="button" hidden id="btn-loading">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Đang gửi...
+                </button>
+            </div>
         </div>
     </div>
+
     <div class="row g-5">
-        <div class="col-xl-8">
+        <div class="col-xl-12">
             <div class="row gx-3 gy-4">
-                <h4 class="fs-7 mb-0">Event Details</h4>
+
+                <div class="border-top pt-4 mt-5">
+                    <h5 class="mb-3 text-primary">📌 Thông tin cơ bản</h5>
+                    <!-- Các input: tiêu đề, trạng thái, banner -->
+                </div>
+
+
                 <div class="col-sm-6 col-md-12">
-                    <div class="form-floating"><input class="form-control" id="floatingEventInput" type="text" placeholder="Event title" /><label for="floatingEventInput">Event title</label></div>
-                </div>
-                <div class="col-sm-6 col-md-6">
-                    <div class="form-floating">
-                        <select class="form-select" id="floatingSelectTask">
-                            <option selected="selected">Select event type</option>
-                            <option value="1">technical</option>
-                            <option value="2">external</option>
-                            <option value="3">organizational</option>
-                        </select><label for="floatingSelectTask">type</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="isPrioritySwitch"
+                               @(isEdit && news.IsPriority ? "checked" : "") />
+                        <label class="form-check-label" for="isPrioritySwitch">Ưu tiên hiển thị</label>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-6">
-                    <div class="form-floating">
-                        <select class="form-select" id="floatingSelectPrivacy">
-                            <option selected="selected">Select topic</option>
-                            <option value="1">Data select topic One</option>
-                            <option value="2">Data select topic Two</option>
-                            <option value="3">Data select topic Three</option>
-                        </select><label for="floatingSelectPrivacy">topic</label>
-                    </div>
-                </div>
-                <div class="col-12 mt-4">
-                    <div class="form-check form-check-inline"><input class="form-check-input" id="inlineRadio1" type="radio" name="inlineRadioOptions" value="option1" checked="checked" /><label class="form-check-label" for="inlineRadio1">Online</label></div>
-                    <div class="form-check form-check-inline"><input class="form-check-input" id="inlineRadio2" type="radio" name="inlineRadioOptions" value="option2" /><label class="form-check-label" for="inlineRadio2">Offline</label></div>
-                    <div class="form-check form-check-inline"><input class="form-check-input" id="inlineRadio3" type="radio" name="inlineRadioOptions" value="option3" /><label class="form-check-label" for="inlineRadio3">Both</label></div>
-                </div>
-                <div class="col-sm-6 col-md-12 mt-md-0 mt-lg-1">
-                    <div class="form-floating"><input class="form-control" id="floatingVenueInput" type="text" placeholder="Venue" /><label for="floatingVenueInput">Venue</label></div>
-                </div>
+
                 <div class="col-sm-6 col-md-4">
+                    <label class="form-label fw-bold text-primary mb-2">Trạng thái</label>
+                    <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusHidden" value="0" @(isEdit && news.Status == 0 ? "checked" : "") />
+                        <label class="btn btn-outline-danger" for="statusHidden">Ẩn</label>
+
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusVisible" value="1" @(isEdit && news.Status == 1 ? "checked" : "") />
+                        <label class="btn btn-outline-success" for="statusVisible">Hiển thị</label>
+
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusDraft" value="2" @(isEdit && news.Status == 2 ? "checked" : "") />
+                        <label class="btn btn-outline-secondary" for="statusDraft">Lưu nháp</label>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-md-12">
                     <div class="form-floating">
-                        <select class="form-select" id="floatingSelectCountry">
-                            <option selected="selected">Select Country</option>
-                            <option value="1">Country One</option>
-                            <option value="2">Country Two</option>
-                            <option value="3">Country Three</option>
-                        </select><label for="floatingSelectCountry">Country</label>
+                        <input class="form-control" id="titleInput" type="text" name="Title"
+                               placeholder="Tiêu đề cuộc thi" required
+                               value="@(isEdit ? news?.Title : "")" />
+                        <label for="titleInput">Tiêu đề cuộc thi</label>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-floating">
-                        <select class="form-select" id="floatingSelectState">
-                            <option selected="selected">Select State </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select><label for="floatingSelectState"> State</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-floating">
-                        <select class="form-select" id="floatingSelectCity">
-                            <option selected="selected">Select city</option>
-                            <option value="1">Data Privacy One</option>
-                            <option value="2">Data Privacy Two</option>
-                            <option value="3">Data Privacy Three</option>
-                        </select><label for="floatingSelectCity">City</label>
-                    </div>
-                </div>
-                <h4 class="fs-7 mt-7">Schedule</h4>
-                <div class="col-sm-6">
-                    <div class="flatpickr-input-container">
-                        <div class="form-floating"><input class="form-control datetimepicker" id="startDatepicker" type="text" placeholder="start date" data-options='{"disableMobile":true}' /><span class="uil uil-calendar-alt flatpickr-icon text-body-tertiary"></span><label class="ps-6" for="startDatepicker">Start date</label></div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-floating"><input class="form-control datetimepicker" id="timepickerEvent" type="text" placeholder="H:i" data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i","disableMobile":true}' /><label for="timepickerEvent">Start Time</label></div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="flatpickr-input-container">
-                        <div class="form-floating"><input class="form-control datetimepicker" id="endDatepicker" type="text" placeholder="end date" data-options='{"disableMobile":true}' /><span class="uil uil-calendar-alt flatpickr-icon text-body-tertiary"></span><label class="ps-6" for="endDatepicker">End date</label></div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-floating"><input class="form-control datetimepicker" id="timepickerEvent2" type="text" placeholder="H:i" data-options='{"enableTime":true,"noCalendar":true,"dateFormat":"H:i","disableMobile":true}' /><label for="timepickerEvent2">End Time</label></div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-floating">
-                        <select class="form-select" id="floatingSelectTimeZone">
-                            <option selected="selected">Select time zone</option>
-                            <option value="1">Data Privacy One</option>
-                            <option value="2">Data Privacy Two</option>
-                            <option value="3">Data Privacy Three</option>
-                        </select><label for="floatingSelectTimeZone">Time zone</label>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="flatpickr-input-container">
-                        <div class="form-floating"><input class="form-control datetimepicker" id="datepicker" type="text" placeholder="registration deadline" data-options='{"disableMobile":true}' /><label for="datepicker">Registration deadline</label></div>
-                    </div>
-                </div>
-                <div class="col-12 gy-6">
-                    <div class="form-floating"><textarea class="form-control" id="floatingProjectDescription" placeholder="Leave a comment here" style="height: 128px"></textarea><label for="floatingProjectDescription">Description</label></div>
-                </div>
-                <div class="col-sm-6 gy-6">
-                    <div class="form-floating"><input class="form-control" id="floatingOrganizersInput" type="text" placeholder="ORGANIZERS" /><label for="floatingOrganizersInput">ORGANIZERS</label></div>
-                </div>
-                <div class="col-sm-6 gy-6">
-                    <div class="form-floating"><input class="form-control" id="floatingSponsorsInput" type="text" placeholder="SPONSORS" /><label for="floatingSponsorsInput">SPONSORS</label></div>
-                </div>
-                <div class="col-12 gy-6">
-                    <div class="dropzone dropzone-multiple p-0 mb-5" id="my-awesome-dropzone" data-dropzone="data-dropzone">
-                        <div class="fallback"><input name="file" type="file" multiple="multiple" /></div>
-                        <div class="dz-preview d-flex flex-wrap">
-                            <div class="border border-translucent bg-body-emphasis rounded-3 d-flex flex-center position-relative me-2 mb-2" style="height:80px;width:80px;"><img class="dz-image" src="../../assets/img/products/23.png" alt="..." data-dz-thumbnail="data-dz-thumbnail" /><a class="dz-remove text-body-quaternary" href="#!" data-dz-remove="data-dz-remove"><span data-feather="x"></span></a></div>
-                        </div>
-                        <div class="dz-message text-body-tertiary text-center" data-dz-message="data-dz-message"> Drag your photo here <span class="text-body-secondary">or </span><button class="btn btn-link p-0" type="button">Browse from device </button><br /><img class="mt-3 me-2" src="../../assets/img/icons/image-icon.png" width="40" alt="" /></div>
-                    </div>
-                </div>
+
                 <div class="col-12">
-                    <div style="--phoenix-choices-inner-min-height: 128px;">
-                        <select class="form-select mb-3" data-choices="data-choices" multiple="multiple" data-options='{"removeItemButton":true,"placeholder":true}'>
-                            <option value="">Add tags</option>
-                            <option value="MUSIC">Music</option>
-                            <option value="CONCEERT">CONCEERT</option>
-                            <option value="GREATEST SHOW ON EARTH">GREATEST SHOW ON EARTH </option>
-                        </select>
-                    </div>
+                    <label class="form-label">Banner cuộc thi</label>
+                    <input name="Banner" type="file" id="bannerInput" class="form-control" accept="image/*" />
+                    @if (!isEdit)
+                    {
+                        <img id="bannerPreview"
+                             src="@Url.Content(news?.BannerUrl ?? "#")"
+                             alt="Preview banner"
+                             style="@(string.IsNullOrEmpty(news?.BannerUrl) ? "display:none;" : "max-height: 200px; margin-top: 10px;")" />
+
+                    }
+
                 </div>
-            </div>
-        </div>
-        <div class="col-xl-4">
-            <div class="border-bottom border-translucent pb-6 mb-6">
-                <h4 class="fs-7 mb-4">Privacy</h4>
-                <div class="form-check mb-2"><input class="form-check-input" id="exampleRadios1" type="radio" name="exampleRadios" value="option1" checked="checked" /><label class="form-check-label fw-normal" for="exampleRadios1">On Phoenix, our distribution partners, and search engines,<br />anybody can find the event </label></div>
-                <div class="form-check mb-0"><input class="form-check-input" id="exampleRadios2" type="radio" name="exampleRadios" value="option2" /><label class="form-check-label fw-normal" for="exampleRadios2">Only the individuals you select have access to it.</label></div>
-            </div>
-            <div class="border-bottom border-translucent mb-6">
-                <div class="form-check"><input class="form-check-input" id="flexChecked" type="checkbox" checked="checked" /><label class="form-check-label fw-bold fs-8 mb-5" for="flexChecked">Show the number of available tickets</label></div>
-            </div>
-            <h4 class="fs-7 mb-4">Ticket pricing</h4>
-            <div class="form-check form-check-inline"><input class="form-check-input" id="freeTicket" type="radio" name="ticketPricing" value="freeTicket" checked="checked" /><label class="form-check-label" for="freeTicket">Free</label></div>
-            <div class="form-check form-check-inline"><input class="form-check-input" id="paidTicket" type="radio" name="ticketPricing" value="paidTicket" /><label class="form-check-label" for="paidTicket">Paid</label></div>
-            <div class="row g-3 mb-7 mt-1 border-bottom border-translucent pb-5">
-                <div class="col-6 col col-xl-7">
-                    <h4 class="fs-9">Option</h4>
+
+                @{
+                    string defaultContent = "Nhập nội dung giới thiệu tổng quan về cuộc thi...";
+                    string defaultRule = "Nhập thể lệ của cuộc thi (ví dụ: ai được tham gia, thời gian nộp hồ sơ...)";
+                    string defaultPrize = "Mô tả các giải thưởng, mức thưởng, hình thức trao thưởng...";
+                    string defaultSchedule = "Nhập lịch trình các mốc quan trọng của cuộc thi (mở đơn, đánh giá, công bố kết quả...)";
+                    string defaultCriterias = "Nhập các tiêu chí chấm điểm như: tính mới, tính khả thi, hiệu quả ứng dụng...";
+                    string defaultSponsors = "Liệt kê đơn vị tài trợ hoặc hỗ trợ truyền thông, tài chính...";
+
+                    string contentValue = isEdit && !string.IsNullOrEmpty(news?.Content) ? news.Content : defaultContent;
+                    string ruleValue = isEdit && !string.IsNullOrEmpty(news?.Rule) ? news.Rule : defaultRule;
+                    string prizeValue = isEdit && !string.IsNullOrEmpty(news?.Prize) ? news.Prize : defaultPrize;
+                    string scheduleValue = isEdit && !string.IsNullOrEmpty(news?.Schedule) ? news.Schedule : defaultSchedule;
+                    string criteriasValue = isEdit && !string.IsNullOrEmpty(news?.Criterias) ? news.Criterias : defaultCriterias;
+                    string sponsorsValue = isEdit && !string.IsNullOrEmpty(news?.Sponsors) ? news.Sponsors : defaultSponsors;
+                }
+                @{
+                    string beginDate = "", beginHour = "", endDate = "", endHour = "";
+                    if (isEdit && !string.IsNullOrEmpty(news?.BeginTime))
+                    {
+                        var parts = news.BeginTime.Split(' ');
+                        beginDate = parts.Length > 0 ? parts[0] : "";
+                        beginHour = parts.Length > 1 ? parts[1] : "";
+                    }
+                    if (isEdit && !string.IsNullOrEmpty(news?.EndTime))
+                    {
+                        var parts = news.EndTime.Split(' ');
+                        endDate = parts.Length > 0 ? parts[0] : "";
+                        endHour = parts.Length > 1 ? parts[1] : "";
+                    }
+                }
+
+                <div class="border-top pt-4 mt-5">
+                    <h5 class="mb-3 text-primary">📑 Nội dung & Thể lệ</h5>
+                    <!-- Content, Rule, Prize -->
                 </div>
-                <div class="col-6 col-xl-5">
-                    <h4 class="fs-9">Price</h4>
+
+                <div class="col-12">
+                    <label>Nội dung giới thiệu</label>
+                    <textarea id="content" class="form-control tinymce" name="Content" style="height: 300px;">@contentValue</textarea>
                 </div>
-                <div class="col-6 col-xl-7"><input class="form-control" type="text" placeholder="Top Gallery" /></div>
-                <div class="col-6 col-xl-5"><input class="form-control" type="number" placeholder="$0.0" /></div>
-                <div class="col-6 col-xl-7"><input class="form-control" type="text" placeholder="VIP" /></div>
-                <div class="col-6 col-xl-5"><input class="form-control" type="number" placeholder="$0.0" /></div>
-                <div class="col-6 col-xl-7"><input class="form-control" type="text" placeholder="Front row" /></div>
-                <div class="col-6 col-xl-5"><input class="form-control" type="number" placeholder="$0.0" /></div>
-                <div class="col-12"><button class="btn btn-link p-0" type="button"><span class="fa-solid fa-plus me-2"></span>Add an option </button></div>
-            </div>
-            <h4 class="fs-7 mb-3">Custom fields</h4>
-            <div class="row g-3 mb-3">
-                <div class="col-md-6 col-lg-12 col-xl-6"><label class="form-label" for="inputName">Name</label><input class="form-control" id="inputName" type="text" placeholder="Item name (e.g. Special T-shirt)" /></div>
-                <div class="col-md-6 col-lg-12 col-xl-6">
-                    <label class="form-label" for="inputState1">Type</label><select class="form-select" id="inputState1">
-                        <option value="">Choose...</option>
-                        <option value="">Type One</option>
-                        <option value="">Type Two</option>
+
+                <div class="col-12">
+                    <label>Thể lệ</label>
+                    <textarea id="rule" class="form-control tinymce" name="Rule" style="height: 300px;">@ruleValue</textarea>
+                </div>
+
+                <div class="border-top pt-4 mt-5">
+                    <h5 class="mb-3 text-primary">🎁 Giải thưởng</h5>
+                    <textarea id="prize" class="form-control tinymce" name="Prize" style="height: 300px;">@prizeValue</textarea>
+                </div>
+
+
+
+                <div class="border-top pt-4 mt-5">
+                    <h5 class="mb-3 text-primary">📆 Lịch trình cuộc thi</h5>
+                    <p class="text-muted">Nhập các mốc quan trọng trong cuộc thi như mở đăng ký, vòng sơ loại, công bố kết quả...</p>
+                    <textarea id="schedule" class="form-control tinymce" name="Schedule" style="height: 300px;">@scheduleValue</textarea>
+                </div>
+
+
+                <h5 class="mt-4">Thời gian diễn ra cuộc thi</h5>
+                <div class="col-sm-6">
+                    <label for="beginTime">Thời gian bắt đầu</label>
+                    <input type="text" class="form-control flatpickr-datetime" id="beginTime" name="BeginTime"
+                           value="@news" placeholder="dd/MM/yyyy HH:mm" />
+                </div>
+
+                <div class="col-sm-6">
+                    <label for="endTime">Thời gian kết thúc</label>
+                    <input type="text" class="form-control flatpickr-datetime" id="endTime" name="EndTime"
+                           value="@news" placeholder="dd/MM/yyyy HH:mm" />
+                </div>
+
+                <div class="border-top pt-4 mt-5">
+                    <h5 class="mb-3 text-primary">📊 Tiêu chí đánh giá</h5>
+                    <!-- Số lượng tiêu chí + các form nhỏ -->
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="criteriaCount">Số lượng tiêu chí</label>
+                    <select class="form-select w-auto" id="criteriaCount">
+                        <option value="0">Chọn số lượng</option>
+                        @for (int i = 1; i <= 10; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
                     </select>
                 </div>
-                <div class="col-12"><label class="form-label" for="filedOptions">Field options</label><textarea class="form-control" id="filedOptions" placeholder="Description" rows="6"></textarea></div>
-            </div>
-            <div class="row g-3">
-                <div class="col-md-6 col-lg-12 col-xl-6"><label class="form-label" for="inputName2">Name</label><input class="form-control" id="inputName2" type="text" placeholder="Item name (e.g. Special T-shirt)" /></div>
-                <div class="col-md-6 col-lg-12 col-xl-6">
-                    <label class="form-label" for="inputState2">Type</label><select class="form-select" id="inputState2">
-                        <option value="">Choose...</option>
-                        <option value="">Type Three</option>
-                        <option value="">Type Four</option>
-                    </select>
+
+                <!-- Khối các form tiêu chí xuất hiện ở đây, cách phía trên một đoạn -->
+                <div id="criteriaFields" class="mt-3"></div>
+
+                <div class="border-top pt-4 mt-5">
+                    <h5 class="mb-3 text-primary">🏢 Logo nhà tài trợ</h5>
+                    <input type="file" class="form-control mb-3" name="SponsorLogos" id="sponsorLogos" multiple accept="image/*" />
+                    <div id="sponsorLogoPreview" class="d-flex flex-wrap gap-3"></div>
+
                 </div>
-                <div class="col-12"><label class="form-label" for="filedOptions2">Field options</label><textarea class="form-control" id="filedOptions2" placeholder="Description" rows="6"></textarea></div>
-                <div class="col-12"><button class="btn btn-link p-0" type="button"><span class="fa-solid fa-plus me-2"></span>Add an item</button></div>
+
+
+
+                <div class="border-top pt-4 mt-5">
+                    <h5 class="mb-3 text-primary">📎 Tài liệu đính kèm</h5>
+                    <!-- AttachmentFiles -->
+                </div>
+
+
+                <div class="col-12">
+                    <label for="AttachmentFiles">Tài liệu đính kèm</label>
+                    <input class="form-control" name="AttachmentFiles" type="file" multiple />
+                </div>
+
             </div>
         </div>
     </div>
 </form>
 
-@section scripts{
-    <script src="~/vendors/choices/choices.min.js"></script>
-    <script src="~/vendors/dropzone/dropzone-min.js"></script>
+@section scripts {
+    <script src="https://cdn.tiny.cloud/1/knomrrtoejbhyvpv9jjulyqaj0ndmqzvy2dxq64mr7co0wz8/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="~/vendors/flatpickr/flatpickr.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: '.tinymce',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media table',
+            toolbar: 'undo redo | bold italic underline | link image media table | numlist bullist | removeformat',
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            }
+        });
+
+        flatpickr(".flatpickr-datetime", {
+            enableTime: true,
+            dateFormat: "d/m/Y H:i",
+            time_24hr: true,
+            disableMobile: true
+        });
+
+
+        document.getElementById("criteriaCount").addEventListener("change", function () {
+            const count = parseInt(this.value);
+            const container = document.getElementById("criteriaFields");
+            container.innerHTML = "";
+
+            for (let i = 0; i < count; i++) {
+                const div = document.createElement("div");
+                div.className = "row g-2 mb-2";
+
+                div.innerHTML = `
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" name="CriteriaName" placeholder="Tên tiêu chí ${i + 1}" required />
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" class="form-control" name="CriteriaPoint" placeholder="Điểm tối đa" required min="1" />
+                            </div>
+                        `;
+                container.appendChild(div);
+            }
+        });
+
+        document.getElementById("bannerInput")?.addEventListener("change", function (event) {
+            const preview = document.getElementById("bannerPreview");
+            const file = event.target.files[0];
+
+            if (file && file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    if (!preview) return;
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                    preview.style.maxHeight = "200px";
+                    preview.style.marginTop = "10px";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "#";
+                preview.style.display = "none";
+            }
+        });
+
+
+    </script>
+    <script>
+        async function sendContest(button) {
+            const btnLoading = document.getElementById("btn-loading");
+            const btnSend = document.getElementById("btn-send");
+            btnLoading.hidden = false;
+            btnSend.hidden = true;
+
+            const titleInput = document.getElementById("titleInput");
+            const title = titleInput.value;
+            const content = tinymce.get("content").getContent();
+            const rule = tinymce.get("rule").getContent();
+            const prize = tinymce.get("prize").getContent();
+            const schedule = tinymce.get("schedule").getContent();
+            const bannerFile = document.getElementById("bannerInput").files[0];
+            const sponsorLogos = document.getElementById("sponsorLogos").files;
+            const attachmentFiles = document.querySelector("input[name='AttachmentFiles']").files;
+            const statusInput = document.querySelector("input[name='statusOptions']:checked");
+            const isPriority = document.getElementById("isPrioritySwitch").checked;
+            const categoryId = document.querySelector("input[name='CategoryId']").value;
+
+            // ✅ Build chuỗi tiêu chí
+            const criterias = [];
+            const names = document.getElementsByName("CriteriaName");
+            const points = document.getElementsByName("CriteriaPoint");
+            for (let i = 0; i < names.length; i++) {
+                if (names[i].value && points[i].value) {
+                    criterias.push(`${names[i].value}-${points[i].value}`);
+                }
+            }
+
+            // ✅ Build chuỗi tên logo
+            const sponsorLogoNames = [];
+            for (let file of sponsorLogos) {
+                sponsorLogoNames.push(file.name);
+            }
+
+            // ✅ Validate dữ liệu
+            if (!schedule.trim()) {
+                showErrorNotification("Vui lòng nhập lịch trình cuộc thi");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+            if (!title.trim()) {
+                showErrorNotification("Vui lòng nhập tiêu đề cuộc thi");
+                titleInput.focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+            if (!content.trim()) {
+                showErrorNotification("Vui lòng nhập nội dung giới thiệu");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+            if (!rule.trim()) {
+                showErrorNotification("Vui lòng nhập thể lệ cuộc thi");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+            if (!prize.trim()) {
+                showErrorNotification("Vui lòng nhập thông tin giải thưởng");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+            if (!statusInput) {
+                showErrorNotification("Vui lòng chọn trạng thái");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+            if (criterias.length === 0) {
+                showErrorNotification("Vui lòng nhập ít nhất một tiêu chí đánh giá");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+            if (sponsorLogos.length === 0) {
+                showErrorNotification("Vui lòng chọn ít nhất một logo nhà tài trợ");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            // ✅ Validate thời gian
+            const beginTimeStr = document.getElementById("beginTime").value;
+            const endTimeStr = document.getElementById("endTime").value;
+
+            if (!beginTimeStr || !endTimeStr) {
+                showErrorNotification("Vui lòng chọn đầy đủ thời gian bắt đầu và kết thúc cuộc thi");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            function parseDate(str) {
+                const [date, time] = str.split(" ");
+                const [d, m, y] = date.split("/");
+                const [h, i] = time.split(":");
+                return new Date(`${y}-${m}-${d}T${h}:${i}:00`);
+            }
+
+            const beginDate = parseDate(beginTimeStr);
+            const endDate = parseDate(endTimeStr);
+
+            if (beginDate >= endDate) {
+                showErrorNotification("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            const now = new Date();
+            if (beginDate < now) {
+                showErrorNotification("Thời gian bắt đầu không được ở quá khứ");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            // ✅ Build FormData
+            const formData = new FormData();
+            formData.append("Title", title);
+            formData.append("Content", content);
+            formData.append("Rule", rule);
+            formData.append("Prize", prize);
+            formData.append("Schedule", schedule);
+            formData.append("BeginTime", beginTimeStr);
+            formData.append("EndTime", endTimeStr);
+            formData.append("Criterias", criterias.join("|"));
+            formData.append("Sponsors", sponsorLogoNames.join("|"));
+            formData.append("Status", statusInput.value);
+            formData.append("IsPriority", isPriority);
+            formData.append("CategoryId", categoryId);
+
+            if (bannerFile) formData.append("Banner", bannerFile);
+            for (let file of sponsorLogos) formData.append("SponsorLogos", file);
+            for (let file of attachmentFiles) formData.append("AttachmentFiles", file);
+
+            try {
+                const response = await fetch("/apis/v1/contest/create", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.Success) {
+                    showSuccessContactNotification(data.Message || "Tạo cuộc thi thành công!");
+                    document.getElementById("createContestForm").reset();
+                    tinymce.get("content").setContent("");
+                    tinymce.get("rule").setContent("");
+                    tinymce.get("prize").setContent("");
+                    document.getElementById("sponsorLogoPreview").innerHTML = "";
+                } else {
+                    showErrorNotification(data.Message || "Tạo thất bại");
+                }
+            } catch (err) {
+                console.error(err);
+                showErrorNotification("Có lỗi xảy ra khi gửi dữ liệu!");
+            }
+
+            btnLoading.hidden = true;
+            btnSend.hidden = false;
+        }
+
+        //async function sendContest(button) {
+        //    const btnLoading = document.getElementById("btn-loading");
+        //const btnSend = document.getElementById("btn-send");
+        //btnLoading.hidden = false;
+        //btnSend.hidden = true;
+
+        //const title = document.getElementById("titleInput").value;
+        //const content = tinymce.get("content").getContent();
+        //const rule = tinymce.get("rule").getContent();
+        //const prize = tinymce.get("prize").getContent();
+        //const schedule = document.querySelector("textarea[name='Schedule']")?.value || "";
+
+        //    if (!title.trim()) {
+        //        showErrorNotification("Vui lòng nhập tiêu đề cuộc thi");
+        //        titleInput.focus();
+        //        return;
+        //    }
+        //    if (!content.trim()) {
+        //        showErrorNotification("Vui lòng nhập nội dung giới thiệu");
+        //        return;
+        //    }
+        //    if (!rule.trim()) {
+        //        showErrorNotification("Vui lòng nhập thể lệ cuộc thi");
+        //        return;
+        //    }
+        //    if (!prize.trim()) {
+        //        showErrorNotification("Vui lòng nhập thông tin giải thưởng");
+        //        return;
+        //    }
+        //    if (criterias.length === 0) {
+        //        showErrorNotification("Vui lòng nhập ít nhất một tiêu chí đánh giá");
+        //        return;
+        //    }
+        //    if (sponsorLogos.length === 0) {
+        //        showErrorNotification("Vui lòng chọn ít nhất một logo nhà tài trợ");
+        //        return;
+        //    }
+
+
+
+        //    const beginTimeStr = document.getElementById("beginTime").value;
+        //    const endTimeStr = document.getElementById("endTime").value;
+
+        //    // ✅ Kiểm tra bắt buộc
+        //    if (!beginTimeStr || !endTimeStr) {
+        //        showErrorNotification("Vui lòng chọn đầy đủ thời gian bắt đầu và kết thúc cuộc thi");
+        //        btnLoading.hidden = true;
+        //        btnSend.hidden = false;
+        //        return;
+        //    }
+
+        //    // ✅ Convert chuỗi ngày dạng d/m/Y H:i thành Date object
+        //    function parseDate(str) {
+        //        const [date, time] = str.split(" ");
+        //        const [d, m, y] = date.split("/");
+        //        const [h, i] = time.split(":");
+        //        return new Date(`${y}-${m}-${d}T${h}:${i}:00`);
+        //    }
+
+        //    const beginDate = parseDate(beginTimeStr);
+        //    const endDate = parseDate(endTimeStr);
+
+        //    // ✅ Kiểm tra logic thời gian
+        //    if (beginDate >= endDate) {
+        //        showErrorNotification("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+        //        btnLoading.hidden = true;
+        //        btnSend.hidden = false;
+        //        return;
+        //    }
+
+        //    // ✅ (Tuỳ chọn) Kiểm tra không được chọn thời gian trong quá khứ
+        //    const now = new Date();
+        //    if (beginDate < now) {
+        //        showErrorNotification("Thời gian bắt đầu không được ở quá khứ");
+        //        btnLoading.hidden = true;
+        //        btnSend.hidden = false;
+        //        return;
+        //    }
+
+        //    // 👉 Gán lại để đưa vào formData bên dưới
+        //    const beginTime = beginTimeStr;
+        //    const endTime = endTimeStr;
+
+        //const attachmentFiles = document.querySelector("input[name='AttachmentFiles']").files;
+        //const bannerFile = document.getElementById("bannerInput").files[0];
+        //const sponsorLogos = document.getElementById("sponsorLogos").files;
+
+        //const statusInput = document.querySelector("input[name='statusOptions']:checked");
+        //if (!statusInput) {
+        //    showErrorNotification("Vui lòng chọn trạng thái");
+        //    btnLoading.hidden = true;
+        //    btnSend.hidden = false;
+        //    return;
+        //}
+        //const status = statusInput.value;
+
+        //const isPriority = document.getElementById("isPrioritySwitch").checked;
+        //const categoryId = document.querySelector("input[name='CategoryId']").value;
+
+        //// ✅ Build chuỗi tiêu chí
+        //const criterias = [];
+        //const names = document.getElementsByName("CriteriaName");
+        //const points = document.getElementsByName("CriteriaPoint");
+        //for (let i = 0; i < names.length; i++) {
+        //        if (names[i].value && points[i].value) {
+        //    criterias.push(`${names[i].value}-${points[i].value}`);
+        //        }
+        //    }
+
+        //// ✅ Build chuỗi tên logo
+        //const sponsorLogoNames = [];
+        //for (let file of sponsorLogos) {
+        //    sponsorLogoNames.push(file.name);
+        //    }
+
+        //// ✅ Build FormData
+        //const formData = new FormData();
+        //formData.append("Title", title);
+        //formData.append("Content", content);
+        //formData.append("Rule", rule);
+        //formData.append("Prize", prize);
+        //formData.append("Schedule", schedule);
+        //formData.append("BeginTime", beginTime);
+        //formData.append("EndTime", endTime);
+        //formData.append("Criterias", criterias.join("|"));
+        //formData.append("Sponsors", sponsorLogoNames.join("|"));
+        //formData.append("Status", status);
+        //formData.append("IsPriority", isPriority);
+        //formData.append("CategoryId", categoryId);
+
+        //if (bannerFile) formData.append("Banner", bannerFile);
+        //for (let file of sponsorLogos) formData.append("SponsorLogos", file);
+        //for (let file of attachmentFiles) formData.append("AttachmentFiles", file);
+
+        //try {
+        //        const response = await fetch("/apis/v1/contest/create", {
+        //            method: "POST",
+        //            body: formData
+        //         });
+
+        //        const data = await response.json();
+        //        if (data.Success) {
+        //            showSuccessContactNotification(data.Message || "Tạo cuộc thi thành công!");
+        //            document.getElementById("createContestForm").reset();
+        //            tinymce.get("content").setContent("");
+        //            tinymce.get("rule").setContent("");
+        //            tinymce.get("prize").setContent("");
+        //            document.getElementById("sponsorLogoPreview").innerHTML = "";
+
+        //        } else {
+        //            showErrorNotification(data.Message || "Tạo thất bại");
+        //        }
+        //            } catch (err) {
+        //            console.error(err);
+        //            showErrorNotification("Có lỗi xảy ra khi gửi dữ liệu!");
+        //            }
+
+        //        btnLoading.hidden = true;
+        //        btnSend.hidden = false;
+        //}
+
+        // TODO: Nếu bạn muốn thêm updateContest(), mình sẽ bổ sung sau.
+
+
+        document.getElementById("sponsorLogos").addEventListener("change", function (event) {
+    const input = event.target;
+        const previewContainer = document.getElementById("sponsorLogoPreview");
+        const files = Array.from(input.files);
+        const dt = new DataTransfer(); // dùng để tạo lại file list mới
+
+        previewContainer.innerHTML = "";
+
+    files.forEach((file, index) => {
+    if (!file.type.startsWith("image/")) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+    const wrapper = document.createElement("div");
+        wrapper.className = "preview-wrapper";
+
+        const img = document.createElement("img");
+        img.src = e.target.result;
+
+        const btn = document.createElement("button");
+        btn.innerText = "×";
+        btn.className = "remove-logo";
+    btn.addEventListener("click", () => {
+            // Xoá ảnh tại vị trí index
+            files.splice(index, 1);
+
+        // Tạo lại file list mới
+        const newDt = new DataTransfer();
+    files.forEach(f => newDt.items.add(f));
+        input.files = newDt.files;
+
+        // Gọi lại chính sự kiện này để re-render preview
+        input.dispatchEvent(new Event("change"));
+    });
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(btn);
+        previewContainer.appendChild(wrapper);
+    };
+        reader.readAsDataURL(file);
+        dt.items.add(file); // giữ file lại ban đầu
+    });
+
+        input.files = dt.files;
+    });
+
+    </script>
+
 }
+
+
