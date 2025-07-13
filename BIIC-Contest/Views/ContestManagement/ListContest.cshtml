@@ -6,26 +6,32 @@
 
 <div class="row gx-6 gy-3 mb-4 align-items-center">
     <div class="col-auto">
-        <h2 class="mb-0">Projects<span class="fw-normal text-body-tertiary ms-3">(32)</span></h2>
+        <h2 class="mb-0">Contests List<span class="fw-normal text-body-tertiary ms-3"></span></h2>
     </div>
 </div>
 <div class="row justify-content-between align-items-end mb-4 g-3">
     <div class="col-12 col-sm-auto">
-        <ul class="nav nav-links mx-n2">
-            <li class="nav-item"><a class="nav-link px-2 py-1 active" aria-current="page" href="#"><span>All</span><span class="text-body-tertiary fw-semibold">(32)</span></a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Ongoing</span><span class="text-body-tertiary fw-semibold">(14)</span></a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Cancelled</span><span class="text-body-tertiary fw-semibold">(2)</span></a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Finished</span><span class="text-body-tertiary fw-semibold">(14)</span></a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Postponed</span><span class="text-body-tertiary fw-semibold">(2)</span></a></li>
+        <ul class="nav nav-links mx-n2" id="statusFilterTabs">
+            <li class="nav-item"><a class="nav-link active" data-status="" href="#">Tất cả <span class="count"></span></a></li>
+            <li class="nav-item"><a class="nav-link" data-status="1" href="#">Hiển thị <span class="count"></span></a></li>
+            <li class="nav-item"><a class="nav-link" data-status="0" href="#">Ẩn <span class="count"></span></a></li>
+            <li class="nav-item"><a class="nav-link" data-status="2" href="#">Lưu nháp <span class="count"></span></a></li>
         </ul>
+
     </div>
     <div class="col-12 col-sm-auto">
         <div class="d-flex align-items-center">
             <div class="search-box me-3">
-                <form class="position-relative">
-                    <input class="form-control search-input search" type="search" placeholder="Search projects" aria-label="Search" />
-                    <span class="fas fa-search search-box-icon"></span>
+                <form class="d-flex align-items-center" id="contestSearchForm" style="max-width: 250px;">
+                    <input class="form-control form-control-sm me-1" type="search" id="contestSearchInput"
+                           placeholder="Tìm cuộc thi..." aria-label="Tìm kiếm" />
+                    <button type="submit" class="btn btn-sm btn-outline-primary rounded-2">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </form>
+
+
+
             </div>
         </div>
     </div>
@@ -69,12 +75,14 @@
         const categoryId = 3;
         const sortBy = "created_at";
         const sortDir = "desc";
+        let keyword = "";
+        let filterStatus = "";
+
 
         function loadContests(page = 1) {
             fetch(`/apis/v1/news/list?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}&categoryId=${categoryId}`)
                 .then(response => response.json())
                 .then(result => {
-                    console.log("DATA:", result.Data);
                     if (!result.Success) {
                         alert(result.Message);
                         return;
@@ -86,43 +94,92 @@
                     const container = document.getElementById("contest-grid");
                     container.innerHTML = "";
 
-                    result.Data.forEach(item => {
+                    const searchTerm = keyword.toLowerCase().trim();
+                    let contests = result.Data;
+
+                    // 🔢 Tính số lượng mỗi trạng thái
+                    const allCount = contests.length;
+                    const statusCounts = {
+                        0: contests.filter(i => i.status === 0).length,
+                        1: contests.filter(i => i.status === 1).length,
+                        2: contests.filter(i => i.status === 2).length
+                    };
+
+                    // 🔁 Cập nhật số trong các tab
+                    document.querySelectorAll("#statusFilterTabs .nav-link").forEach(link => {
+                        const status = link.dataset.status;
+                        let countText = "";
+                        if (status === "") countText = `(${allCount})`;
+                        else countText = `(${statusCounts[status] || 0})`;
+
+                        link.querySelector(".count").textContent = countText;
+                    });
+
+                    // 🔍 Lọc theo từ khoá
+                    let matched = contests;
+                    if (searchTerm) {
+                        matched = contests.filter(item =>
+                            item.title.toLowerCase().includes(searchTerm)
+                        );
+                        const unmatched = contests.filter(item =>
+                            !item.title.toLowerCase().includes(searchTerm)
+                        );
+                        contests = [...matched, ...unmatched];
+                    }
+
+                    // 📌 Lọc theo trạng thái nếu có
+                    if (filterStatus !== "") {
+                        contests = contests.filter(item => String(item.status) === filterStatus);
+                    }
+
+                    // 🧾 Thông báo kết quả
+                    const resultText = searchTerm
+                        ? `🔎 Tìm thấy ${matched.length} kết quả cho "${searchTerm}"`
+                        : `📋 Hiển thị ${contests.length} cuộc thi`;
+
+                    document.getElementById("pagination-container").innerHTML = `<p class="text-muted small mb-0">${resultText}</p>`;
+
+                    // 🎯 Render từng card
+                    contests.forEach(item => {
                         const card = document.createElement("div");
                         card.className = "col-12 col-sm-6 col-md-4 col-xxl-3";
 
-                        card.innerHTML = `
-                            <div class="btn-reveal-trigger position-relative rounded-2 overflow-hidden p-4" style="height: 236px;">
-                                <div class="bg-holder" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 100%), url('${item.banner_url || "/assets/img/event/banner_event_1.jpg"}'); background-size: cover;"></div>
-                                <div class="position-relative h-100 d-flex flex-column justify-content-between">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <span class="badge fw-bold px-3 py-2 rounded-pill fs-9 ${getStatusBadgeClass(item.status)}">
-    ${renderStatus(item.status)}
-</span>
+                        const bannerPath = item.banner_url
+                            ? `/assets/img/event/${item.banner_url}`
+                            : "/assets/img/event/banner_event_1.jpg";
 
-                                        <div class="z-2">
-                                            <button class="btn btn-icon btn-reveal dropdown-toggle dropdown-caret-none transition-none" data-bs-toggle="dropdown"><span class="fas fa-ellipsis-v"></span></button>
-                                            <div class="dropdown-menu dropdown-menu-end py-2">
-                                                <a class="dropdown-item" href="#">Xem bài dự thi</a>
-                                                <a class="dropdown-item text-warning" href="/chinh-sua-cuoc-thi/${item.news_id}">Sửa</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger btn-delete-contest" data-id="${item.news_id}" href="#">Xoá</a>
-                                            </div>
-                                        </div>
+                        card.innerHTML = `
+                    <div class="btn-reveal-trigger position-relative rounded-2 overflow-hidden p-4" style="height: 236px;">
+                        <div class="bg-holder" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 100%), url('${bannerPath}'); background-size: cover;"></div>
+                        <div class="position-relative h-100 d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge fw-bold px-3 py-2 rounded-pill fs-9 ${getStatusBadgeClass(item.status)}">
+                                    ${renderStatus(item.status)}
+                                </span>
+                                <div class="z-2">
+                                    <button class="btn btn-icon btn-reveal dropdown-toggle dropdown-caret-none transition-none" data-bs-toggle="dropdown">
+                                        <span class="fas fa-ellipsis-v"></span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end py-2">
+                                        <a class="dropdown-item" href="#">Xem bài dự thi</a>
+                                        <a class="dropdown-item text-warning" href="/chinh-sua-cuoc-thi/${item.news_id}">Sửa</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-danger btn-delete-contest" data-id="${item.news_id}" href="#">Xoá</a>
                                     </div>
-                                    <h3 class="text-white fw-bold line-clamp-2">${item.title}</h3>
                                 </div>
                             </div>
-                        `;
+                            <h3 class="text-white fw-bold line-clamp-2">${item.title}</h3>
+                        </div>
+                    </div>
+                `;
 
                         container.appendChild(card);
                     });
 
-                    updatePagination();
-                    
+                    updatePagination(); // nếu có
                 });
-
-
         }
+
 
         function renderStatus(status) {
             switch (status) {
@@ -144,6 +201,26 @@
 
         document.addEventListener("DOMContentLoaded", function () {
             loadContests(1);
+            document.getElementById("contestSearchForm").addEventListener("submit", function (e) {
+                e.preventDefault();
+                keyword = document.getElementById("contestSearchInput").value;
+                loadContests(1);
+            });
+
+            document.querySelectorAll("#statusFilterTabs .nav-link").forEach(tab => {
+                tab.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    // Cập nhật class active
+                    document.querySelectorAll("#statusFilterTabs .nav-link").forEach(el => el.classList.remove("active"));
+                    this.classList.add("active");
+
+                    // Cập nhật status cần lọc
+                    filterStatus = this.dataset.status || "";
+                    loadContests(1);
+                });
+            });
+
         });
 
         document.addEventListener("click", function (e) {
@@ -181,6 +258,10 @@
                 }
             }
         });
+
+        
+
+
 
     </script>
    
