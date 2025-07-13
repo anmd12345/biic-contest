@@ -105,7 +105,7 @@
                                                 <a class="dropdown-item" href="#">Xem bài dự thi</a>
                                                 <a class="dropdown-item text-warning" href="/chinh-sua-cuoc-thi/${item.news_id}">Sửa</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#">Xoá</a>
+                                                <a class="dropdown-item text-danger btn-delete-contest" data-id="${item.news_id}" href="#">Xoá</a>
                                             </div>
                                         </div>
                                     </div>
@@ -118,6 +118,7 @@
                     });
 
                     updatePagination();
+                    
                 });
 
 
@@ -141,14 +142,48 @@
             }
         }
 
-
-
-    </script>
-    <script>
         document.addEventListener("DOMContentLoaded", function () {
             loadContests(1);
         });
+
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("btn-delete-contest")) {
+                e.preventDefault();
+
+                const id = e.target.dataset.id;
+
+                if (!id) {
+                    alert("Không tìm thấy ID cuộc thi.");
+                    return;
+                }
+
+                if (confirm("Bạn có chắc chắn muốn xoá cuộc thi này?")) {
+                    fetch("/apis/v1/contest/delete", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: `newsId=${id}` // ✅ Phải là newsId để match tham số API
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            if (result.Success) {
+                                alert("Đã xoá cuộc thi thành công.");
+                                loadContests(currentPage); // Reload danh sách
+                            } else {
+                                alert("Xóa thất bại: " + result.Message);
+                            }
+                        })
+                        .catch(err => {
+                            alert("Lỗi khi xoá cuộc thi.");
+                            console.error(err);
+                        });
+                }
+            }
+        });
+
     </script>
+   
 
 
 }

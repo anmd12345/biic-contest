@@ -318,8 +318,60 @@ namespace BIIC_Contest.Apis
             }
         }
 
+        [HttpPost]
+        [Route("delete")]
+        public JsonResult DeleteContest(int newsId)
+        {
+            var user = Session[SessionConstant.CURRENT_USER] as UserDto;
+            if (user == null)
+                return Json(new BasicResponseEntity(false, "Bạn chưa đăng nhập"));
 
-        
+            try
+            {
+                // Lấy cuộc thi hiện có
+                var result = contestService.getContestById(newsId);
+                if (!result.Success)
+                    return Json(result);
+
+                var old = result.Data as NewsDto;
+
+                // Xóa banner nếu có
+                if (!string.IsNullOrEmpty(old.BannerUrl))
+                {
+                    var bannerPath = Server.MapPath("~" + old.BannerUrl);
+                    if (System.IO.File.Exists(bannerPath))
+                        System.IO.File.Delete(bannerPath);
+                }
+
+                // Xóa logo nhà tài trợ
+                var sponsorLogos = old.Sponsors?.Split('|') ?? new string[0];
+                foreach (var logo in sponsorLogos)
+                {
+                    var path = Server.MapPath("~/assets/img/sponsors/" + logo);
+                    if (System.IO.File.Exists(path))
+                        System.IO.File.Delete(path);
+                }
+
+                // Xóa các file đính kèm
+                var attachments = old.AttachmentFiles?.Split('|') ?? new string[0];
+                foreach (var file in attachments)
+                {
+                    var filePath = Server.MapPath("~/" + file);
+                    if (System.IO.File.Exists(filePath))
+                        System.IO.File.Delete(filePath);
+                }
+
+                // Gọi service để xoá bản ghi trong DB
+                var deleteResult = contestService.deleteContest(newsId);
+                return Json(deleteResult);
+            }
+            catch (Exception ex)
+            {
+                return Json(new BasicResponseEntity(false, "Lỗi khi xoá cuộc thi: " + ex.Message));
+            }
+        }
+
+
 
     }
 }

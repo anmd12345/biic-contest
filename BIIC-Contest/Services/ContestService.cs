@@ -194,5 +194,43 @@ namespace BIIC_Contest.Services
         }
 
 
+        public BasicResponseEntity deleteContest(int id)
+        {
+            try
+            {
+                var contest = newsRepo.findById(id);
+                if (contest == null)
+                {
+                    return new BasicResponseEntity
+                    {
+                        Success = false,
+                        Message = "Không tìm thấy cuộc thi để xoá!",
+                        Data = null
+                    };
+                }
+
+                newsRepo.deleteNews(id); // ✅ truyền id đúng với định nghĩa
+
+                return new BasicResponseEntity
+                {
+                    Success = true,
+                    Message = "Xoá cuộc thi thành công!",
+                    Data = null
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BasicResponseEntity
+                {
+                    Success = false,
+                    Message = "Lỗi khi xoá cuộc thi: " + ex.Message,
+                    Data = null
+                };
+            }
+        }
+
+
+
+
     }
 }
