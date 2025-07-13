@@ -3,10 +3,15 @@
 @{
     ViewBag.Title = "CreateContest";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    //var isEdit = ViewBag.isEdit != null && (bool)ViewBag.isEdit;
+    //var news = ViewBag.news as NewsDto;
     var isEdit = ViewBag.isEdit != null && (bool)ViewBag.isEdit;
-    var news = ViewBag.news as NewsDto;
+    var news = ViewBag.news as NewsDto ?? new NewsDto(); // 👈 gán mặc định nếu null
     var contestCategoryId = ViewBag.contestCategoryId ?? 0; // ID danh mục “Cuộc thi” truyền từ controller
 }
+
+
+
 
 @section styles{
     <link href="~/vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
@@ -117,14 +122,17 @@
                 <div class="col-12">
                     <label class="form-label">Banner cuộc thi</label>
                     <input name="Banner" type="file" id="bannerInput" class="form-control" accept="image/*" />
-                    @if (!isEdit)
+                    @if (isEdit && !string.IsNullOrEmpty(news?.BannerUrl))
                     {
-                        <img id="bannerPreview"
-                             src="@Url.Content(news?.BannerUrl ?? "#")"
-                             alt="Preview banner"
-                             style="@(string.IsNullOrEmpty(news?.BannerUrl) ? "display:none;" : "max-height: 200px; margin-top: 10px;")" />
-
+                        <div class="text-muted mt-1">Đã có banner: <code>@Path.GetFileName(news.BannerUrl)</code></div>
                     }
+
+                    <img id="bannerPreview"
+                         src="@Url.Content(news?.BannerUrl ?? "/assets/img/event/default.jpg")"
+                         alt="Preview banner"
+                         style="max-height: 200px; margin-top: 10px; @(string.IsNullOrEmpty(news?.BannerUrl) ? "display:none;" : "")" />
+
+
 
                 </div>
 
@@ -192,13 +200,13 @@
                 <div class="col-sm-6">
                     <label for="beginTime">Thời gian bắt đầu</label>
                     <input type="text" class="form-control flatpickr-datetime" id="beginTime" name="BeginTime"
-                           value="@news" placeholder="dd/MM/yyyy HH:mm" />
+                           value="@(beginDate + " " + beginHour)" placeholder="dd/MM/yyyy HH:mm" />
                 </div>
 
                 <div class="col-sm-6">
                     <label for="endTime">Thời gian kết thúc</label>
                     <input type="text" class="form-control flatpickr-datetime" id="endTime" name="EndTime"
-                           value="@news" placeholder="dd/MM/yyyy HH:mm" />
+                           value="@(endDate + " " + endHour)" placeholder="dd/MM/yyyy HH:mm" />
                 </div>
 
                 <div class="border-top pt-4 mt-5">
@@ -215,6 +223,7 @@
                             <option value="@i">@i</option>
                         }
                     </select>
+                    <div id="criteriaFields" class="mt-3"></div>
                 </div>
 
                 <!-- Khối các form tiêu chí xuất hiện ở đây, cách phía trên một đoạn -->
@@ -223,7 +232,29 @@
                 <div class="border-top pt-4 mt-5">
                     <h5 class="mb-3 text-primary">🏢 Logo nhà tài trợ</h5>
                     <input type="file" class="form-control mb-3" name="SponsorLogos" id="sponsorLogos" multiple accept="image/*" />
-                    <div id="sponsorLogoPreview" class="d-flex flex-wrap gap-3"></div>
+                    <div id="sponsorLogoPreview" class="d-flex flex-wrap gap-3">
+                        @{
+                            var logos = new string[0];
+                            if (isEdit && news != null && !string.IsNullOrEmpty(news.Sponsors))
+                            {
+                                logos = news.Sponsors.Split('|');
+                            }
+                        }
+                        @if (logos.Length > 0)
+                        {
+                            foreach (var logo in logos)
+                            {
+                                <div class="preview-wrapper" data-filename="@logo">
+                                    <img src="@Url.Content("/assets/img/sponsors/" + logo)" alt="@logo" />
+                                    <button type="button" class="remove-logo" onclick="removeOldLogo(this, '@logo')">×</button>
+                                </div>
+                            }
+                        }
+                    </div>
+
+
+
+                    <input type="hidden" name="OldSponsorLogos" id="oldSponsorLogosHidden" value="@news.Sponsors" />
 
                 </div>
 
@@ -239,16 +270,63 @@
                     <label for="AttachmentFiles">Tài liệu đính kèm</label>
                     <input class="form-control" name="AttachmentFiles" type="file" multiple />
                 </div>
+                @if (isEdit && !string.IsNullOrEmpty(news?.AttachmentFiles))
+                {
+                    var files = news.AttachmentFiles.Split('|');
+                    <div id="existingAttachments" class="mt-2">
+                        @foreach (var f in files.Where(f => !string.IsNullOrWhiteSpace(f)))
+                        {
+                            var fileName = Path.GetFileName(f);
+                            <div class="d-flex align-items-center mb-2 existing-file" data-file="@f">
+                                <a href="@Url.Content("/assets/upload/" + f)" target="_blank">@fileName</a>
+                                <button type="button" class="btn btn-sm btn-danger ms-2 remove-attachment">×</button>
+                            </div>
+                        }
+
+                    </div>
+                    <input type="hidden" id="remainingAttachments" name="RemainingAttachments" value="@news.AttachmentFiles" />
+                }
+
+
+
 
             </div>
         </div>
     </div>
 </form>
 
+
 @section scripts {
+    @{
+        var criteriaJson = "";
+        if (isEdit && !string.IsNullOrEmpty(news?.Criterias))
+        {
+            var items = news.Criterias.Split('|')
+                          .Select(c => c.Split('-'))
+                          .Select(p => new { name = p[0], point = (p.Length > 1 ? p[1] : "0") });
+            criteriaJson = Newtonsoft.Json.JsonConvert.SerializeObject(items);
+        }
+    }
+    <script>
+        const loadedCriterias = @Html.Raw(criteriaJson);
+        function removeOldLogo(button, filename) {
+            const wrapper = button.closest(".preview-wrapper");
+            if (wrapper) wrapper.remove();
+
+            // Cập nhật hidden input chứa danh sách logo cũ
+            const input = document.getElementById("oldSponsorLogosHidden");
+            if (!input) return;
+
+            const currentList = input.value.split("|").filter(name => name !== filename);
+            input.value = currentList.join("|");
+        }
+
+    </script>
+
     <script src="https://cdn.tiny.cloud/1/knomrrtoejbhyvpv9jjulyqaj0ndmqzvy2dxq64mr7co0wz8/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="~/vendors/flatpickr/flatpickr.min.js"></script>
     <script>
+        // ✅ Init tinymce
         tinymce.init({
             selector: '.tinymce',
             plugins: 'anchor autolink charmap codesample emoticons image link lists media table',
@@ -260,14 +338,59 @@
             }
         });
 
+        // ✅ Init flatpickr
         flatpickr(".flatpickr-datetime", {
             enableTime: true,
             dateFormat: "d/m/Y H:i",
             time_24hr: true,
             disableMobile: true
         });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // addEventListener cho criteriaCount
+
+            // ✅ Cuối cùng mới chạy fill tiêu chí:
+            if (loadedCriterias && loadedCriterias.length > 0) {
+                const criteriaCountSelect = document.getElementById("criteriaCount");
+                criteriaCountSelect.value = loadedCriterias.length;
+                criteriaCountSelect.dispatchEvent(new Event("change"));
+
+                // ✅ Trì hoãn một chút để đảm bảo DOM render xong:
+                setTimeout(() => {
+                    const names = document.getElementsByName("CriteriaName");
+                    const points = document.getElementsByName("CriteriaPoint");
+
+                    for (let i = 0; i < loadedCriterias.length; i++) {
+                        names[i].value = loadedCriterias[i].name;
+                        points[i].value = loadedCriterias[i].point;
+                    }
+                }, 100); // delay 100ms
+            }
+
+            const attachmentContainer = document.getElementById("existingAttachments");
+            const hiddenField = document.getElementById("remainingAttachments");
+
+            if (attachmentContainer && hiddenField) {
+                attachmentContainer.addEventListener("click", function (e) {
+                    if (e.target.classList.contains("remove-attachment")) {
+                        const fileDiv = e.target.closest(".existing-file");
+                        const filePath = fileDiv.getAttribute("data-file");
+                        fileDiv.remove();
+
+                        const paths = hiddenField.value.split('|').filter(f => f !== filePath);
+                        hiddenField.value = paths.join('|');
+                    }
+                });
+            }
+        });
+
+    </script>
 
 
+    <!-- Tách phần xử lý logic riêng -->
+    <script>
+        // Các script event: load ảnh preview, preview logo, xử lý tiêu chí động
         document.getElementById("criteriaCount").addEventListener("change", function () {
             const count = parseInt(this.value);
             const container = document.getElementById("criteriaFields");
@@ -278,17 +401,16 @@
                 div.className = "row g-2 mb-2";
 
                 div.innerHTML = `
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" name="CriteriaName" placeholder="Tên tiêu chí ${i + 1}" required />
-                            </div>
-                            <div class="col-md-4">
-                                <input type="number" class="form-control" name="CriteriaPoint" placeholder="Điểm tối đa" required min="1" />
-                            </div>
-                        `;
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" name="CriteriaName" placeholder="Tên tiêu chí ${i + 1}" required />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="number" class="form-control" name="CriteriaPoint" placeholder="Điểm tối đa" required min="1" />
+                                    </div>
+                                `;
                 container.appendChild(div);
             }
         });
-
         document.getElementById("bannerInput")?.addEventListener("change", function (event) {
             const preview = document.getElementById("bannerPreview");
             const file = event.target.files[0];
@@ -308,10 +430,82 @@
                 preview.style.display = "none";
             }
         });
+        document.getElementById("sponsorLogos").addEventListener("change", function (event) {
+            const input = event.target;
+            const previewContainer = document.getElementById("sponsorLogoPreview");
+            const files = Array.from(input.files);
+            const dt = new DataTransfer();
 
+            // ✅ KHÔNG xóa toàn bộ preview container nữa
+            // previewContainer.innerHTML = ""; ❌ Bỏ dòng này!
+
+            // ✅ Xóa các preview-wrapper do chính JS tạo ra (logo mới)
+            const oldNewLogos = previewContainer.querySelectorAll(".preview-wrapper.new-logo");
+            oldNewLogos.forEach(el => el.remove());
+
+            files.forEach((file, index) => {
+                if (!file.type.startsWith("image/")) return;
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const wrapper = document.createElement("div");
+                    wrapper.className = "preview-wrapper new-logo"; // ✅ đánh dấu logo mới
+
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+
+                    const btn = document.createElement("button");
+                    btn.innerText = "×";
+                    btn.className = "remove-logo";
+                    btn.addEventListener("click", () => {
+                        // Xoá ảnh tại vị trí index
+                        files.splice(index, 1);
+
+                        // Tạo lại file list mới
+                        const newDt = new DataTransfer();
+                        files.forEach(f => newDt.items.add(f));
+                        input.files = newDt.files;
+
+                        // Gọi lại chính sự kiện này để re-render preview
+                        input.dispatchEvent(new Event("change"));
+                    });
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(btn);
+                    previewContainer.appendChild(wrapper);
+                };
+                reader.readAsDataURL(file);
+                dt.items.add(file);
+            });
+
+            input.files = dt.files;
+        });
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const attachmentContainer = document.getElementById("existingAttachments");
+            const hiddenField = document.getElementById("remainingAttachments");
+
+            if (attachmentContainer && hiddenField) {
+                attachmentContainer.addEventListener("click", function (e) {
+                    if (e.target.classList.contains("remove-attachment")) {
+                        const fileDiv = e.target.closest(".existing-file");
+                        const filePath = fileDiv.getAttribute("data-file");
+                        fileDiv.remove();
+
+                        // Cập nhật input ẩn
+                        const paths = hiddenField.value.split('|').filter(f => f !== filePath);
+                        hiddenField.value = paths.join('|');
+                    }
+                });
+            }
+        });
 
     </script>
+
     <script>
+        // Các hàm xử lý chính
         async function sendContest(button) {
             const btnLoading = document.getElementById("btn-loading");
             const btnSend = document.getElementById("btn-send");
@@ -340,6 +534,19 @@
                     criterias.push(`${names[i].value}-${points[i].value}`);
                 }
             }
+            // ✅ Validate tổng điểm = 100
+            let totalPoints = 0;
+            for (let point of points) {
+                if (!point.value || isNaN(point.value)) continue;
+                totalPoints += parseInt(point.value);
+            }
+            if (totalPoints !== 100) {
+                showErrorNotification("Tổng số điểm các tiêu chí phải đúng bằng 100");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
 
             // ✅ Build chuỗi tên logo
             const sponsorLogoNames = [];
@@ -479,218 +686,534 @@
             btnSend.hidden = false;
         }
 
-        //async function sendContest(button) {
-        //    const btnLoading = document.getElementById("btn-loading");
-        //const btnSend = document.getElementById("btn-send");
-        //btnLoading.hidden = false;
-        //btnSend.hidden = true;
+        async function updateContest() {
+            const btnLoading = document.getElementById("btn-loading");
+            const btnSend = document.getElementById("btn-send");
+            btnLoading.hidden = false;
+            btnSend.hidden = true;
 
-        //const title = document.getElementById("titleInput").value;
-        //const content = tinymce.get("content").getContent();
-        //const rule = tinymce.get("rule").getContent();
-        //const prize = tinymce.get("prize").getContent();
-        //const schedule = document.querySelector("textarea[name='Schedule']")?.value || "";
-
-        //    if (!title.trim()) {
-        //        showErrorNotification("Vui lòng nhập tiêu đề cuộc thi");
-        //        titleInput.focus();
-        //        return;
-        //    }
-        //    if (!content.trim()) {
-        //        showErrorNotification("Vui lòng nhập nội dung giới thiệu");
-        //        return;
-        //    }
-        //    if (!rule.trim()) {
-        //        showErrorNotification("Vui lòng nhập thể lệ cuộc thi");
-        //        return;
-        //    }
-        //    if (!prize.trim()) {
-        //        showErrorNotification("Vui lòng nhập thông tin giải thưởng");
-        //        return;
-        //    }
-        //    if (criterias.length === 0) {
-        //        showErrorNotification("Vui lòng nhập ít nhất một tiêu chí đánh giá");
-        //        return;
-        //    }
-        //    if (sponsorLogos.length === 0) {
-        //        showErrorNotification("Vui lòng chọn ít nhất một logo nhà tài trợ");
-        //        return;
-        //    }
+            const newsId = document.getElementById("newsIdHidden").value;
+            const titleInput = document.getElementById("titleInput");
+            const title = titleInput.value;
+            const content = tinymce.get("content").getContent();
+            const rule = tinymce.get("rule").getContent();
+            const prize = tinymce.get("prize").getContent();
+            const schedule = tinymce.get("schedule").getContent();
+            const bannerFile = document.getElementById("bannerInput").files[0];
+            const oldSponsorLogoNames = document.getElementById("oldSponsorLogosHidden")?.value || "";
+            const remainingAttachments = document.getElementById("remainingAttachments")?.value || "";
 
 
+            const sponsorLogos = document.getElementById("sponsorLogos").files;
+            const attachmentFiles = document.querySelector("input[name='AttachmentFiles']").files;
+            const statusInput = document.querySelector("input[name='statusOptions']:checked");
+            const isPriority = document.getElementById("isPrioritySwitch").checked;
+            const categoryId = document.querySelector("input[name='CategoryId']").value;
 
-        //    const beginTimeStr = document.getElementById("beginTime").value;
-        //    const endTimeStr = document.getElementById("endTime").value;
-
-        //    // ✅ Kiểm tra bắt buộc
-        //    if (!beginTimeStr || !endTimeStr) {
-        //        showErrorNotification("Vui lòng chọn đầy đủ thời gian bắt đầu và kết thúc cuộc thi");
-        //        btnLoading.hidden = true;
-        //        btnSend.hidden = false;
-        //        return;
-        //    }
-
-        //    // ✅ Convert chuỗi ngày dạng d/m/Y H:i thành Date object
-        //    function parseDate(str) {
-        //        const [date, time] = str.split(" ");
-        //        const [d, m, y] = date.split("/");
-        //        const [h, i] = time.split(":");
-        //        return new Date(`${y}-${m}-${d}T${h}:${i}:00`);
-        //    }
-
-        //    const beginDate = parseDate(beginTimeStr);
-        //    const endDate = parseDate(endTimeStr);
-
-        //    // ✅ Kiểm tra logic thời gian
-        //    if (beginDate >= endDate) {
-        //        showErrorNotification("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
-        //        btnLoading.hidden = true;
-        //        btnSend.hidden = false;
-        //        return;
-        //    }
-
-        //    // ✅ (Tuỳ chọn) Kiểm tra không được chọn thời gian trong quá khứ
-        //    const now = new Date();
-        //    if (beginDate < now) {
-        //        showErrorNotification("Thời gian bắt đầu không được ở quá khứ");
-        //        btnLoading.hidden = true;
-        //        btnSend.hidden = false;
-        //        return;
-        //    }
-
-        //    // 👉 Gán lại để đưa vào formData bên dưới
-        //    const beginTime = beginTimeStr;
-        //    const endTime = endTimeStr;
-
-        //const attachmentFiles = document.querySelector("input[name='AttachmentFiles']").files;
-        //const bannerFile = document.getElementById("bannerInput").files[0];
-        //const sponsorLogos = document.getElementById("sponsorLogos").files;
-
-        //const statusInput = document.querySelector("input[name='statusOptions']:checked");
-        //if (!statusInput) {
-        //    showErrorNotification("Vui lòng chọn trạng thái");
-        //    btnLoading.hidden = true;
-        //    btnSend.hidden = false;
-        //    return;
-        //}
-        //const status = statusInput.value;
-
-        //const isPriority = document.getElementById("isPrioritySwitch").checked;
-        //const categoryId = document.querySelector("input[name='CategoryId']").value;
-
-        //// ✅ Build chuỗi tiêu chí
-        //const criterias = [];
-        //const names = document.getElementsByName("CriteriaName");
-        //const points = document.getElementsByName("CriteriaPoint");
-        //for (let i = 0; i < names.length; i++) {
-        //        if (names[i].value && points[i].value) {
-        //    criterias.push(`${names[i].value}-${points[i].value}`);
-        //        }
-        //    }
-
-        //// ✅ Build chuỗi tên logo
-        //const sponsorLogoNames = [];
-        //for (let file of sponsorLogos) {
-        //    sponsorLogoNames.push(file.name);
-        //    }
-
-        //// ✅ Build FormData
-        //const formData = new FormData();
-        //formData.append("Title", title);
-        //formData.append("Content", content);
-        //formData.append("Rule", rule);
-        //formData.append("Prize", prize);
-        //formData.append("Schedule", schedule);
-        //formData.append("BeginTime", beginTime);
-        //formData.append("EndTime", endTime);
-        //formData.append("Criterias", criterias.join("|"));
-        //formData.append("Sponsors", sponsorLogoNames.join("|"));
-        //formData.append("Status", status);
-        //formData.append("IsPriority", isPriority);
-        //formData.append("CategoryId", categoryId);
-
-        //if (bannerFile) formData.append("Banner", bannerFile);
-        //for (let file of sponsorLogos) formData.append("SponsorLogos", file);
-        //for (let file of attachmentFiles) formData.append("AttachmentFiles", file);
-
-        //try {
-        //        const response = await fetch("/apis/v1/contest/create", {
-        //            method: "POST",
-        //            body: formData
-        //         });
-
-        //        const data = await response.json();
-        //        if (data.Success) {
-        //            showSuccessContactNotification(data.Message || "Tạo cuộc thi thành công!");
-        //            document.getElementById("createContestForm").reset();
-        //            tinymce.get("content").setContent("");
-        //            tinymce.get("rule").setContent("");
-        //            tinymce.get("prize").setContent("");
-        //            document.getElementById("sponsorLogoPreview").innerHTML = "";
-
-        //        } else {
-        //            showErrorNotification(data.Message || "Tạo thất bại");
-        //        }
-        //            } catch (err) {
-        //            console.error(err);
-        //            showErrorNotification("Có lỗi xảy ra khi gửi dữ liệu!");
-        //            }
-
-        //        btnLoading.hidden = true;
-        //        btnSend.hidden = false;
-        //}
-
-        // TODO: Nếu bạn muốn thêm updateContest(), mình sẽ bổ sung sau.
+            const criterias = [];
+            const names = document.getElementsByName("CriteriaName");
+            const points = document.getElementsByName("CriteriaPoint");
+            for (let i = 0; i < names.length; i++) {
+                if (names[i].value && points[i].value) {
+                    criterias.push(`${names[i].value}-${points[i].value}`);
+                }
+            }
+            // ✅ Validate tổng điểm = 100
+            let totalPoints = 0;
+            for (let point of points) {
+                if (!point.value || isNaN(point.value)) continue;
+                totalPoints += parseInt(point.value);
+            }
+            if (totalPoints !== 100) {
+                showErrorNotification("Tổng số điểm các tiêu chí phải đúng bằng 100");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
 
 
-        document.getElementById("sponsorLogos").addEventListener("change", function (event) {
-    const input = event.target;
-        const previewContainer = document.getElementById("sponsorLogoPreview");
-        const files = Array.from(input.files);
-        const dt = new DataTransfer(); // dùng để tạo lại file list mới
+            const sponsorLogoNames = [];
+            for (let file of sponsorLogos) {
+                sponsorLogoNames.push(file.name);
+            }
 
-        previewContainer.innerHTML = "";
+            const beginTimeStr = document.getElementById("beginTime").value;
+            const endTimeStr = document.getElementById("endTime").value;
 
-    files.forEach((file, index) => {
-    if (!file.type.startsWith("image/")) return;
+            if (!title.trim() || !content.trim() || !rule.trim() || !prize.trim() || !schedule.trim() || !statusInput) {
+                showErrorNotification("Vui lòng điền đầy đủ các trường bắt buộc");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
 
-        const reader = new FileReader();
-        reader.onload = function (e) {
-    const wrapper = document.createElement("div");
-        wrapper.className = "preview-wrapper";
+            function parseDate(str) {
+                const [date, time] = str.split(" ");
+                const [d, m, y] = date.split("/");
+                const [h, i] = time.split(":");
+                return new Date(`${y}-${m}-${d}T${h}:${i}:00`);
+            }
 
-        const img = document.createElement("img");
-        img.src = e.target.result;
+            const beginDate = parseDate(beginTimeStr);
+            const endDate = parseDate(endTimeStr);
+            const now = new Date();
 
-        const btn = document.createElement("button");
-        btn.innerText = "×";
-        btn.className = "remove-logo";
-    btn.addEventListener("click", () => {
-            // Xoá ảnh tại vị trí index
-            files.splice(index, 1);
+            if (beginDate >= endDate) {
+                showErrorNotification("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
 
-        // Tạo lại file list mới
-        const newDt = new DataTransfer();
-    files.forEach(f => newDt.items.add(f));
-        input.files = newDt.files;
+            if (beginDate < now) {
+                showErrorNotification("Thời gian bắt đầu không được ở quá khứ");
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
 
-        // Gọi lại chính sự kiện này để re-render preview
-        input.dispatchEvent(new Event("change"));
-    });
+            const formData = new FormData();
+            formData.append("NewsId", newsId);
+            formData.append("Title", title);
+            formData.append("Content", content);
+            formData.append("Rule", rule);
+            formData.append("Prize", prize);
+            formData.append("Schedule", schedule);
+            formData.append("BeginTime", beginTimeStr);
+            formData.append("EndTime", endTimeStr);
+            formData.append("Criterias", criterias.join("|"));
+            formData.append("Sponsors", sponsorLogoNames.join("|"));
+            formData.append("Status", statusInput.value);
+            formData.append("IsPriority", isPriority);
+            formData.append("CategoryId", categoryId);
+            formData.append("OldSponsorLogos", oldSponsorLogoNames);
+            formData.append("RemainingAttachments", remainingAttachments);
 
-        wrapper.appendChild(img);
-        wrapper.appendChild(btn);
-        previewContainer.appendChild(wrapper);
-    };
-        reader.readAsDataURL(file);
-        dt.items.add(file); // giữ file lại ban đầu
-    });
 
-        input.files = dt.files;
-    });
+            if (bannerFile) formData.append("Banner", bannerFile);
+            for (let file of sponsorLogos) formData.append("SponsorLogos", file);
+            for (let file of attachmentFiles) formData.append("AttachmentFiles", file);
 
+            try {
+                const response = await fetch("/apis/v1/contest/update", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.Success) {
+                    showSuccessContactNotification(data.Message || "Cập nhật cuộc thi thành công!");
+                } else {
+                    showErrorNotification(data.Message || "Cập nhật thất bại");
+                }
+            } catch (err) {
+                console.error(err);
+                showErrorNotification("Có lỗi xảy ra khi cập nhật dữ liệu!");
+            }
+
+            btnLoading.hidden = true;
+            btnSend.hidden = false;
+        }
     </script>
-
 }
+
+
+@*@section scripts {
+        <script src="https://cdn.tiny.cloud/1/knomrrtoejbhyvpv9jjulyqaj0ndmqzvy2dxq64mr7co0wz8/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="~/vendors/flatpickr/flatpickr.min.js"></script>
+
+        <script>
+            tinymce.init({
+                selector: '.tinymce',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media table',
+                toolbar: 'undo redo | bold italic underline | link image media table | numlist bullist | removeformat',
+                setup: function (editor) {
+                    editor.on('change', function () {
+                        editor.save();
+                    });
+                }
+            });
+
+            flatpickr(".flatpickr-datetime", {
+                enableTime: true,
+                dateFormat: "d/m/Y H:i",
+                time_24hr: true,
+                disableMobile: true
+            });
+
+
+            document.getElementById("criteriaCount").addEventListener("change", function () {
+                const count = parseInt(this.value);
+                const container = document.getElementById("criteriaFields");
+                container.innerHTML = "";
+
+                for (let i = 0; i < count; i++) {
+                    const div = document.createElement("div");
+                    div.className = "row g-2 mb-2";
+
+                    div.innerHTML = `
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" name="CriteriaName" placeholder="Tên tiêu chí ${i + 1}" required />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="number" class="form-control" name="CriteriaPoint" placeholder="Điểm tối đa" required min="1" />
+                                        </div>
+                                    `;
+                    container.appendChild(div);
+                }
+            });
+
+            document.getElementById("bannerInput")?.addEventListener("change", function (event) {
+                const preview = document.getElementById("bannerPreview");
+                const file = event.target.files[0];
+
+                if (file && file.type.startsWith("image/")) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        if (!preview) return;
+                        preview.src = e.target.result;
+                        preview.style.display = "block";
+                        preview.style.maxHeight = "200px";
+                        preview.style.marginTop = "10px";
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = "#";
+                    preview.style.display = "none";
+                }
+            });
+
+
+        </script>
+        <script>
+            async function sendContest(button) {
+                const btnLoading = document.getElementById("btn-loading");
+                const btnSend = document.getElementById("btn-send");
+                btnLoading.hidden = false;
+                btnSend.hidden = true;
+
+                const titleInput = document.getElementById("titleInput");
+                const title = titleInput.value;
+                const content = tinymce.get("content").getContent();
+                const rule = tinymce.get("rule").getContent();
+                const prize = tinymce.get("prize").getContent();
+                const schedule = tinymce.get("schedule").getContent();
+                const bannerFile = document.getElementById("bannerInput").files[0];
+                const sponsorLogos = document.getElementById("sponsorLogos").files;
+                const attachmentFiles = document.querySelector("input[name='AttachmentFiles']").files;
+                const statusInput = document.querySelector("input[name='statusOptions']:checked");
+                const isPriority = document.getElementById("isPrioritySwitch").checked;
+                const categoryId = document.querySelector("input[name='CategoryId']").value;
+
+                // ✅ Build chuỗi tiêu chí
+                const criterias = [];
+                const names = document.getElementsByName("CriteriaName");
+                const points = document.getElementsByName("CriteriaPoint");
+                for (let i = 0; i < names.length; i++) {
+                    if (names[i].value && points[i].value) {
+                        criterias.push(`${names[i].value}-${points[i].value}`);
+                    }
+                }
+
+                // ✅ Build chuỗi tên logo
+                const sponsorLogoNames = [];
+                for (let file of sponsorLogos) {
+                    sponsorLogoNames.push(file.name);
+                }
+
+                // ✅ Validate dữ liệu
+                if (!schedule.trim()) {
+                    showErrorNotification("Vui lòng nhập lịch trình cuộc thi");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+                if (!title.trim()) {
+                    showErrorNotification("Vui lòng nhập tiêu đề cuộc thi");
+                    titleInput.focus();
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+                if (!content.trim()) {
+                    showErrorNotification("Vui lòng nhập nội dung giới thiệu");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+                if (!rule.trim()) {
+                    showErrorNotification("Vui lòng nhập thể lệ cuộc thi");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+                if (!prize.trim()) {
+                    showErrorNotification("Vui lòng nhập thông tin giải thưởng");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+                if (!statusInput) {
+                    showErrorNotification("Vui lòng chọn trạng thái");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+                if (criterias.length === 0) {
+                    showErrorNotification("Vui lòng nhập ít nhất một tiêu chí đánh giá");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+                if (sponsorLogos.length === 0) {
+                    showErrorNotification("Vui lòng chọn ít nhất một logo nhà tài trợ");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+
+                // ✅ Validate thời gian
+                const beginTimeStr = document.getElementById("beginTime").value;
+                const endTimeStr = document.getElementById("endTime").value;
+
+                if (!beginTimeStr || !endTimeStr) {
+                    showErrorNotification("Vui lòng chọn đầy đủ thời gian bắt đầu và kết thúc cuộc thi");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+
+                function parseDate(str) {
+                    const [date, time] = str.split(" ");
+                    const [d, m, y] = date.split("/");
+                    const [h, i] = time.split(":");
+                    return new Date(`${y}-${m}-${d}T${h}:${i}:00`);
+                }
+
+                const beginDate = parseDate(beginTimeStr);
+                const endDate = parseDate(endTimeStr);
+
+                if (beginDate >= endDate) {
+                    showErrorNotification("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+
+                const now = new Date();
+                if (beginDate < now) {
+                    showErrorNotification("Thời gian bắt đầu không được ở quá khứ");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+
+                // ✅ Build FormData
+                const formData = new FormData();
+                formData.append("Title", title);
+                formData.append("Content", content);
+                formData.append("Rule", rule);
+                formData.append("Prize", prize);
+                formData.append("Schedule", schedule);
+                formData.append("BeginTime", beginTimeStr);
+                formData.append("EndTime", endTimeStr);
+                formData.append("Criterias", criterias.join("|"));
+                formData.append("Sponsors", sponsorLogoNames.join("|"));
+                formData.append("Status", statusInput.value);
+                formData.append("IsPriority", isPriority);
+                formData.append("CategoryId", categoryId);
+
+                if (bannerFile) formData.append("Banner", bannerFile);
+                for (let file of sponsorLogos) formData.append("SponsorLogos", file);
+                for (let file of attachmentFiles) formData.append("AttachmentFiles", file);
+
+                try {
+                    const response = await fetch("/apis/v1/contest/create", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    if (data.Success) {
+                        showSuccessContactNotification(data.Message || "Tạo cuộc thi thành công!");
+                        document.getElementById("createContestForm").reset();
+                        tinymce.get("content").setContent("");
+                        tinymce.get("rule").setContent("");
+                        tinymce.get("prize").setContent("");
+                        document.getElementById("sponsorLogoPreview").innerHTML = "";
+                    } else {
+                        showErrorNotification(data.Message || "Tạo thất bại");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showErrorNotification("Có lỗi xảy ra khi gửi dữ liệu!");
+                }
+
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+            }
+
+
+            async function updateContest() {
+                const btnLoading = document.getElementById("btn-loading");
+                const btnSend = document.getElementById("btn-send");
+                btnLoading.hidden = false;
+                btnSend.hidden = true;
+
+                const newsId = document.getElementById("newsIdHidden").value;
+                const titleInput = document.getElementById("titleInput");
+                const title = titleInput.value;
+                const content = tinymce.get("content").getContent();
+                const rule = tinymce.get("rule").getContent();
+                const prize = tinymce.get("prize").getContent();
+                const schedule = tinymce.get("schedule").getContent();
+                const bannerFile = document.getElementById("bannerInput").files[0];
+                const sponsorLogos = document.getElementById("sponsorLogos").files;
+                const attachmentFiles = document.querySelector("input[name='AttachmentFiles']").files;
+                const statusInput = document.querySelector("input[name='statusOptions']:checked");
+                const isPriority = document.getElementById("isPrioritySwitch").checked;
+                const categoryId = document.querySelector("input[name='CategoryId']").value;
+
+                const criterias = [];
+                const names = document.getElementsByName("CriteriaName");
+                const points = document.getElementsByName("CriteriaPoint");
+                for (let i = 0; i < names.length; i++) {
+                    if (names[i].value && points[i].value) {
+                        criterias.push(`${names[i].value}-${points[i].value}`);
+                    }
+                }
+
+                const sponsorLogoNames = [];
+                for (let file of sponsorLogos) {
+                    sponsorLogoNames.push(file.name);
+                }
+
+                const beginTimeStr = document.getElementById("beginTime").value;
+                const endTimeStr = document.getElementById("endTime").value;
+
+                if (!title.trim() || !content.trim() || !rule.trim() || !prize.trim() || !schedule.trim() || !statusInput) {
+                    showErrorNotification("Vui lòng điền đầy đủ các trường bắt buộc");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+
+                function parseDate(str) {
+                    const [date, time] = str.split(" ");
+                    const [d, m, y] = date.split("/");
+                    const [h, i] = time.split(":");
+                    return new Date(`${y}-${m}-${d}T${h}:${i}:00`);
+                }
+
+                const beginDate = parseDate(beginTimeStr);
+                const endDate = parseDate(endTimeStr);
+                const now = new Date();
+
+                if (beginDate >= endDate) {
+                    showErrorNotification("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+
+                if (beginDate < now) {
+                    showErrorNotification("Thời gian bắt đầu không được ở quá khứ");
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append("NewsId", newsId);
+                formData.append("Title", title);
+                formData.append("Content", content);
+                formData.append("Rule", rule);
+                formData.append("Prize", prize);
+                formData.append("Schedule", schedule);
+                formData.append("BeginTime", beginTimeStr);
+                formData.append("EndTime", endTimeStr);
+                formData.append("Criterias", criterias.join("|"));
+                formData.append("Sponsors", sponsorLogoNames.join("|"));
+                formData.append("Status", statusInput.value);
+                formData.append("IsPriority", isPriority);
+                formData.append("CategoryId", categoryId);
+
+                if (bannerFile) formData.append("Banner", bannerFile);
+                for (let file of sponsorLogos) formData.append("SponsorLogos", file);
+                for (let file of attachmentFiles) formData.append("AttachmentFiles", file);
+
+                try {
+                    const response = await fetch("/apis/v1/contest/update", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const data = await response.json();
+                    if (data.Success) {
+                        showSuccessContactNotification(data.Message || "Cập nhật cuộc thi thành công!");
+                    } else {
+                        showErrorNotification(data.Message || "Cập nhật thất bại");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    showErrorNotification("Có lỗi xảy ra khi cập nhật dữ liệu!");
+                }
+
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+            }
+
+
+
+            document.getElementById("sponsorLogos").addEventListener("change", function (event) {
+                const input = event.target;
+                const previewContainer = document.getElementById("sponsorLogoPreview");
+                const files = Array.from(input.files);
+                const dt = new DataTransfer(); // dùng để tạo lại file list mới
+
+                previewContainer.innerHTML = "";
+
+                files.forEach((file, index) => {
+                    if (!file.type.startsWith("image/")) return;
+
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const wrapper = document.createElement("div");
+                        wrapper.className = "preview-wrapper";
+
+                        const img = document.createElement("img");
+                        img.src = e.target.result;
+
+                        const btn = document.createElement("button");
+                        btn.innerText = "×";
+                        btn.className = "remove-logo";
+                        btn.addEventListener("click", () => {
+                            // Xoá ảnh tại vị trí index
+                            files.splice(index, 1);
+
+                            // Tạo lại file list mới
+                            const newDt = new DataTransfer();
+                            files.forEach(f => newDt.items.add(f));
+                            input.files = newDt.files;
+
+                            // Gọi lại chính sự kiện này để re-render preview
+                            input.dispatchEvent(new Event("change"));
+                        });
+
+                        wrapper.appendChild(img);
+                        wrapper.appendChild(btn);
+                        previewContainer.appendChild(wrapper);
+                    };
+                    reader.readAsDataURL(file);
+                    dt.items.add(file); // giữ file lại ban đầu
+                });
+
+                input.files = dt.files;
+            });
+
+
+        </script>
+
+    }*@
 
 

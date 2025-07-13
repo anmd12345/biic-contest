@@ -6,6 +6,10 @@ namespace BIIC_Contest.Services.I
     public interface IContestService
     {
         BasicResponseEntity createContest(NewsDto dto);
-        // Các hàm mở rộng sau nếu cần: getAllContests, updateContest, ...
+        BasicResponseEntity updateContest(NewsDto dto); // ✅ Hàm cập nhật cuộc thi
+        BasicResponseEntity getAllContests(); // ✅ Nếu cần dùng ở view list
+
+        BasicResponseEntity getContestById(int id);
+
     }
 }

@@ -30,25 +30,141 @@
         </div>
     </div>
 </div>
-<div class="row g-3 mb-9">
-    <div class="col-12 col-sm-6 col-md-4 col-xxl-3">
-        <div class="btn-reveal-trigger position-relative rounded-2 overflow-hidden p-4" style="height: 236px;">
-            <div class="bg-holder" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 39.41%, rgba(0, 0, 0, 0.4) 100%), url(/assets/img/event/banner_event_1.jpg)"></div>
-            <div class="position-relative h-100 d-flex flex-column justify-content-between">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="badge badge-phoenix fs-10 badge-phoenix-primary" data-bs-theme="light">Ongoing</span>
-                    <div class="z-2">
-                        <button class="btn btn-icon btn-reveal dropdown-toggle dropdown-caret-none transition-none" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-v"></span></button>
-                        <div class="dropdown-menu dropdown-menu-end py-2">
-                            <a class="dropdown-item" href="@RouteConstant.BASE_LIST_SUBMISSION_ROUTE">Xem danh sách bài dự thi</a>
-                            <a class="dropdown-item" href="#!">Export</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#!">Remove</a>
+<div class="row g-3 mb-9" id="contest-grid">
+
+
+
+    @*<div class="col-12 col-sm-6 col-md-4 col-xxl-3">
+            <div class="btn-reveal-trigger position-relative rounded-2 overflow-hidden p-4" style="height: 236px;">
+                <div class="bg-holder" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 39.41%, rgba(0, 0, 0, 0.4) 100%), url(/assets/img/event/banner_event_1.jpg)"></div>
+                <div class="position-relative h-100 d-flex flex-column justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge badge-phoenix fs-10 badge-phoenix-primary" data-bs-theme="light">Ongoing</span>
+                        <div class="z-2">
+                            <button class="btn btn-icon btn-reveal dropdown-toggle dropdown-caret-none transition-none" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-v"></span></button>
+                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                <a class="dropdown-item" href="@RouteConstant.BASE_LIST_SUBMISSION_ROUTE">Xem danh sách bài dự thi</a>
+                                <a class="dropdown-item" href="#!">Export</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="#!">Remove</a>
+                            </div>
                         </div>
                     </div>
+                    <h3 class="text-white fw-bold line-clamp-2">Project Doughnut Dungeon</h3>
                 </div>
-                <h3 class="text-white fw-bold line-clamp-2">Project Doughnut Dungeon</h3>
             </div>
-        </div>
-    </div>
+        </div>*@
 </div>
+<div id="pagination-container" class="mt-4 text-center">
+    <!-- phân trang JS sẽ render ở đây -->
+</div>
+
+
+
+@section Scripts{
+    <script>
+        let currentPage = 1;
+        let totalRecords = 0;
+        const pageSize = 9;
+        const categoryId = 3;
+        const sortBy = "created_at";
+        const sortDir = "desc";
+
+        function loadContests(page = 1) {
+            fetch(`/apis/v1/news/list?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}&categoryId=${categoryId}`)
+                .then(response => response.json())
+                .then(result => {
+                    console.log("DATA:", result.Data);
+                    if (!result.Success) {
+                        alert(result.Message);
+                        return;
+                    }
+
+                    currentPage = page;
+                    totalRecords = result.TotalRecords;
+
+                    const container = document.getElementById("contest-grid");
+                    container.innerHTML = "";
+
+                    result.Data.forEach(item => {
+                        const card = document.createElement("div");
+                        card.className = "col-12 col-sm-6 col-md-4 col-xxl-3";
+
+                        card.innerHTML = `
+                            <div class="btn-reveal-trigger position-relative rounded-2 overflow-hidden p-4" style="height: 236px;">
+                                <div class="bg-holder" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 100%), url('${item.banner_url || "/assets/img/event/banner_event_1.jpg"}'); background-size: cover;"></div>
+                                <div class="position-relative h-100 d-flex flex-column justify-content-between">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge fw-bold px-3 py-2 rounded-pill fs-9 ${getStatusBadgeClass(item.status)}">
+    ${renderStatus(item.status)}
+</span>
+
+                                        <div class="z-2">
+                                            <button class="btn btn-icon btn-reveal dropdown-toggle dropdown-caret-none transition-none" data-bs-toggle="dropdown"><span class="fas fa-ellipsis-v"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                                <a class="dropdown-item" href="#">Xem bài dự thi</a>
+                                                <a class="dropdown-item text-warning" href="/chinh-sua-cuoc-thi/${item.news_id}">Sửa</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item text-danger" href="#">Xoá</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-white fw-bold line-clamp-2">${item.title}</h3>
+                                </div>
+                            </div>
+                        `;
+
+                        container.appendChild(card);
+                    });
+
+                    updatePagination();
+                });
+
+
+        }
+
+        function renderStatus(status) {
+            switch (status) {
+                case 0: return "Ẩn";
+                case 1: return "Hiển thị";
+                case 2: return "Lưu nháp";
+                default: return "Không rõ";
+            }
+        }
+
+        function getStatusBadgeClass(status) {
+            switch (status) {
+                case 0: return "bg-secondary text-white"; // Ẩn
+                case 1: return "bg-success text-white";   // Hiển thị
+                case 2: return "bg-warning text-dark";    // Lưu nháp
+                default: return "bg-light text-dark";
+            }
+        }
+
+
+
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadContests(1);
+        });
+    </script>
+
+
+}
+
+
+
+
+@functions {
+    public string getStatusText(short status)
+    {
+        switch (status)
+        {
+            case 0: return "Ẩn";
+            case 1: return "Hiển thị";
+            case 2: return "Lưu nháp";
+            default: return "Không rõ";
+        }
+    }
+}
