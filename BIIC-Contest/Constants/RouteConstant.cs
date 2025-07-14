@@ -38,6 +38,15 @@
         public const string LIST_ASSIGNMENT_PAGE = "/danh-sach-cong-viec";
         public const string VIEW_ASSIGNMENT_WItH_EXAMINER = "/chi-tiet-bai-du-thi-v1";
         public const string VIEW_ASSIGNMENT_WItH_EMPLOYEE = "/chi-tiet-bai-du-thi-v2";
-        
+
+        // === KHU VỰC CỦA EXAMINER ===
+        public static class Examiner
+        {
+            private const string Prefix = "/examiner"; // Tiền tố chung cho examiner
+
+            public const string Dashboard = Prefix + "/danh-sach-bai-du-thi";
+            public const string AssignmentList = Prefix + "/assignments"; // Bài thi được phân công
+            public const string AssignmentDetails = Prefix + "/assignments/details";
+        }
     }
 }
