@@ -123,7 +123,8 @@ namespace BIIC_Contest.Apis
                     n.view,
                     n.like,
                     n.share,
-                    n.is_priority
+                    n.is_priority,
+                    n.banner_url
                 })
                 .ToList();
 

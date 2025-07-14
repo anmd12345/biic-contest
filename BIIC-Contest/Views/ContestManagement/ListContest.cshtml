@@ -6,49 +6,281 @@
 
 <div class="row gx-6 gy-3 mb-4 align-items-center">
     <div class="col-auto">
-        <h2 class="mb-0">Projects<span class="fw-normal text-body-tertiary ms-3">(32)</span></h2>
+        <h2 class="mb-0">Contests List<span class="fw-normal text-body-tertiary ms-3"></span></h2>
     </div>
 </div>
 <div class="row justify-content-between align-items-end mb-4 g-3">
     <div class="col-12 col-sm-auto">
-        <ul class="nav nav-links mx-n2">
-            <li class="nav-item"><a class="nav-link px-2 py-1 active" aria-current="page" href="#"><span>All</span><span class="text-body-tertiary fw-semibold">(32)</span></a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Ongoing</span><span class="text-body-tertiary fw-semibold">(14)</span></a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Cancelled</span><span class="text-body-tertiary fw-semibold">(2)</span></a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Finished</span><span class="text-body-tertiary fw-semibold">(14)</span></a></li>
-            <li class="nav-item"><a class="nav-link px-2 py-1" href="#"><span>Postponed</span><span class="text-body-tertiary fw-semibold">(2)</span></a></li>
+        <ul class="nav nav-links mx-n2" id="statusFilterTabs">
+            <li class="nav-item"><a class="nav-link active" data-status="" href="#">Tất cả <span class="count"></span></a></li>
+            <li class="nav-item"><a class="nav-link" data-status="1" href="#">Hiển thị <span class="count"></span></a></li>
+            <li class="nav-item"><a class="nav-link" data-status="0" href="#">Ẩn <span class="count"></span></a></li>
+            <li class="nav-item"><a class="nav-link" data-status="2" href="#">Lưu nháp <span class="count"></span></a></li>
         </ul>
+
     </div>
     <div class="col-12 col-sm-auto">
         <div class="d-flex align-items-center">
             <div class="search-box me-3">
-                <form class="position-relative">
-                    <input class="form-control search-input search" type="search" placeholder="Search projects" aria-label="Search" />
-                    <span class="fas fa-search search-box-icon"></span>
+                <form class="d-flex align-items-center" id="contestSearchForm" style="max-width: 250px;">
+                    <input class="form-control form-control-sm me-1" type="search" id="contestSearchInput"
+                           placeholder="Tìm cuộc thi..." aria-label="Tìm kiếm" />
+                    <button type="submit" class="btn btn-sm btn-outline-primary rounded-2">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </form>
+
+
+
             </div>
         </div>
     </div>
 </div>
-<div class="row g-3 mb-9">
-    <div class="col-12 col-sm-6 col-md-4 col-xxl-3">
-        <div class="btn-reveal-trigger position-relative rounded-2 overflow-hidden p-4" style="height: 236px;">
-            <div class="bg-holder" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 39.41%, rgba(0, 0, 0, 0.4) 100%), url(/assets/img/event/banner_event_1.jpg)"></div>
-            <div class="position-relative h-100 d-flex flex-column justify-content-between">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="badge badge-phoenix fs-10 badge-phoenix-primary" data-bs-theme="light">Ongoing</span>
-                    <div class="z-2">
-                        <button class="btn btn-icon btn-reveal dropdown-toggle dropdown-caret-none transition-none" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-v"></span></button>
-                        <div class="dropdown-menu dropdown-menu-end py-2">
-                            <a class="dropdown-item" href="@RouteConstant.BASE_LIST_SUBMISSION_ROUTE">Xem danh sách bài dự thi</a>
-                            <a class="dropdown-item" href="#!">Export</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#!">Remove</a>
+<div class="row g-3 mb-9" id="contest-grid">
+
+
+
+    @*<div class="col-12 col-sm-6 col-md-4 col-xxl-3">
+            <div class="btn-reveal-trigger position-relative rounded-2 overflow-hidden p-4" style="height: 236px;">
+                <div class="bg-holder" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 39.41%, rgba(0, 0, 0, 0.4) 100%), url(/assets/img/event/banner_event_1.jpg)"></div>
+                <div class="position-relative h-100 d-flex flex-column justify-content-between">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge badge-phoenix fs-10 badge-phoenix-primary" data-bs-theme="light">Ongoing</span>
+                        <div class="z-2">
+                            <button class="btn btn-icon btn-reveal dropdown-toggle dropdown-caret-none transition-none" data-bs-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fas fa-ellipsis-v"></span></button>
+                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                <a class="dropdown-item" href="@RouteConstant.BASE_LIST_SUBMISSION_ROUTE">Xem danh sách bài dự thi</a>
+                                <a class="dropdown-item" href="#!">Export</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="#!">Remove</a>
+                            </div>
                         </div>
                     </div>
+                    <h3 class="text-white fw-bold line-clamp-2">Project Doughnut Dungeon</h3>
                 </div>
-                <h3 class="text-white fw-bold line-clamp-2">Project Doughnut Dungeon</h3>
             </div>
-        </div>
-    </div>
+        </div>*@
 </div>
+<div id="pagination-container" class="mt-4 text-center">
+    <!-- phân trang JS sẽ render ở đây -->
+</div>
+
+
+
+@section Scripts{
+    <script>
+        let currentPage = 1;
+        let totalRecords = 0;
+        const pageSize = 9;
+        const categoryId = 3;
+        const sortBy = "created_at";
+        const sortDir = "desc";
+        let keyword = "";
+        let filterStatus = "";
+
+
+        function loadContests(page = 1) {
+            fetch(`/apis/v1/news/list?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&sortDir=${sortDir}&categoryId=${categoryId}`)
+                .then(response => response.json())
+                .then(result => {
+                    if (!result.Success) {
+                        alert(result.Message);
+                        return;
+                    }
+
+                    currentPage = page;
+                    totalRecords = result.TotalRecords;
+
+                    const container = document.getElementById("contest-grid");
+                    container.innerHTML = "";
+
+                    const searchTerm = keyword.toLowerCase().trim();
+                    let contests = result.Data;
+
+                    // 🔢 Tính số lượng mỗi trạng thái
+                    const allCount = contests.length;
+                    const statusCounts = {
+                        0: contests.filter(i => i.status === 0).length,
+                        1: contests.filter(i => i.status === 1).length,
+                        2: contests.filter(i => i.status === 2).length
+                    };
+
+                    // 🔁 Cập nhật số trong các tab
+                    document.querySelectorAll("#statusFilterTabs .nav-link").forEach(link => {
+                        const status = link.dataset.status;
+                        let countText = "";
+                        if (status === "") countText = `(${allCount})`;
+                        else countText = `(${statusCounts[status] || 0})`;
+
+                        link.querySelector(".count").textContent = countText;
+                    });
+
+                    // 🔍 Lọc theo từ khoá
+                    let matched = contests;
+                    if (searchTerm) {
+                        matched = contests.filter(item =>
+                            item.title.toLowerCase().includes(searchTerm)
+                        );
+                        const unmatched = contests.filter(item =>
+                            !item.title.toLowerCase().includes(searchTerm)
+                        );
+                        contests = [...matched, ...unmatched];
+                    }
+
+                    // 📌 Lọc theo trạng thái nếu có
+                    if (filterStatus !== "") {
+                        contests = contests.filter(item => String(item.status) === filterStatus);
+                    }
+
+                    // 🧾 Thông báo kết quả
+                    const resultText = searchTerm
+                        ? `🔎 Tìm thấy ${matched.length} kết quả cho "${searchTerm}"`
+                        : `📋 Hiển thị ${contests.length} cuộc thi`;
+
+                    document.getElementById("pagination-container").innerHTML = `<p class="text-muted small mb-0">${resultText}</p>`;
+
+                    // 🎯 Render từng card
+                    contests.forEach(item => {
+                        const card = document.createElement("div");
+                        card.className = "col-12 col-sm-6 col-md-4 col-xxl-3";
+
+                        const bannerPath = item.banner_url
+                            ? `/assets/img/event/${item.banner_url}`
+                            : "/assets/img/event/banner_event_1.jpg";
+
+                        card.innerHTML = `
+                    <div class="btn-reveal-trigger position-relative rounded-2 overflow-hidden p-4" style="height: 236px;">
+                        <div class="bg-holder" style="background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 100%), url('${bannerPath}'); background-size: cover;"></div>
+                        <div class="position-relative h-100 d-flex flex-column justify-content-between">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge fw-bold px-3 py-2 rounded-pill fs-9 ${getStatusBadgeClass(item.status)}">
+                                    ${renderStatus(item.status)}
+                                </span>
+                                <div class="z-2">
+                                    <button class="btn btn-icon btn-reveal dropdown-toggle dropdown-caret-none transition-none" data-bs-toggle="dropdown">
+                                        <span class="fas fa-ellipsis-v"></span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end py-2">
+                                        <a class="dropdown-item" href="#">Xem bài dự thi</a>
+                                        <a class="dropdown-item text-warning" href="/chinh-sua-cuoc-thi/${item.news_id}">Sửa</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item text-danger btn-delete-contest" data-id="${item.news_id}" href="#">Xoá</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="text-white fw-bold line-clamp-2">${item.title}</h3>
+                        </div>
+                    </div>
+                `;
+
+                        container.appendChild(card);
+                    });
+
+                    updatePagination(); // nếu có
+                });
+        }
+
+
+        function renderStatus(status) {
+            switch (status) {
+                case 0: return "Ẩn";
+                case 1: return "Hiển thị";
+                case 2: return "Lưu nháp";
+                default: return "Không rõ";
+            }
+        }
+
+        function getStatusBadgeClass(status) {
+            switch (status) {
+                case 0: return "bg-secondary text-white"; // Ẩn
+                case 1: return "bg-success text-white";   // Hiển thị
+                case 2: return "bg-warning text-dark";    // Lưu nháp
+                default: return "bg-light text-dark";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            loadContests(1);
+            document.getElementById("contestSearchForm").addEventListener("submit", function (e) {
+                e.preventDefault();
+                keyword = document.getElementById("contestSearchInput").value;
+                loadContests(1);
+            });
+
+            document.querySelectorAll("#statusFilterTabs .nav-link").forEach(tab => {
+                tab.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    // Cập nhật class active
+                    document.querySelectorAll("#statusFilterTabs .nav-link").forEach(el => el.classList.remove("active"));
+                    this.classList.add("active");
+
+                    // Cập nhật status cần lọc
+                    filterStatus = this.dataset.status || "";
+                    loadContests(1);
+                });
+            });
+
+        });
+
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("btn-delete-contest")) {
+                e.preventDefault();
+
+                const id = e.target.dataset.id;
+
+                if (!id) {
+                    alert("Không tìm thấy ID cuộc thi.");
+                    return;
+                }
+
+                if (confirm("Bạn có chắc chắn muốn xoá cuộc thi này?")) {
+                    fetch("/apis/v1/contest/delete", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: `newsId=${id}` // ✅ Phải là newsId để match tham số API
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            if (result.Success) {
+                                alert("Đã xoá cuộc thi thành công.");
+                                loadContests(currentPage); // Reload danh sách
+                            } else {
+                                alert("Xóa thất bại: " + result.Message);
+                            }
+                        })
+                        .catch(err => {
+                            alert("Lỗi khi xoá cuộc thi.");
+                            console.error(err);
+                        });
+                }
+            }
+        });
+
+        
+
+
+
+    </script>
+   
+
+
+}
+
+
+
+
+@functions {
+    public string getStatusText(short status)
+    {
+        switch (status)
+        {
+            case 0: return "Ẩn";
+            case 1: return "Hiển thị";
+            case 2: return "Lưu nháp";
+            default: return "Không rõ";
+        }
+    }
+}

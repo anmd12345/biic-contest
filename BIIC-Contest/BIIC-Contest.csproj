@@ -132,6 +132,7 @@
   <ItemGroup>
     <Compile Include="Apis\CategoryApiController.cs" />
     <Compile Include="Apis\ContactMessageApiController.cs" />
+    <Compile Include="Apis\ContestApiController.cs" />
     <Compile Include="Apis\NewsApiController.cs" />
     <Compile Include="Apis\SystemApisController.cs" />
     <Compile Include="Apis\UploadApisController.cs" />
@@ -206,10 +207,12 @@
     <Compile Include="Services\ActivityLogService.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Services\ContactMessageService.cs" />
+    <Compile Include="Services\ContestService.cs" />
     <Compile Include="Services\I\IActivityLogService.cs" />
     <Compile Include="Services\I\IBaseService.cs" />
     <Compile Include="Services\I\ICategoryService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
+    <Compile Include="Services\I\IContestService.cs" />
     <Compile Include="Services\I\INewsService.cs" />
     <Compile Include="Services\I\ISystemService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
