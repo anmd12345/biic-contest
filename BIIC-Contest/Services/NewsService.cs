@@ -128,6 +128,37 @@ namespace BIIC_Contest.Services
             );
         }
 
+        public BasicResponseEntity getContestById(int id)
+        {
+            var news = newsRepo.findById(id);
+            if (news == null)
+            {
+                return new BasicResponseEntity(false, "Không tìm thấy cuộc thi");
+            }
+
+            var dto = new NewsDto
+            {
+                NewsId = news.news_id,
+                Title = news.title,
+                Content = news.content,
+                CategoryId = (int)news.category_id,
+                BannerUrl = news.banner_url,
+                CreatedAt = news.created_at,
+                Status = (short)news.status,
+                Rule = news.rule,
+                Prize = news.prize,
+                Schedule = news.schedule,
+                Sponsors = news.sponsors,
+                Criterias = news.criterias,
+                BeginTime = news.begin_time,
+                EndTime = news.end_time,
+                AttachmentFiles = news.attachment_files,
+                IsPriority = news.is_priority ?? false
+
+            };
+
+            return new BasicResponseEntity(true, "Lấy cuộc thi thành công", dto);
+        }
 
         public BasicResponseEntity updateNews(NewsDto newsDto)
         {

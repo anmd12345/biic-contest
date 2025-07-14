@@ -10,19 +10,27 @@ namespace BIIC_Contest.Repositorys
     {
         private BIICConnectionDbContext db = BIICConnectionDbContext.getInstance;
 
+        public List<tbl_new> findByCategoryId(int categoryId)
+        {
+            return db.tbl_news.Where(n => n.category_id == categoryId).ToList();
+        }
+
+
         // Phương thức để thêm bài viết vào cơ sở dữ liệu
         public void createNews(tbl_new news)
         {
             try
             {
                 db.tbl_news.InsertOnSubmit(news);
-                db.SubmitChanges();  // Lưu thay đổi vào cơ sở dữ liệu
+                db.SubmitChanges();
             }
             catch (Exception ex)
             {
-                // Xử lý lỗi (nếu cần)
+                Console.WriteLine("Lỗi khi lưu contest: " + ex.Message);
+                throw; // Bắt buộc phải throw lại
             }
         }
+
 
         // Phương thức tìm bài viết theo ID
         public tbl_new findById(int id)
