@@ -16,7 +16,7 @@
         public const string NEWS_PAGE = "/tin-tuc";
         public const string LOGIN_PAGE = "/dang-nhap";
         public const string SIGNUP_PAGE = "/dang-ky";
-        public const string REGISTER_CONTEST_PAGE = "/dang-ky-cuoc-thi";
+        public const string REGISTER_CONTEST_PAGE = "/dang-ky-du-thi";
         public const string FORGOT_PASSWORD_PAGE = "/quen-mat-khau";
 
 

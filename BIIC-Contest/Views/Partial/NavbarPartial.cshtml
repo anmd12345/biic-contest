@@ -223,7 +223,7 @@
                     <a class="nav-link lh-1 py-0 fs-9 fw-bold py-3" href="@RouteConstant.CONTACT_PAGE">Liên hệ</a>
                 </li>
             </ul>
-            @if (!currentPath.Equals(RouteConstant.REGISTER_CONTEST_PAGE))
+            @if (!currentPath.Equals(RouteConstant.REGISTER_CONTEST_PAGE) && !currentPath.Equals(RouteConstant.NEWS_PAGE) && !currentPath.Equals(RouteConstant.CONTACT_PAGE))
             {
                 <div class="row d-none d-lg-block px-5 py-2">
                     <button type="button" class="btn-custom w-100" onclick="window.location.href='@RouteConstant.REGISTER_CONTEST_PAGE'">
@@ -241,7 +241,7 @@
             }
         </div>
     </nav>
-    @if (!currentPath.Equals(RouteConstant.REGISTER_CONTEST_PAGE))
+    @if (!currentPath.Equals(RouteConstant.REGISTER_CONTEST_PAGE) && !currentPath.Equals(RouteConstant.NEWS_PAGE) && !currentPath.Equals(RouteConstant.CONTACT_PAGE))
     {
         <div class="row d-sm-block d-lg-none px-5 py-2">
             <button type="button" class="btn-custom w-100" onclick="window.location.href='@RouteConstant.REGISTER_CONTEST_PAGE'">

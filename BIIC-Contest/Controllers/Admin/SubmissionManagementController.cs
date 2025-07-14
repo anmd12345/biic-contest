@@ -1,12 +1,10 @@
 
-﻿using BIIC_Contest.Databases;
+using BIIC_Contest.Constants;
+using BIIC_Contest.Databases;
 using BIIC_Contest.Models;
 using BIIC_Contest.Services;
 using BIIC_Contest.Services.I;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,7 +12,7 @@ using System.Web.Mvc;
 
 namespace BIIC_Contest.Controllers.Admin
 {
-    public class SubmissionManagementController : BaseAdminController
+    public class SubmissionManagementController : Controller
     {
         private readonly ISubmissionService _service;
 
@@ -26,18 +24,26 @@ namespace BIIC_Contest.Controllers.Admin
         [Route("quan-ly-ho-so-du-thi")]
         public ActionResult IndexSubmissionManagement(string field, string status, int page = 1, int pageSize = 5)
         {
-            int totalRecords;
-            var submissions = _service.GetPaged(field, status, page, pageSize, out totalRecords);
+            var currentUSer = Session[SessionConstant.CURRENT_USER];
 
+            if (currentUSer != null)
+            {
+                int totalRecords;
+                var submissions = _service.GetPaged(field, status, page, pageSize, out totalRecords);
+
+
+
+                ViewBag.Fields = submissions.Select(s => s.field).Distinct().ToList();
+                ViewBag.Statuses = submissions.Select(s => s.status).Distinct().ToList();
+
+                ViewBag.CurrentPage = page;
+                ViewBag.TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+                return View(submissions);
+            }
+
+            return Redirect(RouteConstant.LOGIN_PAGE);
             
-
-            ViewBag.Fields = submissions.Select(s => s.field).Distinct().ToList();
-            ViewBag.Statuses = submissions.Select(s => s.status).Distinct().ToList();
-
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
-
-            return View(submissions);
         }
 
         [Route("quan-ly-ho-so-du-thi/chi-tiet/{id}")]
