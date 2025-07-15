@@ -27,7 +27,7 @@ namespace BIIC_Contest.Controllers.Admin
                 case 2:
                     // RoleId = 2 là Examiner, chuyển hướng đến trang của Examiner
                     // Bạn có thể thay đổi URL "/examiner" thành URL thực tế của mình
-                    filterContext.Result = new RedirectResult("/examiner");
+                    filterContext.Result = new RedirectResult("/examiner/dashboard");
                     return;
 
                 default:

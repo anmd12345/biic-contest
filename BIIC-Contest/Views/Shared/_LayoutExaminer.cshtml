@@ -152,8 +152,9 @@
                                     <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-assignment">
                                         <li class="collapsed-nav-item-title d-none">Công việc</li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="@RouteConstant.LIST_ASSIGNMENT_PAGE">
-                                                <div class="d-flex align-items-center"><span class="nav-link-text">Danh sách bài dự thi được phân công</span></div>
+                                            @* Sử dụng Url.Action để tạo link một cách an toàn và chính xác *@
+                                            <a class="nav-link" href="@Url.Action("Assignments", "Examiner")">
+                                                <div class="d-flex align-items-center"><span class="nav-link-text">Danh sách các bài dự thi</span></div>
                                             </a>
                                         </li>
                                     </ul>

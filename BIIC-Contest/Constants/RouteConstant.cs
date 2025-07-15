@@ -42,11 +42,17 @@
         // === KHU VỰC CỦA EXAMINER ===
         public static class Examiner
         {
-            private const string Prefix = "/examiner"; // Tiền tố chung cho examiner
+            // Trang tổng quan chính của Examiner
+            // URL đầy đủ sẽ là: "examiner/dashboard"
+            public const string Dashboard = "examiner/dashboard";
 
-            public const string Dashboard = Prefix + "/danh-sach-bai-du-thi";
-            public const string AssignmentList = Prefix + "/assignments"; // Bài thi được phân công
-            public const string AssignmentDetails = Prefix + "/assignments/details";
+            // Trang danh sách tất cả bài thi
+            // URL đầy đủ sẽ là: "examiner/submissions"
+            public const string SubmissionList = "examiner/submissions";
+
+            // Trang chi tiết một bài thi
+            // URL đầy đủ sẽ là: "examiner/submission/{id}" (với {id} là tham số)
+            public const string SubmissionDetails = "examiner/submission";
         }
     }
 }
