@@ -1,0 +1,117 @@
+﻿@model BIIC_Contest.Models.tbl_submission
+
+@{
+    ViewBag.Title = "Chi tiết và Chấm bài";
+    // --- THAY ĐỔI LAYOUT ---
+    Layout = "~/Views/Shared/_LayoutExaminer.cshtml";
+
+    var fileList = (Model.submisstion_files ?? "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+    // Hàm tiện ích để hiển thị trạng thái
+    string GetStatusText(short? status)
+    {
+        switch (status) // So sánh trực tiếp với số
+        {
+            case 1: return "Đã tiếp nhận";
+            case 2: return "Đang đánh giá";
+            case 3: return "Đã đánh giá";
+            case 4: return "Kết quả";
+            default: return "Đã hủy"; // Hoặc "Không xác định"
+        }
+    }
+}
+
+<h2 class="text-center">
+    Bài Dự Thi @Model.submission_code -
+    <span class="text-danger">"@GetStatusText(Model.status)"</span>
+</h2>
+<br />
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-info">@TempData["Message"]</div>
+}
+
+@* --- GIỮ NGUYÊN PHẦN HIỂN THỊ THÔNG TIN --- *@
+<div class="row">
+    <div class="col-md-6">
+        <h4 class="text-center">Thông tin thí sinh</h4>
+        <table class="table table-bordered">
+            <tr><th>Họ tên:</th><td>@Model.fullname</td></tr>
+            <tr><th>Ngày sinh:</th><td>@Model.birth_day</td></tr>
+            <tr><th>Điện thoại:</th><td>@Model.phone</td></tr>
+            <tr><th>Email:</th><td>@Model.email</td></tr>
+            <tr><th>Địa chỉ:</th><td>@Model.address</td></tr>
+            <tr><th>Lĩnh vực:</th><td>@Model.field</td></tr>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <h4 class="text-center">Thông tin bài dự thi</h4>
+        <table class="table table-bordered">
+            <tr><th>Tiêu đề:</th><td>@Model.field</td></tr>
+            <tr><th>Mô tả:</th><td>@Model.description</td></tr>
+        </table>
+
+        <h4 class="text-center">Các tệp đính kèm</h4>
+        @if (fileList.Length == 0)
+        {
+            <span>Không có file.</span>
+        }
+        else
+        {
+            <ul>
+                @foreach (var file in fileList)
+                {
+                    <li>
+                        <a href="@Url.Content("~/assets/upload/files/" + file)" target="_blank">@file</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+<hr />
+<br />
+
+@* --- KHU VỰC CHẤM BÀI ĐÃ ĐƯỢC THAY ĐỔI VÀ NÂNG CẤP --- *@
+<h4>Chấm điểm và Đánh giá</h4>
+@using (Html.BeginForm("UpdateStatus", "Examiner", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("submissionId", Model.submission_id)
+
+    <div class="form-group mb-3">
+        <label for="status">Cập nhật trạng thái</label>
+        <select name="status" id="status" class="form-control" required>
+            <option value="">-- Chọn trạng thái --</option>
+            <option value="2" @(Model.status == 2 ? "selected" : "")>Đang đánh giá</option>
+            <option value="3" @(Model.status == 3 ? "selected" : "")>Đã đánh giá</option>
+        </select>
+    </div>
+
+    @* Có thể thêm các trường cho điểm số và nhận xét nếu cần *@
+    @*
+        <div class="form-group mb-3">
+            <label for="score">Điểm số</label>
+            <input type="number" name="score" id="score" class="form-control" value="@Model.score" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="feedback">Nhận xét của giám khảo</label>
+            <textarea name="feedback" id="feedback" class="form-control" rows="4">@Model.feedback</textarea>
+        </div>
+    *@
+
+    <button type="submit" class="btn btn-primary">Lưu đánh giá</button>
+}
+
+<hr />
+
+@* --- ĐÃ XÓA BỎ FORM UPLOAD FILE CỦA ADMIN --- *@
+
+<p class="mt-4">
+    @* --- SỬA LẠI LINK QUAY VỀ DANH SÁCH CỦA EXAMINER --- *@
+    <a href="@Url.Action("Assignments", "Examiner")">← Quay lại danh sách</a>
+</p>

@@ -415,6 +415,7 @@
     <Content Include="Views\Shared\_LayoutExaminer.cshtml" />
     <Content Include="Views\Examiner\Index.cshtml" />
     <Content Include="Views\Examiner\Assignments.cshtml" />
+    <Content Include="Views\Examiner\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

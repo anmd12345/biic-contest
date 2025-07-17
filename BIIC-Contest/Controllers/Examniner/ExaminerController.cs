@@ -62,11 +62,14 @@ namespace BIIC_Contest.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // Không cần route cho action POST này vì nó sẽ được gọi từ form
-        public ActionResult UpdateStatus(int submissionId, string status)
+        public ActionResult UpdateStatus(int submissionId, string status) // Giữ nguyên nếu chỉ cập nhật status
+                                                                          // Hoặc public ActionResult UpdateStatus(int submissionId, string status, int? score, string feedback) // Nếu có thêm điểm và nhận xét
         {
+            // Gọi đến service để cập nhật status (và các trường khác nếu có)
             _submissionService.UpdateStatus(submissionId, status, out string message);
+
             TempData["Message"] = message;
+
             return RedirectToAction("Details", new { id = submissionId });
         }
     }
