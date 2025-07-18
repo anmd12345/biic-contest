@@ -1,117 +1,192 @@
-﻿@model BIIC_Contest.Models.tbl_submission
+﻿@model BIIC_Contest.ViewModels.SubmissionDetailsViewModel
+@using BIIC_Contest.Dtos
+@using Newtonsoft.Json
 
 @{
-    ViewBag.Title = "Chi tiết và Chấm bài";
-    // --- THAY ĐỔI LAYOUT ---
+    ViewBag.Title = "Chi tiết bài dự thi - " + Model.Submission.submission_code;
     Layout = "~/Views/Shared/_LayoutExaminer.cshtml";
+    var fileList = (Model.Submission.submisstion_files ?? "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-    var fileList = (Model.submisstion_files ?? "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
-    // Hàm tiện ích để hiển thị trạng thái
-    string GetStatusText(short? status)
-    {
-        switch (status) // So sánh trực tiếp với số
-        {
-            case 1: return "Đã tiếp nhận";
-            case 2: return "Đang đánh giá";
-            case 3: return "Đã đánh giá";
-            case 4: return "Kết quả";
-            default: return "Đã hủy"; // Hoặc "Không xác định"
-        }
-    }
-}
-
-<h2 class="text-center">
-    Bài Dự Thi @Model.submission_code -
-    <span class="text-danger">"@GetStatusText(Model.status)"</span>
-</h2>
-<br />
-
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-info">@TempData["Message"]</div>
-}
-
-@* --- GIỮ NGUYÊN PHẦN HIỂN THỊ THÔNG TIN --- *@
-<div class="row">
-    <div class="col-md-6">
-        <h4 class="text-center">Thông tin thí sinh</h4>
-        <table class="table table-bordered">
-            <tr><th>Họ tên:</th><td>@Model.fullname</td></tr>
-            <tr><th>Ngày sinh:</th><td>@Model.birth_day</td></tr>
-            <tr><th>Điện thoại:</th><td>@Model.phone</td></tr>
-            <tr><th>Email:</th><td>@Model.email</td></tr>
-            <tr><th>Địa chỉ:</th><td>@Model.address</td></tr>
-            <tr><th>Lĩnh vực:</th><td>@Model.field</td></tr>
-        </table>
+    <div class="row align-items-center justify-content-between g-3 mb-4">
+        <div class="col-12 col-md-auto">
+            <h2 class="mb-0">Bài dự thi @Model.Submission.submission_code</h2>
+        </div>
+        <div class="col-12 col-md-auto">
+            <a href="@Url.Action("Assignments", "Examiner")" class="btn btn-phoenix-secondary">
+                <span class="fa-solid fa-arrow-left me-2"></span>
+                Quay lại danh sách
+            </a>
+        </div>
     </div>
 
-    <div class="col-md-6">
-        <h4 class="text-center">Thông tin bài dự thi</h4>
-        <table class="table table-bordered">
-            <tr><th>Tiêu đề:</th><td>@Model.field</td></tr>
-            <tr><th>Mô tả:</th><td>@Model.description</td></tr>
-        </table>
+    // Lấy đối tượng assignment từ ViewModel
+    var assignment = Model.Assignment;
 
-        <h4 class="text-center">Các tệp đính kèm</h4>
-        @if (fileList.Length == 0)
+    // --- SỬA LẠI CÁCH LẤY DỮ LIỆU ---
+    bool isSubmitted = assignment?.is_completed ?? false;
+    string gradingResultJson = assignment?.assignment_result ?? "{}";
+
+    // Giải mã JSON để lấy điểm và nhận xét đã lưu
+    var gradingData = JsonConvert.DeserializeObject<GradingDataDto>(gradingResultJson) ?? new GradingDataDto();
+
+    // Danh sách tiêu chí cứng
+    var criteriaDefinitions = new Dictionary<string, int>
+{
+        { "Tính sáng tạo", 30 },
+        { "Tính ứng dụng", 40 },
+        { "Kỹ thuật trình bày", 30 }
+    };
+}
+
+<div class="row g-0 g-md-4 g-xl-6">
+    @* ======================================================== *@
+    @* = CỘT BÊN TRÁI - HIỂN THỊ THÔNG TIN THÍ SINH VÀ BÀI THI = *@
+    @* ======================================================== *@
+    <div class="col-md-5 col-lg-5 col-xl-4">
+        <div class="sticky-leads-sidebar">
+            <div class="lead-details-offcanvas bg-body scrollbar">
+                @* Card thông tin chính *@
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row align-items-center g-3 text-center text-xxl-start">
+                            <div class="col-12 col-xxl-auto">
+                                <div class="avatar avatar-5xl"><img class="rounded-circle" src="~/assets/img/user/default_logo.jpg" alt="" /></div>
+                            </div>
+                            <div class="col-12 col-sm-auto flex-1">
+                                <h3 class="fw-bolder mb-2">@Model.Submission.fullname</h3>
+                                <p class="mb-0">Ngày sinh: @Model.Submission.birth_day</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @* Card thông tin liên hệ *@
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h3 class="mb-4">Thông tin liên hệ</h3>
+                        <div class="mb-4">
+                            <div class="d-flex align-items-center mb-1"><span data-feather="mail" class="me-2"></span><h5 class="mb-0">Email</h5></div>
+                            <a href="mailto:@Model.Submission.email">@Model.Submission.email</a>
+                        </div>
+                        <div class="mb-4">
+                            <div class="d-flex align-items-center mb-1"><span data-feather="phone" class="me-2"></span><h5 class="mb-0">Phone</h5></div>
+                            <a href="tel:@Model.Submission.phone">@Model.Submission.phone</a>
+                        </div>
+                        <div>
+                            <div class="d-flex align-items-center mb-1"><span data-feather="map-pin" class="me-2"></span><h5 class="mb-0">Địa chỉ</h5></div>
+                            <p class="mb-0 text-body-secondary">@Model.Submission.address</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* ======================================================== *@
+    @* = CỘT BÊN PHẢI - NỘI DUNG CHẤM BÀI VÀ CÁC THÔNG TIN KHÁC = *@
+    @* ======================================================== *@
+    <div class="col-md-7 col-lg-7 col-xl-8">
+        @if (TempData["Message"] != null)
         {
-            <span>Không có file.</span>
+            <div class="alert alert-info">@TempData["Message"]</div>
         }
-        else
-        {
-            <ul>
-                @foreach (var file in fileList)
+
+        @* --- HIỂN THỊ NỘI DUNG BÀI THI --- *@
+        <div class="mb-5">
+            <h3 class="mb-4">Nội dung bài thi</h3>
+            <div class="mb-4">
+                <h5>Lĩnh vực</h5>
+                <p>@Model.Submission.field</p>
+            </div>
+            <div>
+                <h5>Mô tả chi tiết</h5>
+                <p style="white-space: pre-wrap;">@Model.Submission.description</p>
+            </div>
+        </div>
+
+        @* --- HIỂN THỊ TỆP ĐÍNH KÈM --- *@
+        <div class="mb-5">
+            <h3 class="mb-4">Các tệp đính kèm (@fileList.Length)</h3>
+            @if (fileList.Any())
+            {
+                foreach (var file in fileList)
                 {
-                    <li>
-                        <a href="@Url.Content("~/assets/upload/files/" + file)" target="_blank">@file</a>
-                    </li>
+                    <div class="border-top border-dashed py-3">
+                        <div class="d-flex align-items-center">
+                            <span class="fa-solid fa-file-lines me-2"></span>
+                            <a href="@Url.Content("~/assets/upload/files/" + file)" target="_blank">@file</a>
+                        </div>
+                    </div>
                 }
-            </ul>
-        }
-    </div>
-</div>
-
-<hr />
-<br />
-
-@* --- KHU VỰC CHẤM BÀI ĐÃ ĐƯỢC THAY ĐỔI VÀ NÂNG CẤP --- *@
-<h4>Chấm điểm và Đánh giá</h4>
-@using (Html.BeginForm("UpdateStatus", "Examiner", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.Hidden("submissionId", Model.submission_id)
-
-    <div class="form-group mb-3">
-        <label for="status">Cập nhật trạng thái</label>
-        <select name="status" id="status" class="form-control" required>
-            <option value="">-- Chọn trạng thái --</option>
-            <option value="2" @(Model.status == 2 ? "selected" : "")>Đang đánh giá</option>
-            <option value="3" @(Model.status == 3 ? "selected" : "")>Đã đánh giá</option>
-        </select>
-    </div>
-
-    @* Có thể thêm các trường cho điểm số và nhận xét nếu cần *@
-    @*
-        <div class="form-group mb-3">
-            <label for="score">Điểm số</label>
-            <input type="number" name="score" id="score" class="form-control" value="@Model.score" />
+            }
+            else
+            {
+                <p class="text-muted">Không có tệp nào được đính kèm.</p>
+            }
         </div>
 
-        <div class="form-group mb-3">
-            <label for="feedback">Nhận xét của giám khảo</label>
-            <textarea name="feedback" id="feedback" class="form-control" rows="4">@Model.feedback</textarea>
+
+        @* ======================================================== *@
+        @* =          FORM CHẤM ĐIỂM CHI TIẾT VÀ TỔNG QUAN         = *@
+        @* ======================================================== *@
+        <div class="mt-5">
+            <h3 class="mb-4">Bảng điểm và Đánh giá</h3>
+
+            @using (Html.BeginForm("SaveGrading", "Examiner", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("submissionId", Model.Submission.submission_id)
+
+                foreach (var criterion in criteriaDefinitions)
+                {
+                    var criterionName = criterion.Key;
+                    var maxScore = criterion.Value;
+                    var savedGrade = gradingData.CriteriaGrades?.FirstOrDefault(g => g.Name == criterionName);
+                    var currentScore = savedGrade?.Score ?? 0;
+
+                    <div class="row align-items-center border-top py-3 gx-0">
+                        <div class="col-12 col-lg flex-1">
+                            <h5 class="mb-0">@criterionName</h5>
+                        </div>
+                        <div class="col-12 col-lg-auto mt-2 mt-lg-0">
+                            <div class="d-flex align-items-center">
+                                <input type="number" name="gradingData.CriteriaGrades[@criterionName].Score"
+                                       class="form-control" style="width: 100px;"
+                                       value="@currentScore" min="0" max="@maxScore"
+                                       @(isSubmitted ? "disabled" : "") required />
+                                <input type="hidden" name="gradingData.CriteriaGrades[@criterionName].Name" value="@criterionName" />
+                                <div class="ps-3 border-start ms-3">
+                                    <p class="text-danger fw-bold mb-0">/@maxScore</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <hr class="my-4" />
+
+                <div class="form-group mb-3">
+                    <label for="score" class="form-label fw-bold">Điểm tổng kết</label>
+                    <input type="number" name="gradingData.FinalScore" class="form-control" value="@gradingData.FinalScore" @(isSubmitted ? "disabled" : "") required />
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="overallComment" class="form-label fw-bold">Nhận xét tổng quan</label>
+                    <textarea name="gradingData.OverallComment" class="form-control" rows="6" @(isSubmitted ? "disabled" : "")>@gradingData.OverallComment</textarea>
+                </div>
+
+                if (!isSubmitted)
+                {
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="submit" name="submitButton" value="draft" class="btn btn-secondary">Lưu nháp</button>
+                        <button type="submit" name="submitButton" value="final" class="btn btn-primary" onclick="return confirm('Bạn có chắc chắn muốn nộp điểm cuối cùng?');">Nộp điểm cuối cùng</button>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-success text-center">
+                        <strong>Bạn đã nộp điểm cho bài thi này và không thể chỉnh sửa.</strong>
+                    </div>
+                }
+            }
         </div>
-    *@
-
-    <button type="submit" class="btn btn-primary">Lưu đánh giá</button>
-}
-
-<hr />
-
-@* --- ĐÃ XÓA BỎ FORM UPLOAD FILE CỦA ADMIN --- *@
-
-<p class="mt-4">
-    @* --- SỬA LẠI LINK QUAY VỀ DANH SÁCH CỦA EXAMINER --- *@
-    <a href="@Url.Action("Assignments", "Examiner")">← Quay lại danh sách</a>
-</p>
