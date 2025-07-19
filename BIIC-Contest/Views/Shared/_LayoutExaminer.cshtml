@@ -112,15 +112,15 @@
                         <li class="nav-item">
                             <div class="nav-item-wrapper">
                                 <a class="nav-link dropdown-indicator label-1" href="#nv-home" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-home">
-                                    @*<div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon-wrapper">
-                                                <span class="fas fa-caret-right dropdown-indicator-icon"></span>
-                                            </div>
-                                            <span class="nav-link-icon">
-                                                <span data-feather="pie-chart"></span>
-                                            </span>
-                                            <span class="nav-link-text">Bảng điều khiển</span>
-                                        </div>*@
+                                    <div class="d-flex align-items-center">
+                                        <div class="dropdown-indicator-icon-wrapper">
+                                            <span class="fas fa-caret-right dropdown-indicator-icon"></span>
+                                        </div>
+                                        <span class="nav-link-icon">
+                                            <span data-feather="pie-chart"></span>
+                                        </span>
+                                        <span class="nav-link-text">Bảng điều khiển</span>
+                                    </div>
                                 </a>
                                 <div class="parent-wrapper label-1">
                                     <ul class="nav collapse parent @(currentPath.Equals(RouteConstant.DASHBOARD_PAGE) ? "show" : "")" data-bs-parent="#navbarVerticalCollapse" id="nv-home">
@@ -162,159 +162,6 @@
                             </div>
                         </li>
 
-                        @*<li class="nav-item">
-                                <p class="navbar-vertical-label">Bài viết và cuộc thi</p>
-                                <hr class="navbar-vertical-line" />
-
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1" href="#nv-news-management" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-news-management">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon-wrapper">
-                                                <span class="fas fa-caret-right dropdown-indicator-icon"></span>
-                                            </div>
-                                            <span class="nav-link-icon">
-                                                <span data-feather="clipboard"></span>
-                                            </span>
-                                            <span class="nav-link-text">Quản lý bài viết</span>
-                                        </div>
-                                    </a>
-                                    <div class="parent-wrapper label-1">
-                                        <ul class="nav collapse parent @((currentPath.Equals(RouteConstant.LIST_NEWS_PAGE) || currentPath.Equals(RouteConstant.CREATE_NEWS_PAGE)) ? "show" : "")" data-bs-parent="#navbarVerticalCollapse" id="nv-news-management">
-                                            <li class="collapsed-nav-item-title d-none">Quản lý bài viết</li>
-                                            <li class="nav-item">
-                                                <a class="nav-link @(currentPath.Equals(RouteConstant.LIST_NEWS_PAGE) ? "active" : "")" href="@RouteConstant.LIST_NEWS_PAGE">
-                                                    <div class="d-flex align-items-center"><span class="nav-link-text">Danh sách bài viết</span></div>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link @(currentPath.Equals(RouteConstant.CREATE_NEWS_PAGE) ? "active" : "")" href="@RouteConstant.CREATE_NEWS_PAGE">
-                                                    <div class="d-flex align-items-center"><span class="nav-link-text">Tạo bài viết</span></div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1" href="#nv-contest-management" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-kanban">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon-wrapper">
-                                                <span class="fas fa-caret-right dropdown-indicator-icon"></span>
-                                            </div>
-                                            <span class="nav-link-icon">
-                                                <span data-feather="trello"></span>
-                                            </span>
-                                            <span class="nav-link-text">Quản lý cuộc thi</span>
-                                        </div>
-                                    </a>
-                                    <div class="parent-wrapper label-1">
-                                        <ul class="nav collapse parent @((currentPath.Equals(RouteConstant.LIST_CONTEST_PAGE) || currentPath.Equals(RouteConstant.CREATE_CONTEST_PAGE) || currentPath.Contains(RouteConstant.BASE_LIST_SUBMISSION_ROUTE) || currentPath.Equals(RouteConstant.VIEW_ASSIGNMENT_WItH_EMPLOYEE)) ? "show" : "")" data-bs-parent="#navbarVerticalCollapse" id="nv-contest-management">
-                                            <li class="collapsed-nav-item-title d-none">Quản lý cuộc thi</li>
-                                            <li class="nav-item">
-                                                <a class="nav-link @((currentPath.Equals(RouteConstant.LIST_CONTEST_PAGE) || currentPath.Equals(RouteConstant.BASE_LIST_SUBMISSION_ROUTE) || currentPath.Equals(RouteConstant.VIEW_ASSIGNMENT_WItH_EMPLOYEE)) ? "active" : "")" href="@RouteConstant.LIST_CONTEST_PAGE">
-                                                    <div class="d-flex align-items-center"><span class="nav-link-text">Danh sách cuộc thi</span></div>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link @(currentPath.Equals(RouteConstant.CREATE_CONTEST_PAGE) ? "active" : "")" href="@RouteConstant.CREATE_CONTEST_PAGE">
-                                                    <div class="d-flex align-items-center"><span class="nav-link-text">Tạo cuộc thi</span></div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1 @(currentPath.Equals(RouteConstant.LIST_CATEGORY_PAGE) ? "active" : "")" href="@RouteConstant.LIST_CATEGORY_PAGE" role="button" data-bs-toggle="" aria-expanded="false">
-                                        <div class="d-flex align-items-center">
-                                            <span class="nav-link-icon">
-                                                <span data-feather="calendar"></span>
-                                            </span>
-                                            <span class="nav-link-text-wrapper">
-                                                <span class="nav-link-text">Danh mục</span>
-                                            </span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>*@
-
-                        @*<li class="nav-item">
-                                <p class="navbar-vertical-label">Người dùng</p>
-                                <hr class="navbar-vertical-line" />
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1" href="#nv-users" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-users">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon-wrapper">
-                                                <span class="fas fa-caret-right dropdown-indicator-icon"></span>
-                                            </div>
-                                            <span class="nav-link-icon">
-                                                <span data-feather="user"></span>
-                                            </span>
-                                            <span class="nav-link-text">Người dùng</span>
-                                        </div>
-                                    </a>
-                                    <div class="parent-wrapper label-1">
-                                        <ul class="nav collapse parent @((currentPath.Equals(RouteConstant.USER_MANAGEMENT_PAGE) || currentPath.Contains(RouteConstant.BASE_USER_INFO_ROUTE)) ? "show" : "")" data-bs-parent="#navbarVerticalCollapse" id="nv-users">
-                                            <li class="collapsed-nav-item-title d-none">Hộp thư</li>
-                                            <li class="nav-item">
-                                                <a class="nav-link @((currentPath.Equals(RouteConstant.USER_MANAGEMENT_PAGE) || currentPath.Contains(RouteConstant.BASE_USER_INFO_ROUTE)) ? "active" : "")" href="@RouteConstant.USER_MANAGEMENT_PAGE">
-                                                    <div class="d-flex align-items-center"><span class="nav-link-text">Danh sách người dùng</span></div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>*@
-
-                        @*<li class="nav-item">
-                                <p class="navbar-vertical-label">Hộp thư</p>
-                                <hr class="navbar-vertical-line" />
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link dropdown-indicator label-1" href="#nv-contact" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-contact">
-                                        <div class="d-flex align-items-center">
-                                            <div class="dropdown-indicator-icon-wrapper">
-                                                <span class="fas fa-caret-right dropdown-indicator-icon"></span>
-                                            </div>
-                                            <span class="nav-link-icon">
-                                                <span data-feather="mail"></span>
-                                            </span>
-                                            <span class="nav-link-text">Hộp thư</span>
-                                        </div>
-                                    </a>
-                                    <div class="parent-wrapper label-1">
-                                        <ul class="nav collapse parent @((currentPath.Equals(RouteConstant.CONTACT_MESSAGE_MANAGEMENT_PAGE) || currentPath.Contains(RouteConstant.BASE_CONTACT_MESSAGE_DETAIL_ROUTE)) ? "show" : "")" data-bs-parent="#navbarVerticalCollapse" id="nv-contact">
-                                            <li class="collapsed-nav-item-title d-none">Hộp thư</li>
-                                            <li class="nav-item">
-                                                <a class="nav-link @((currentPath.Equals(RouteConstant.CONTACT_MESSAGE_MANAGEMENT_PAGE) || currentPath.Contains(RouteConstant.BASE_CONTACT_MESSAGE_DETAIL_ROUTE)) ? "active" : "")" href="@RouteConstant.CONTACT_MESSAGE_MANAGEMENT_PAGE">
-                                                    <div class="d-flex align-items-center"><span class="nav-link-text">Hộp thư đến</span></div>
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="../apps/email/compose.html">
-                                                    <div class="d-flex align-items-center"><span class="nav-link-text">Đã gửi</span></div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>*@
-
-
-                        @*<li class="nav-item">
-                                <p class="navbar-vertical-label">Khác</p>
-                                <hr class="navbar-vertical-line" />
-                                <div class="nav-item-wrapper">
-                                    <a class="nav-link label-1 @(currentPath.Equals(RouteConstant.ACTIVITY_LOG_PAGE) ? "active" : "")" href="@RouteConstant.ACTIVITY_LOG_PAGE" role="button" data-bs-toggle="" aria-expanded="false">
-                                        <div class="d-flex align-items-center">
-                                            <span class="nav-link-icon">
-                                                <span data-feather="activity"></span>
-                                            </span>
-                                            <span class="nav-link-text">Nhật ký hoạt động</span>
-                                            <span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>*@
                     </ul>
                 </div>
             </div>
@@ -333,7 +180,7 @@
         <nav class="navbar navbar-top fixed-top navbar-expand-lg" id="navbarCombo" data-navbar-top="combo" data-move-target="#navbarVerticalNav">
             <div class="navbar-logo">
                 <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
-                <a class="navbar-brand me-1 me-sm-3" href="@RouteConstant.Examiner.Dashboard">
+                <a class="navbar-brand me-1 me-sm-3" href="@Url.Action("Dashboard", "Examiner")">
                     <div class="d-flex align-items-center">
                         <div class="d-flex align-items-center">
                             <img src="~/assets/img/system/default_logo.jpg" alt="phoenix" width="27" />

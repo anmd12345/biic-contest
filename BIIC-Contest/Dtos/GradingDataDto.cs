@@ -8,7 +8,7 @@ namespace BIIC_Contest.Dtos
     public class GradingDataDto
     {
         public string OverallComment { get; set; }
-        public int FinalScore { get; set; }
+        //public int FinalScore { get; set; }
         public List<CriterionGradeDto> CriteriaGrades { get; set; }
 
         public GradingDataDto()

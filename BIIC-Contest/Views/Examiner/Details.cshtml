@@ -23,7 +23,6 @@
     // Lấy đối tượng assignment từ ViewModel
     var assignment = Model.Assignment;
 
-    // --- SỬA LẠI CÁCH LẤY DỮ LIỆU ---
     bool isSubmitted = assignment?.is_completed ?? false;
     string gradingResultJson = assignment?.assignment_result ?? "{}";
 
@@ -129,64 +128,67 @@
         @* ======================================================== *@
         @* =          FORM CHẤM ĐIỂM CHI TIẾT VÀ TỔNG QUAN         = *@
         @* ======================================================== *@
-        <div class="mt-5">
-            <h3 class="mb-4">Bảng điểm và Đánh giá</h3>
+    <div class="mt-5">
+        <h3 class="mb-4">Bảng điểm và Đánh giá</h3>
 
-            @using (Html.BeginForm("SaveGrading", "Examiner", FormMethod.Post))
+        @using (Html.BeginForm("SaveGrading", "Examiner", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("submissionId", Model.Submission.submission_id)
+            var criteriaList = criteriaDefinitions.ToList();
+
+            for (int i = 0; i < criteriaList.Count; i++)
             {
-                @Html.AntiForgeryToken()
-                @Html.Hidden("submissionId", Model.Submission.submission_id)
+                var criterionName = criteriaList[i].Key;
+                var maxScore = criteriaList[i].Value;
+                var savedGrade = gradingData.CriteriaGrades?.FirstOrDefault(g => g.Name == criterionName);
+                var currentScore = savedGrade?.Score ?? 0;
 
-                foreach (var criterion in criteriaDefinitions)
-                {
-                    var criterionName = criterion.Key;
-                    var maxScore = criterion.Value;
-                    var savedGrade = gradingData.CriteriaGrades?.FirstOrDefault(g => g.Name == criterionName);
-                    var currentScore = savedGrade?.Score ?? 0;
-
-                    <div class="row align-items-center border-top py-3 gx-0">
-                        <div class="col-12 col-lg flex-1">
-                            <h5 class="mb-0">@criterionName</h5>
-                        </div>
-                        <div class="col-12 col-lg-auto mt-2 mt-lg-0">
-                            <div class="d-flex align-items-center">
-                                <input type="number" name="gradingData.CriteriaGrades[@criterionName].Score"
-                                       class="form-control" style="width: 100px;"
-                                       value="@currentScore" min="0" max="@maxScore"
-                                       @(isSubmitted ? "disabled" : "") required />
-                                <input type="hidden" name="gradingData.CriteriaGrades[@criterionName].Name" value="@criterionName" />
-                                <div class="ps-3 border-start ms-3">
-                                    <p class="text-danger fw-bold mb-0">/@maxScore</p>
-                                </div>
+                <div class="row align-items-center border-top py-3 gx-0">
+                    <div class="col-12 col-lg flex-1">
+                        <h5 class="mb-0">@criterionName</h5>
+                    </div>
+                    <div class="col-12 col-lg-auto mt-2 mt-lg-0">
+                        <div class="d-flex align-items-center">
+                            <input type="number" name="gradingData.CriteriaGrades[@i].Score"
+                                   class="form-control" style="width: 100px;"
+                                   value="@currentScore" min="0" max="@maxScore"
+                                   @(isSubmitted ? "disabled" : "") required />
+                            <input type="hidden" name="gradingData.CriteriaGrades[@i].Name" value="@criterionName" />
+                            <div class="ps-3 border-start ms-3">
+                                <p class="text-danger fw-bold mb-0">/@maxScore</p>
                             </div>
                         </div>
                     </div>
-                }
-
-                <hr class="my-4" />
-
-                <div class="form-group mb-3">
-                    <label for="score" class="form-label fw-bold">Điểm tổng kết</label>
-                    <input type="number" name="gradingData.FinalScore" class="form-control" value="@gradingData.FinalScore" @(isSubmitted ? "disabled" : "") required />
                 </div>
-
-                <div class="form-group mb-4">
-                    <label for="overallComment" class="form-label fw-bold">Nhận xét tổng quan</label>
-                    <textarea name="gradingData.OverallComment" class="form-control" rows="6" @(isSubmitted ? "disabled" : "")>@gradingData.OverallComment</textarea>
-                </div>
-
-                if (!isSubmitted)
-                {
-                    <div class="d-flex justify-content-end gap-2">
-                        <button type="submit" name="submitButton" value="draft" class="btn btn-secondary">Lưu nháp</button>
-                        <button type="submit" name="submitButton" value="final" class="btn btn-primary" onclick="return confirm('Bạn có chắc chắn muốn nộp điểm cuối cùng?');">Nộp điểm cuối cùng</button>
-                    </div>
-                }
-                else
-                {
-                    <div class="alert alert-success text-center">
-                        <strong>Bạn đã nộp điểm cho bài thi này và không thể chỉnh sửa.</strong>
-                    </div>
-                }
             }
-        </div>
+
+            <hr class="my-4" />
+
+            @*<div class="form-group mb-3">
+                <label for="score" class="form-label fw-bold">Điểm tổng kết</label>
+                <input type="number" name="gradingData.FinalScore" class="form-control" value="@gradingData.FinalScore" @(isSubmitted ? "disabled" : "") required />
+            </div>*@
+
+            <div class="form-group mb-4">
+                <label for="overallComment" class="form-label fw-bold">Nhận xét tổng quan</label>
+                <textarea name="gradingData.OverallComment" class="form-control" rows="6" @(isSubmitted ? "disabled" : "")>@gradingData.OverallComment</textarea>
+            </div>
+
+            if (!isSubmitted)
+            {
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="submit" name="submitButton" value="draft" class="btn btn-secondary">Lưu nháp</button>
+                    <button type="submit" name="submitButton" value="final" class="btn btn-primary" onclick="return confirm('Bạn có chắc chắn muốn nộp điểm cuối cùng?');">Nộp điểm cuối cùng</button>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-success text-center">
+                    <strong>Bạn đã nộp điểm cho bài thi này và không thể chỉnh sửa.</strong>
+                </div>
+            }
+        }
+    </div>
+</div>
+</div>

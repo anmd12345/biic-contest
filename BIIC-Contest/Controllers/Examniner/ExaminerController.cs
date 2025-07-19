@@ -15,7 +15,7 @@ namespace BIIC_Contest.Controllers
     {
         private readonly ISubmissionService _submissionService;
 
-        // CẢI TIẾN 1: Service được "tiêm" vào qua constructor.
+       
         // Điều này đòi hỏi bạn cần cài đặt một DI Container như Unity.Mvc5
         public ExaminerController(ISubmissionService submissionService)
         {
@@ -59,7 +59,7 @@ namespace BIIC_Contest.Controllers
             return View(viewModel);
         }
 
-        // CẢI TIẾN 2: Action mới để nhận dữ liệu từ form chấm điểm chi tiết
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("submission/save-grading")]
