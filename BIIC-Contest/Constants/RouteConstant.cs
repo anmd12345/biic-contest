@@ -30,12 +30,29 @@
         public const string CREATE_CONTEST_PAGE = "/tao-cuoc-thi";
         public const string DASHBOARD_PAGE = "/bang-dieu-khien";
         public const string LIST_NEWS_PAGE = "/danh-sach-bai-viet";
+        public const string EDIT_NEWS_PAGE = "/chinh-sua-bai-viet";
+
         public const string LIST_CONTEST_PAGE = "/danh-sach-cuoc-thi";
         public const string LIST_CATEGORY_PAGE = "/danh-sach-danh-muc";
         public const string USER_MANAGEMENT_PAGE = "/quan-ly-nguoi-dung";
         public const string LIST_ASSIGNMENT_PAGE = "/danh-sach-cong-viec";
         public const string VIEW_ASSIGNMENT_WItH_EXAMINER = "/chi-tiet-bai-du-thi-v1";
         public const string VIEW_ASSIGNMENT_WItH_EMPLOYEE = "/chi-tiet-bai-du-thi-v2";
-        
+
+        // === KHU VỰC CỦA EXAMINER ===
+        public static class Examiner
+        {
+            // Trang tổng quan chính của Examiner
+            // URL đầy đủ sẽ là: "examiner/dashboard"
+            public const string Dashboard = "examiner/dashboard";
+
+            // Trang danh sách tất cả bài thi
+            // URL đầy đủ sẽ là: "examiner/submissions"
+            public const string SubmissionList = "examiner/submissions";
+
+            // Trang chi tiết một bài thi
+            // URL đầy đủ sẽ là: "examiner/submission/{id}" (với {id} là tham số)
+            public const string SubmissionDetails = "examiner/submission";
+        }
     }
 }

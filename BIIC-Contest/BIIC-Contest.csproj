@@ -50,6 +50,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -103,6 +106,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Abstractions, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.11.1\lib\net47\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.11.1\lib\net47\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mvc5, Version=1.4.0.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc5.1.4.0\lib\net45\Unity.Mvc5.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -132,12 +144,14 @@
   <ItemGroup>
     <Compile Include="Apis\CategoryApiController.cs" />
     <Compile Include="Apis\ContactMessageApiController.cs" />
+    <Compile Include="Apis\NewsApiController.cs" />
     <Compile Include="Apis\SystemApisController.cs" />
     <Compile Include="Apis\UploadApisController.cs" />
     <Compile Include="Apis\UserApiController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Configs\GoogleMapConfig.cs" />
     <Compile Include="Controllers\Admin\ActivityLogController.cs" />
@@ -147,8 +161,13 @@
     <Compile Include="Controllers\Admin\ContestManagementController.cs" />
     <Compile Include="Controllers\Admin\DashboardController.cs" />
     <Compile Include="Controllers\Admin\NewsManagementController.cs" />
+    <Compile Include="Controllers\Examniner\BaseExaminerController.cs" />
+    <Compile Include="Controllers\Examniner\ExaminerController.cs" />
     <Compile Include="Controllers\RegisterContestController.cs" />
     <Compile Include="Dtos\CategoryDto.cs" />
+    <Compile Include="Dtos\GradingDataDto.cs" />
+    <Compile Include="Dtos\NewsDto.cs" />
+    <Compile Include="Controllers\Admin\SubmissionManagementController.cs" />
     <Compile Include="Entitys\ActivityLogMessageEntity.cs" />
     <Compile Include="Constants\ActivityLogTypeConstant.cs" />
     <Compile Include="Constants\MessageConstant.cs" />
@@ -165,7 +184,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
-    <Compile Include="Controllers\SubmissionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Databases\BIICConnectionDbContext.cs" />
     <Compile Include="Dtos\ActivityLogDto.cs" />
@@ -194,7 +212,9 @@
     <Compile Include="Repositorys\ActivityLogRepo.cs" />
     <Compile Include="Repositorys\CategoryRepository.cs" />
     <Compile Include="Repositorys\ContactMessageRepo.cs" />
+    <Compile Include="Repositorys\NewsRepository.cs" />
     <Compile Include="Repositorys\RoleRepo.cs" />
+    <Compile Include="Repositorys\SubmissionRepo.cs" />
     <Compile Include="Repositorys\SystemRepo.cs" />
     <Compile Include="Repositorys\UserRepo.cs" />
     <Compile Include="Services\ActivityLogService.cs" />
@@ -204,10 +224,17 @@
     <Compile Include="Services\I\IBaseService.cs" />
     <Compile Include="Services\I\ICategoryService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
+    <Compile Include="Services\I\INewsService.cs" />
     <Compile Include="Services\I\ISystemService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
+    <Compile Include="Services\NewsService.cs" />
+    <Compile Include="Services\I\ISubmissionService.cs" />
+    <Compile Include="Services\I\ISystemService.cs" />
+    <Compile Include="Services\I\IUserService.cs" />
+    <Compile Include="Services\SubmissionService.cs" />
     <Compile Include="Services\SystemService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="ViewModels\SubmissionDetailsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\css\404-500.css" />
@@ -350,6 +377,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\BaseExaminer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\BIICConnectionDb.dbml">
@@ -396,6 +424,13 @@
     <Content Include="Views\AssignmentManagement\ListAssignment.cshtml" />
     <Content Include="Views\CategoryManagement\ListCategory.cshtml" />
     <Content Include="vendors\address\data.json" />
+    <Content Include="Views\SubmissionManagement\CreateSubmissionManagement.cshtml" />
+    <Content Include="Views\SubmissionManagement\DetailsSubmissionManagement.cshtml" />
+    <Content Include="Views\SubmissionManagement\IndexSubmissionManagement.cshtml" />
+    <Content Include="Views\Shared\_LayoutExaminer.cshtml" />
+    <Content Include="Views\Examiner\Index.cshtml" />
+    <Content Include="Views\Examiner\Assignments.cshtml" />
+    <Content Include="Views\Examiner\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

@@ -3,9 +3,10 @@
 @{
     ViewBag.Title = "CreateNews";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-
-
     List<CategoryDto> categories = ViewBag.categories;
+    var isEdit = ViewBag.isEdit != null && (bool)ViewBag.isEdit;
+    var news = ViewBag.news as BIIC_Contest.Dtos.NewsDto;
+
 }
 
 @section styles{
@@ -14,39 +15,74 @@
 
 }
 
-<form class="mb-9">
+<form id="createNewsForm">
+    @if (isEdit)
+    {
+        <input type="hidden" id="newsIdHidden" value="@news.NewsId" />
+    }
+    @Html.AntiForgeryToken()
+
     <div class="row justify-content-between align-items-end g-3 mb-5">
         <div class="col-12 col-sm-auto col-xl-8">
             <h2 class="mb-0">Tạo bài viết</h2>
         </div>
         <div class="col-12 col-sm-auto col-xl-4">
             <div class="d-flex">
-                <button class="btn btn-primary px-5 w-100 text-nowrap" type="button">Đăng bài viết</button>
+                @*<button class="btn btn-primary px-5 w-100 text-nowrap" type="button" onclick="sendNews(this)" id="btn-send">Đăng bài viết</button>*@
+                <button class="btn btn-primary px-5 w-100 text-nowrap" type="button"
+                        onclick="@(isEdit ? "updateNews()" : "sendNews(this)")" id="btn-send">
+                    @(isEdit ? "Cập nhật bài viết" : "Đăng bài viết")
+                </button>
+
+                <button class="btn btn-primary px-5 w-100 text-nowrap" type="button" hidden id="btn-loading">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Đang gửi...
+                </button>
             </div>
         </div>
     </div>
+
     <div class="row g-5">
         <div class="col-xl-12">
             <div class="row gx-3 gy-4">
                 <h4 class="fs-7 mb-0">Thông tin chi tiết bài viết</h4>
+
                 <div class="col-sm-6 col-md-12">
-                    <div class="form-floating">
-                        <input class="form-control" id="floatingEventInput" type="text" placeholder="Tiêu đề bài viết" />
-                        <label for="floatingEventInput">Tiêu đề bài viết</label>
+                    <div class="form-check form-switch">
+                        @*<input class="form-check-input" type="checkbox" id="isPrioritySwitch">*@
+                        <input class="form-check-input" type="checkbox" id="isPrioritySwitch"
+                               @(isEdit && news.IsPriority ? "checked" : "")>
+                        <label class="form-check-label" for="isPrioritySwitch">Ưu tiên hiển thị bài viết</label>
                     </div>
                 </div>
-                <div class="col-12 gy-6">
-                    <h4 class="fs-7">Nội dung bài viết</h4>
-                    <div class="form-floating">
-                        <textarea id="content" style="height: 500px" class="form-control tinymce" name="content"></textarea>
+
+                <div class="col-sm-6 col-md-4">
+                    <label class="form-label fw-bold text-primary mb-2">Trạng thái bài viết</label>
+                    <div class="btn-group w-100" role="group">
+                        @*<input type="radio" class="btn-check" name="statusOptions" id="statusHidden" value="0" autocomplete="off">*@
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusHidden" value="0"
+                               @(isEdit && news.Status == 0 ? "checked" : "") />
+                        <label class="btn btn-outline-danger" for="statusHidden">Ẩn</label>
+
+                        @*<input type="radio" class="btn-check" name="statusOptions" id="statusVisible" value="1" autocomplete="off" checked>*@
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusVisible" value="1"
+                               @(isEdit && news.Status == 1 ? "checked" : "") />
+                        <label class="btn btn-outline-success" for="statusVisible">Hiển thị</label>
+
+                        @*<input type="radio" class="btn-check" name="statusOptions" id="statusDraft" value="2" autocomplete="off">*@
+                        <input type="radio" class="btn-check" name="statusOptions" id="statusDraft" value="2"
+                               @(isEdit && news.Status == 2 ? "checked" : "") />
+                        <label class="btn btn-outline-secondary" for="statusDraft">Lưu nháp</label>
                     </div>
                 </div>
+
+
                 <div class="col-sm-12 col-md-12">
                     <div class="d-flex flex-wrap mb-2">
                         <h4 class="mb-0 text-body-highlight me-2">Danh mục</h4><a class="fw-bold fs-9" href="#modal-add-new-category" data-bs-toggle="modal">Thêm danh mục mới</a>
                     </div>
                     <div class="form-floating">
-                        <select class="form-select" id="floatingSelectPrivacy">
+                        <select class="form-select" id="floatingSelectPrivacy" name="CategoryId" required>
                             @if (categories == null)
                             {
                                 <option selected="selected">Danh mục rỗng!</option>
@@ -55,100 +91,279 @@
                             {
                                 foreach (var category in categories)
                                 {
-                                    <option value="@category.Id">@category.CategoryName</option>
+                                    if (category.CategoryName != "Cuộc thi")
+                                    {
+                                        @*<option value="@category.Id">@category.CategoryName</option>*@
+                                        <option value="@category.Id" @(isEdit && news.CategoryId == category.Id ? "selected" : "")>
+                                            @category.CategoryName
+                                        </option>
+
+                                    }
                                 }
                             }
                         </select>
                         <label for="floatingSelectPrivacy">Danh mục bài viết</label>
                     </div>
                 </div>
-                <div class="col-12 gy-6">
-                    <h4 class="fs-7">Banner bài viết</h4>
-                    <div class="dropzone dropzone-multiple p-0 mb-5" id="my-awesome-dropzone" data-dropzone="data-dropzone">
-                        <div class="fallback"><input name="file" type="file" multiple="multiple" /></div>
-                        <div class="dz-preview d-flex flex-wrap">
-                            <div class="border border-translucent bg-body-emphasis rounded-3 d-flex flex-center position-relative me-2 mb-2" style="height:80px;width:80px;"><img class="dz-image" src="../../assets/img/products/23.png" alt="..." data-dz-thumbnail="data-dz-thumbnail" /><a class="dz-remove text-body-quaternary" href="#!" data-dz-remove="data-dz-remove"><span data-feather="x"></span></a></div>
-                        </div>
-                        <div class="dz-message text-body-tertiary text-center" data-dz-message="data-dz-message"> Drag your photo here <span class="text-body-secondary">or </span><button class="btn btn-link p-0" type="button">Browse from device </button><br /><img class="mt-3 me-2" src="../../assets/img/icons/image-icon.png" width="40" alt="" /></div>
+
+                <div class="col-sm-6 col-md-12">
+                    <div class="form-floating">
+                        @*<input class="form-control" id="floatingEventInput" type="text" name="Title" placeholder="Tiêu đề bài viết" required />*@
+                        <input class="form-control" id="floatingEventInput" type="text" name="Title"
+                               placeholder="Tiêu đề bài viết" required
+                               value="@(isEdit ? news?.Title : "")" />
+
+                        <label for="floatingEventInput">Tiêu đề bài viết</label>
                     </div>
                 </div>
+
+
+                <div class="col-12 gy-6">
+                    <h4 class="fs-7">Banner bài viết</h4>
+                    <div class="form-group">
+                        <label for="bannerInput">Chọn ảnh banner</label>
+                        <input name="Banner" type="file" id="bannerInput" class="form-control" accept="image/*" />
+                        <img id="bannerPreview"
+                             src="@(isEdit && !string.IsNullOrEmpty(news.BannerUrl) ? Url.Content(news.BannerUrl) : "#")"
+                             alt="Preview banner"
+                             style="@(isEdit && !string.IsNullOrEmpty(news.BannerUrl) ? "max-height: 200px; margin-top: 10px; display: block;" : "display: none;")" />
+
+                        <img id="bannerPreview" src="#" alt="Preview banner" style="display:none; max-height: 200px; margin-top: 10px;" />
+                    </div>
+                </div>
+
+                <div class="col-12 gy-6">
+                    <h4 class="fs-7">Nội dung bài viết</h4>
+                    <div class="form-floating">
+                        @*<textarea id="content" style="height: 500px" class="form-control tinymce" name="Content" required></textarea>*@
+                        <textarea id="content" style="height: 500px" class="form-control tinymce" name="Content" required>
+                            @(isEdit ? news?.Content : "")
+                        </textarea>
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </form>
 
-<div class="modal fade" id="modal-add-new-category" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modal-add-new-category-title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-uppercase" id="modal-add-new-category-title">Thêm danh mục mới</h5>
-                <button class="btn btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-2">
-                    <label class="form-label" for="category-name">Tên danh mục</label>
-                    <input class="form-control" id="category-name" type="text" placeholder="Nhập tên danh mục mới" />
-                    <div class="text-danger fs-9 text-validate" hidden="hidden">Vui lòng nhập tên của bạn trước khi chat</div>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="description">Mô tả</label>
-                    <textarea rows="4" class="form-control" id="description" placeholder="Mô tả danh mục (có thể bỏ trống)"></textarea>
-                </div>
-                
-            </div>
-            
-            <div class="modal-footer">
-                <div class="alert alert-subtle-success w-100 category-notification" hidden role="alert">A simple primary alert—check it out!</div>
-                <button class="btn btn-primary justify-content-end" onclick="addCategory(this)" type="button">Thêm danh mục</button>
-                <button class="btn btn-primary" id="btn-spinner" hidden type="button"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang thêm danh mục...</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div id="responseMessage"></div>
 
-@section scripts{
+@section scripts {
     <script src="~/vendors/choices/choices.min.js"></script>
     <script src="~/vendors/dropzone/dropzone-min.js"></script>
     <script src="~/vendors/flatpickr/flatpickr.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/knomrrtoejbhyvpv9jjulyqaj0ndmqzvy2dxq64mr7co0wz8/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="~/scripts/fetch-api.js"></script>
+    <script src="~/scripts/show-notification.js"></script>
     <script>
         tinymce.init({
             selector: '#content',
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            }
         });
-    </script>
 
-    <script>
-        function addCategory(btn) {
-            const btnSpinner = document.getElementById('btn-spinner')
-            const categoryNameEl = document.getElementById('category-name')
-            const descriptionEl = document.getElementById('description')
-            const notification = document.querySelector('.category-notification')
-
-            categoryNameEl.disabled = true
-            descriptionEl.disabled = true
-            btn.disabled = true
-            btn.hidden = true
-            btnSpinner.hidden = false
-            notification.hidden = false
+        const btnLoading = document.getElementById("btn-loading");
+        const btnSend = document.getElementById("btn-send");
 
 
-            //call api
+        async function sendNews(button) {
+            btnLoading.hidden = false;
+            btnSend.hidden = true;
+
+            const titleEl = document.querySelector('#floatingEventInput');
+            const contentEl = tinymce.get('content');
+            const categoryIdEl = document.querySelector('#floatingSelectPrivacy');
+            const isPriority = document.getElementById("isPrioritySwitch").checked;
+            const bannerInput = document.getElementById("bannerInput");
+            const statusValue = document.querySelector('input[name="statusOptions"]:checked').value;
+
+            // Kiểm tra tiêu đề
+            if (!titleEl.value.trim()) {
+                showErrorNotification("Vui lòng nhập tiêu đề bài viết");
+                titleEl.focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            // Kiểm tra nội dung
+            if (!contentEl.getContent().trim()) {
+                showErrorNotification("Vui lòng nhập nội dung bài viết");
+                tinymce.get('content').focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            // Kiểm tra danh mục
+            if (!categoryIdEl.value) {
+                showErrorNotification("Vui lòng chọn danh mục");
+                categoryIdEl.focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            // Kiểm tra banner (tuỳ chọn)
+            if (bannerInput.files.length > 0) {
+                const file = bannerInput.files[0];
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                if (!file.type.startsWith("image/")) {
+                    showErrorNotification("Chỉ được chọn file ảnh làm banner");
+                    bannerInput.focus();
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+                if (file.size > maxSize) {
+                    showErrorNotification("Kích thước ảnh tối đa 5MB");
+                    bannerInput.focus();
+                    btnLoading.hidden = true;
+                    btnSend.hidden = false;
+                    return;
+                }
+            }
 
 
-            setTimeout(() => {
-                categoryNameEl.value = ""
-                descriptionEl.value = ""
-                categoryNameEl.disabled = false
-                descriptionEl.disabled = false
-                btn.disabled = false
-                btn.hidden = false
-                btnSpinner.hidden = true
-                notification.hidden = true
-            }, 3000)
+            const formData = new FormData();
+            formData.append("Title", titleEl.value);
+            formData.append("Content", contentEl.getContent());
+            formData.append("CategoryId", categoryIdEl.value);
+            formData.append("IsPriority", isPriority);
+            formData.append("Status", parseInt(statusValue));
 
-          
+            if (bannerInput && bannerInput.files.length > 0) {
+                formData.append("Banner", bannerInput.files[0]);
+            }
+
+            try {
+                const response = await fetch("/apis/v1/news/create", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.Success) {
+                    showSuccessContactNotification(data.Message);
+                    document.getElementById("createNewsForm").reset();
+                    contentEl.setContent("");
+                } else {
+                    showErrorNotification(data.Message);
+                    titleEl.disabled = false;
+                    categoryIdEl.disabled = false;
+                }
+            } catch (err) {
+                console.error("Lỗi khi gửi bài viết:", err);
+                showErrorNotification("Gửi bài viết thất bại.");
+            }
+
+            btnLoading.hidden = true;
+            btnSend.hidden = false;
         }
+
+        async function updateNews() {
+            btnLoading.hidden = false;
+            btnSend.hidden = true;
+
+            const titleEl = document.querySelector('#floatingEventInput');
+            const contentEl = tinymce.get('content');
+            const categoryIdEl = document.querySelector('#floatingSelectPrivacy');
+            const isPriority = document.getElementById("isPrioritySwitch").checked;
+            const bannerInput = document.getElementById("bannerInput");
+            const statusValue = document.querySelector('input[name="statusOptions"]:checked').value;
+
+            const newsId = document.getElementById("newsIdHidden")?.value;
+
+            if (!newsId) {
+                showErrorNotification("Không tìm thấy bài viết cần sửa.");
+                return;
+            }
+
+            // Kiểm tra các trường bắt buộc (giống sendNews)
+            if (!titleEl.value.trim()) {
+                showErrorNotification("Vui lòng nhập tiêu đề bài viết");
+                titleEl.focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            if (!contentEl.getContent().trim()) {
+                showErrorNotification("Vui lòng nhập nội dung bài viết");
+                tinymce.get('content').focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            if (!categoryIdEl.value) {
+                showErrorNotification("Vui lòng chọn danh mục");
+                categoryIdEl.focus();
+                btnLoading.hidden = true;
+                btnSend.hidden = false;
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("NewsId", newsId);
+            formData.append("Title", titleEl.value);
+            formData.append("Content", contentEl.getContent());
+            formData.append("CategoryId", categoryIdEl.value);
+            formData.append("IsPriority", isPriority);
+            formData.append("Status", parseInt(statusValue));
+
+            if (bannerInput && bannerInput.files.length > 0) {
+                formData.append("Banner", bannerInput.files[0]);
+            }
+
+            try {
+                const response = await fetch("/apis/v1/news/update", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.Success) {
+                    showSuccessContactNotification(data.Message);
+                    window.location.href = "/danh-sach-bai-viet";
+                } else {
+                    showErrorNotification(data.Message);
+                }
+            } catch (err) {
+                console.error("Lỗi khi cập nhật bài viết:", err);
+                showErrorNotification("Cập nhật bài viết thất bại.");
+            }
+
+            btnLoading.hidden = true;
+            btnSend.hidden = false;
+        }
+
+
+
+        document.getElementById("bannerInput").addEventListener("change", function (event) {
+            const preview = document.getElementById("bannerPreview");
+            const file = event.target.files[0];
+
+            if (file && file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "#";
+                preview.style.display = "none";
+            }
+        });
+
+
     </script>
 }
