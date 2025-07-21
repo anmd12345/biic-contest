@@ -1,0 +1,106 @@
+﻿@model BIIC_Contest.Models.tbl_submission
+
+@{
+    ViewBag.Title = "Chi tiết bài dự thi";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+
+    var fileList = (Model.submisstion_files ?? "").Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+    string GetStatusText(short? status)
+    {
+        switch (status)
+        {
+            case 1: return "Đã tiếp nhận";
+            case 2: return "Đang đánh giá";
+            case 3: return "Đã đánh giá";
+            case 4: return "Kết quả";
+            default: return "Không xác định";
+        }
+    }
+}
+
+<h2 class="text-center">
+    Bài Dự Thi @Model.submission_code -
+    <span class="text-danger">"@GetStatusText(Model.status)"</span>
+</h2>
+<br />
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+<div class="row">
+    <!-- Thông tin thí sinh (bên trái) -->
+    <div class="col-md-6">
+        <h4 class="text-center">Thông tin thí sinh</h4>
+        <table class="table table-bordered">
+            <tr><th>Họ tên:</th><td>@Model.fullname</td></tr>
+            <tr><th>Ngày sinh:</th><td>@Model.birth_day</td></tr>
+            <tr><th>Điện thoại:</th><td>@Model.phone</td></tr>
+            <tr><th>Email:</th><td>@Model.email</td></tr>
+            <tr><th>Địa chỉ:</th><td>@Model.address</td></tr>
+            <tr><th>Lĩnh vực:</th><td>@Model.field</td></tr>
+        </table>
+    </div>
+
+    <!-- Thông tin bài dự thi + file (bên phải) -->
+    <div class="col-md-6">
+        <h4 class="text-center">Thông tin bài dự thi</h4>
+        <table class="table table-bordered">
+            <tr><th>Tiêu đề:</th><td>@Model.field</td></tr>
+            <tr><th>Mô tả:</th><td>@Model.description</td></tr>
+        </table>
+
+        <h4 class="text-center">các tệp đính kèm</h4>
+        @if (fileList.Length == 0)
+        {
+            <span>Không có file.</span>
+        }
+        else
+        {
+            <ul>
+                @foreach (var file in fileList)
+                {
+                    <li>
+                        <a href="@Url.Content("~/assets/upload/files/" + file)" target="_blank">@file</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+
+<hr />
+<br />
+<!-- Cập nhật trạng thái -->
+<h4>Cập nhật trạng thái</h4>
+@using (Html.BeginForm("UpdateStatus", "SubmissionManagement", FormMethod.Post))
+{
+    @Html.Hidden("id", Model.submission_id)
+    <select name="status" class="form-control" required>
+        <option value="">-- Chọn trạng thái --</option>
+        <option value="1" @(Model.status == 1 ? "selected" : "")>Đã tiếp nhận</option>
+        <option value="2" @(Model.status == 2 ? "selected" : "")>Đang đánh giá</option>
+        <option value="3" @(Model.status == 3 ? "selected" : "")>Đã đánh giá</option>
+        <option value="4" @(Model.status == 4 ? "selected" : "")>Kết quả</option>
+    </select>
+    <br />
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+}
+
+<hr />
+
+<!-- Upload file -->
+<h4>Upload file đính kèm bổ sung</h4>
+@using (Html.BeginForm("UploadFile", "SubmissionManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Hidden("id", Model.submission_id)
+    <input type="file" name="file" class="form-control" required />
+    <br />
+    <button type="submit" class="btn btn-success">Upload</button>
+}
+
+<p>
+    <a href="@Url.Action("IndexSubmissionManagement")">← Quay lại danh sách</a>
+</p>
