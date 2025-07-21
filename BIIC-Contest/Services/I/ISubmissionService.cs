@@ -1,4 +1,6 @@
-﻿using BIIC_Contest.Models;
+﻿using BIIC_Contest.Dtos;
+using BIIC_Contest.Models;
+using BIIC_Contest.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +17,8 @@ namespace BIIC_Contest.Services.I
         void Create(tbl_submission model, HttpPostedFileBase file, string uploadPath, out string message);
         void Delete(int id, string uploadPath, out string message);
         bool IsEmailExists(string email);
+
+        void SaveGradingResult(int submissionId, int examinerId, GradingDataDto gradingData, bool isFinal);
+        SubmissionDetailsViewModel GetSubmissionDetailsForExaminer(int submissionId, int examinerId);
     }
 }

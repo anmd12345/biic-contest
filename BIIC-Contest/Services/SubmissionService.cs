@@ -1,6 +1,10 @@
-﻿using BIIC_Contest.Models;
+﻿using BIIC_Contest.Databases;
+using BIIC_Contest.Dtos;
+using BIIC_Contest.Models;
 using BIIC_Contest.Repositorys;
 using BIIC_Contest.Services.I;
+using BIIC_Contest.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +16,7 @@ namespace BIIC_Contest.Services
     public class SubmissionService : ISubmissionService
     {
         private readonly ISubmissionRepo _repo;
-
+        private readonly BIICConnectionDbContext _db = BIICConnectionDbContext.getInstance;
         public SubmissionService()
         {
             _repo = new SubmissionRepo(); // hoặc dùng DI
@@ -155,5 +159,50 @@ namespace BIIC_Contest.Services
             return _repo.GetAll().Any(x => x.email == email);
         }
 
+        public SubmissionDetailsViewModel GetSubmissionDetailsForExaminer(int submissionId, int examinerId)
+        {
+            var submission = GetById(submissionId);
+            if (submission == null) return null;
+
+            var assignment = _db.tbl_assignments.FirstOrDefault(a => a.submission_id == submissionId && a.user_id == examinerId);
+
+            var viewModel = new SubmissionDetailsViewModel
+            {
+                Submission = submission,
+                Assignment = assignment // Truyền cả object assignment sang
+            };
+
+            return viewModel;
+        }
+
+        public void SaveGradingResult(int submissionId, int examinerId, GradingDataDto gradingData, bool isFinal)
+        {
+            // 1. Tìm xem bản ghi phân công đã tồn tại chưa
+            var assignment = _db.tbl_assignments.FirstOrDefault(a => a.submission_id == submissionId && a.user_id == examinerId);
+
+            // 2. Nếu CHƯA TỒN TẠI, hãy TẠO MỚI
+            if (assignment == null)
+            {
+                assignment = new tbl_assignment
+                {
+                    submission_id = submissionId,
+                    user_id = examinerId,
+                    assigned_at = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    is_completed = false
+                };
+                _db.tbl_assignments.InsertOnSubmit(assignment);
+            }
+            assignment.assignment_result = JsonConvert.SerializeObject(gradingData);
+            assignment.is_completed = isFinal;
+            try
+            {
+                _db.SubmitChanges();
+            }
+            catch (Exception ex)
+            {
+                // Xử lý lỗi nếu có
+                // Log lỗi ex.Message
+            }
+        }
     }
 }
