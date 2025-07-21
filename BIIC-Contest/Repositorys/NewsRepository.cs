@@ -15,9 +15,14 @@ namespace BIIC_Contest.Repositorys
             return db.tbl_news.Where(n => n.category_id == categoryId).ToList();
         }
 
+        public tbl_new findByActiveContest()
+        {
+            return db.tbl_news.FirstOrDefault(n => n.status == 1 && n.category_id == 3);
+        }
 
-        // Phương thức để thêm bài viết vào cơ sở dữ liệu
-        public void createNews(tbl_new news)
+
+            // Phương thức để thêm bài viết vào cơ sở dữ liệu
+            public void createNews(tbl_new news)
         {
             try
             {
