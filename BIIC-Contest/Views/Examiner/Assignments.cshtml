@@ -26,7 +26,6 @@
                 <span class="fw-normal text-body-tertiary ms-3">(@ViewBag.TotalRecords)</span>
             </h2>
         </div>
-        @* --- XÓA BỎ NÚT "THÊM BÀI DỰ THI" VÌ EXAMINER KHÔNG CÓ QUYỀN NÀY --- *@
     </div>
 
     <div class="row justify-content-between align-items-end mb-4 g-3">
@@ -56,41 +55,51 @@
         </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-        @foreach (var item in Model)
-        {
-            string badgeClass;
-            switch (item.status)
-            {
-                //case "Đang đánh giá": badgeClass = "badge bg-warning-subtle text-warning"; break;
-                //case "Đã đánh giá": badgeClass = "badge bg-success-subtle text-success"; break;
-                //case "Kết quả": badgeClass = "badge bg-primary-subtle text-primary"; break;
-                //case "Đã hủy": badgeClass = "badge bg-secondary"; break;
-                //default: badgeClass = "badge bg-info-subtle text-info"; break; // Đã tiếp nhận
-            }
+    <div class="table-responsive">
+        <table class="table table-hover table-striped align-middle">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Mã hồ sơ</th>
+                    <th scope="col">Tên thí sinh</th>
+                    <th scope="col">Lĩnh vực</th>
+                    <th scope="col">Trạng thái</th>
+                    <th scope="col" class="text-end">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    string statusText = item.status == 1 ? "Đã tiếp nhận"
+                                      : item.status == 2 ? "Đang đánh giá"
+                                      : item.status == 3 ? "Đã đánh giá"
+                                      : item.status == 4 ? "Kết quả"
+                                      : "Đã hủy";
 
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body position-relative">
-                        <h5 class="card-title">@item.fullname</h5>
-                        @*<span class="@badgeClass">@item.status</span>*@
-                        <p class="mt-3 text-muted">Lĩnh vực: <strong>@item.field</strong></p>
-                        <p class="text-muted">Mã hồ sơ: <code>@item.submission_code</code></p>
-                        <p class="text-muted text-truncate" title="@item.description">
-                            Mô tả: @item.description
-                        </p>
-                        <div class="mt-3 d-flex gap-2">
-                            @* --- SỬA LẠI ĐƯỜNG DẪN TRỎ ĐẾN ACTION "DETAILS" CỦA "EXAMINERCONTROLLER" --- *@
+                    string badgeClass;
+                    switch (item.status)
+                    {
+                        case 1: badgeClass = "badge bg-info-subtle text-info"; break;
+                        case 2: badgeClass = "badge bg-warning-subtle text-warning"; break;
+                        case 3: badgeClass = "badge bg-success-subtle text-success"; break;
+                        case 4: badgeClass = "badge bg-primary-subtle text-primary"; break;
+                        default: badgeClass = "badge bg-secondary"; break;
+                    }
+                    <tr>
+                        <td><code>@item.submission_code</code></td>
+                        <td>@item.fullname</td>
+                        <td>@item.field</td>
+                        <td>
+                            <span class="@badgeClass">@statusText</span>
+                        </td>
+                        <td class="text-end">
                             <a href="@Url.Action("Details", "Examiner", new { id = item.submission_id })" class="btn btn-sm btn-primary">
                                 <i class="fa fa-eye me-1"></i> Xem & Chấm bài
                             </a>
-
-                            @* --- XÓA TOÀN BỘ NÚT VÀ FORM XÓA --- *@
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 
     <div class="mt-5 text-center">
@@ -107,7 +116,6 @@
                     else
                     {
                         <li class="page-item">
-                            @* --- SỬA LẠI ĐƯỜNG DẪN TRỎ ĐẾN ACTION "ASSIGNMENTS" CỦA "EXAMINERCONTROLLER" --- *@
                             <a class="page-link" href="@Url.Action("Assignments", "Examiner", new { page = i, field = selectedField, status = selectedStatus })">@i</a>
                         </li>
                     }
