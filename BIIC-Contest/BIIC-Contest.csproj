@@ -132,6 +132,7 @@
   <ItemGroup>
     <Compile Include="Apis\CategoryApiController.cs" />
     <Compile Include="Apis\ContactMessageApiController.cs" />
+    <Compile Include="Apis\NewsApiController.cs" />
     <Compile Include="Apis\SystemApisController.cs" />
     <Compile Include="Apis\UploadApisController.cs" />
     <Compile Include="Apis\UserApiController.cs" />
@@ -149,6 +150,8 @@
     <Compile Include="Controllers\Admin\NewsManagementController.cs" />
     <Compile Include="Controllers\RegisterContestController.cs" />
     <Compile Include="Dtos\CategoryDto.cs" />
+    <Compile Include="Dtos\NewsDto.cs" />
+    <Compile Include="Controllers\Admin\SubmissionManagementController.cs" />
     <Compile Include="Entitys\ActivityLogMessageEntity.cs" />
     <Compile Include="Constants\ActivityLogTypeConstant.cs" />
     <Compile Include="Constants\MessageConstant.cs" />
@@ -165,7 +168,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\PartialController.cs" />
-    <Compile Include="Controllers\SubmissionController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Databases\BIICConnectionDbContext.cs" />
     <Compile Include="Dtos\ActivityLogDto.cs" />
@@ -194,7 +196,9 @@
     <Compile Include="Repositorys\ActivityLogRepo.cs" />
     <Compile Include="Repositorys\CategoryRepository.cs" />
     <Compile Include="Repositorys\ContactMessageRepo.cs" />
+    <Compile Include="Repositorys\NewsRepository.cs" />
     <Compile Include="Repositorys\RoleRepo.cs" />
+    <Compile Include="Repositorys\SubmissionRepo.cs" />
     <Compile Include="Repositorys\SystemRepo.cs" />
     <Compile Include="Repositorys\UserRepo.cs" />
     <Compile Include="Services\ActivityLogService.cs" />
@@ -204,8 +208,14 @@
     <Compile Include="Services\I\IBaseService.cs" />
     <Compile Include="Services\I\ICategoryService.cs" />
     <Compile Include="Services\I\IContactMessageService.cs" />
+    <Compile Include="Services\I\INewsService.cs" />
     <Compile Include="Services\I\ISystemService.cs" />
     <Compile Include="Services\I\IUserService.cs" />
+    <Compile Include="Services\NewsService.cs" />
+    <Compile Include="Services\I\ISubmissionService.cs" />
+    <Compile Include="Services\I\ISystemService.cs" />
+    <Compile Include="Services\I\IUserService.cs" />
+    <Compile Include="Services\SubmissionService.cs" />
     <Compile Include="Services\SystemService.cs" />
     <Compile Include="Services\UserService.cs" />
   </ItemGroup>
@@ -396,6 +406,9 @@
     <Content Include="Views\AssignmentManagement\ListAssignment.cshtml" />
     <Content Include="Views\CategoryManagement\ListCategory.cshtml" />
     <Content Include="vendors\address\data.json" />
+    <Content Include="Views\SubmissionManagement\CreateSubmissionManagement.cshtml" />
+    <Content Include="Views\SubmissionManagement\DetailsSubmissionManagement.cshtml" />
+    <Content Include="Views\SubmissionManagement\IndexSubmissionManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
